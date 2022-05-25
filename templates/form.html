@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form, render_field, render_form_row %}
+
+{% block content %}
+    <h2>Search</h2>
+    {{ render_form(form, form_type='inline', render_kw={'hx-post': '/form', 'hx-target': '#output'}) }}
+    <div id="output"></div>
+{% endblock %}
