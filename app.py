@@ -5,6 +5,7 @@ from flask_bootstrap import Bootstrap5
 
 bootstrap = Bootstrap5()
 
+
 def create_app(config='config'):
     logging.basicConfig(format="%(asctime)s:%(levelname)s:%(name)s:%(message)s")
     logging.getLogger().setLevel(logging.WARNING)
