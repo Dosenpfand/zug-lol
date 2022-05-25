@@ -38,6 +38,8 @@ To run the application locally follow these steps.
 ## Live Demo
 A live version can be reached at https://train.sad.bz
 
+![An animation showing the functionality](demo.gif "Demo")
+
 ## Deploy
 ```oebb-ticket-price.service``` and ```wsgi.py``` can be used to deploy the application using Gunicorn. To use nginx as a proxy the following config snippet can be used inside a ```server``` section.
 
