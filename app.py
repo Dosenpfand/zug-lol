@@ -1,9 +1,13 @@
 import logging
 
+import click
 from flask import Flask
+from flask.cli import with_appcontext
 from flask_bootstrap import Bootstrap5
+from flask_sqlalchemy import SQLAlchemy
 
 bootstrap = Bootstrap5()
+db = SQLAlchemy()
 
 
 def create_app(config='config'):
@@ -16,6 +20,23 @@ def create_app(config='config'):
         app.config.from_object(config)
         app.config.from_envvar('APPLICATION_SETTINGS', silent=True)
         bootstrap.init_app(app)
+        db.init_app(app)
+        app.cli.add_command(init_db_command)
+
         from views import ticket_price  # noqa
         app.register_blueprint(ticket_price)
+
     return app
+
+
+def init_db():
+    db.drop_all()
+    db.create_all()
+
+
+@click.command("init-db")
+@with_appcontext
+def init_db_command():
+    """Clear existing data and create new tables."""
+    init_db()
+    click.echo("Initialized the database.")

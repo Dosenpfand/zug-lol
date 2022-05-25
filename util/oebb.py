@@ -24,7 +24,7 @@ def get_station_id(name, access_token=None):
     headers = get_request_headers(access_token)
     params = {'name': name, 'count': 1}
     r = requests.get('https://tickets.oebb.at/api/hafas/v1/stations', params, headers=headers)
-    if not type(r.json()) is list:
+    if not type(r.json()) is list or not len(r.json()):
         return None
     return r.json()[0]['number']
 
@@ -113,7 +113,7 @@ def get_connection_id(travel_action_id, date=None, has_vc66=False, access_token=
     # 'to': {'latitude': 47263774, 'longitude': 11400973, 'name': 'Innsbruck', 'number': 1170101}}
     headers = get_request_headers(access_token)
     r = requests.post(url, json=data, headers=headers)
-    if not r.json().get('connections') or not type(r.json()['connections']) is list:
+    if not r.json().get('connections') or not type(r.json()['connections']) is list or not len(r.json()['connections']):
         return None
 
     connection_id = r.json()['connections'][0]['id']
@@ -150,42 +150,3 @@ def get_price(origin, destination, date=None, has_vc66=False, access_token=None)
     return price
 
 
-def get_price_generator(origin, destination, date=None, has_vc66=False, access_token=None):
-    if not access_token:
-        yield 'event: UpdateEvent\ndata: Generating access token\n\n'
-        access_token = get_access_token()
-        if not access_token:
-            yield 'event: UpdateEvent\ndata: Failed to generate access token\n\n'
-            return
-
-    yield 'event: UpdateEvent\ndata: Processing origin\n\n'
-    origin_id = get_station_id(origin, access_token=access_token)
-    if not origin_id:
-        yield 'event: UpdateEvent\ndata: Failed to process origin\n\n'
-        return
-
-    yield 'event: UpdateEvent\ndata: Processing destination\n\n'
-    destination_id = get_station_id(destination, access_token=access_token)
-    if not destination_id:
-        yield 'event: UpdateEvent\ndata: Failed to process destination\n\n'
-        return
-
-    yield 'event: UpdateEvent\ndata: Processing travel action\n\n'
-    travel_action_id = get_travel_action_id(origin_id, destination_id, date=date, access_token=access_token)
-    if not travel_action_id:
-        yield 'event: UpdateEvent\ndata: Failed to process travel action\n\n'
-        return
-
-    yield 'event: UpdateEvent\ndata: Processing connection\n\n'
-    connection_id = get_connection_id(travel_action_id, date=date, has_vc66=has_vc66, access_token=access_token)
-    if not connection_id:
-        yield 'event: UpdateEvent\ndata: Failed to process connection\n\n'
-        return
-
-    yield f'event: UpdateEvent\ndata: Retrieving price\n\n'
-    price = get_price_for_connection(connection_id, access_token=access_token)
-    if not price:
-        yield 'event: UpdateEvent\ndata: Failed to retrieve price\n\n'
-        return
-
-    yield f'event: UpdateEvent\ndata: Price for a ticket from {origin} to {destination}: <b>{price} €</b>\n\n'
