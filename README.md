@@ -1,6 +1,5 @@
 # oebb-ticket-price
-TODO
-A minimal example of a Flask web application using htmx and Bootstrap for the front end.
+Minimal web app to retrieve prices for train journeys from [oebb.at](oebb.at) (Austrian Federal Railways).
 
 ## Components
 The application uses the following components.
@@ -9,10 +8,13 @@ The application uses the following components.
 3. [Bootstrap](https://getbootstrap.com/) for front end layout
 
 ## File Structure
-TODO
-- ```static/``` contains the Bootstrap and htmx assets.
+The application is structured as follows.
+- ```util/``` contains library functions to interact with the oebb.at web API. Could potentially be used as an individual library.
 - ```templates/``` contains the Jinja2 templates used by Flask.
-- ```app.py``` is the Flask application's implementation
+- ```app.py``` is the Flask application's implementation.
+- ```config.py``` contains configuration parameters for the application.
+- ```views.py``` contains the routes offered by the app.
+- ```forms.py``` conatins the input forms.
 
 ## Run
 To run the application locally follow these steps.
@@ -50,4 +52,3 @@ location / {
    proxy_buffering off;
 }
 ```
-
