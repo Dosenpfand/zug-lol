@@ -1,37 +1,20 @@
-from flask import Flask, render_template
+import logging
+
+from flask import Flask
 from flask_bootstrap import Bootstrap5
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import InputRequired
 
-from util.oebb import get_price_generator
+bootstrap = Bootstrap5()
 
-app = Flask(__name__)
-app.config.from_object('settings')
-app.config.from_envvar('APPLICATION_SETTINGS', silent=True)
-bootstrap = Bootstrap5(app)
+def create_app(config='config'):
+    logging.basicConfig(format="%(asctime)s:%(levelname)s:%(name)s:%(message)s")
+    logging.getLogger().setLevel(logging.WARNING)
 
+    app = Flask(__name__)
 
-class PriceForm(FlaskForm):
-    origin = StringField(label='Origin', validators=[InputRequired()], render_kw={'placeholder': 'Origin (e.g. Wien)'})
-    destination = StringField(label='Destination', render_kw={'placeholder': 'Destination (e.g. Innsbruck)'},
-                              validators=[InputRequired()])
-    submit = SubmitField(label='Search Price')
-
-
-@app.route('/form', methods=['GET', 'POST'])
-@app.route('/', methods=['GET', 'POST'])
-def price_form():
-    form = PriceForm()
-    if form.validate_on_submit():
-        return render_template('sse_container.html', form=form)
-    return render_template('form.html', form=form)
-
-
-@app.route('/get_price/<string:origin>/<string:destination>')
-def get_price(origin, destination):
-    def generate():
-        for row in get_price_generator(origin, destination):
-            yield row
-
-    return app.response_class(generate(), mimetype='text/event-stream')
+    with app.app_context():
+        app.config.from_object(config)
+        app.config.from_envvar('APPLICATION_SETTINGS', silent=True)
+        bootstrap.init_app(app)
+        from views import ticket_price  # noqa
+        app.register_blueprint(ticket_price)
+    return app

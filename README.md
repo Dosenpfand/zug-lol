@@ -26,7 +26,7 @@ To run the application locally follow these steps.
     ```
     pip install -r requirements.txt
     ```
-3. Adapt the config, either by changing the contents in ```settings.py``` or by pointing the environment variable ```APPLICATION_SETTINGS``` to an alternative file.
+3. Adapt the config, either by changing the contents in ```config.py``` or by pointing the environment variable ```APPLICATION_SETTINGS``` to an alternative file.
 4. Run the app
     ```
     export FLASK_ENV=development
