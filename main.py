@@ -7,6 +7,7 @@ from wtforms.validators import InputRequired
 from oebb import get_price_generator
 
 app = Flask(__name__)
+# TODO: change!
 app.secret_key = 'dev'
 bootstrap = Bootstrap5(app)
 
