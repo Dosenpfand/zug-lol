@@ -123,7 +123,6 @@ def get_price_for_connection(connection_id, access_token=None):
     params = {'connectionIds[]': connection_id, 'sortType': 'DEPARTURE', 'bestPriceId': 'undefined'}
     headers = get_request_headers(access_token)
     r = requests.get(url, params, headers=headers)
-    print(r.json())
     return r.json()['offers'][0].get('price')
 
 
