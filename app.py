@@ -1,14 +1,14 @@
-from flask import Flask, flash, redirect, url_for, render_template
+from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import InputRequired
 
-from oebb import get_price_generator
+from util.oebb import get_price_generator
 
 app = Flask(__name__)
-# TODO: change!
-app.secret_key = 'dev'
+app.config.from_object('settings')
+app.config.from_envvar('APPLICATION_SETTINGS', silent=True)
 bootstrap = Bootstrap5(app)
 
 

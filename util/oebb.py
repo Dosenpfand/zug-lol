@@ -35,22 +35,24 @@ def get_travel_action_id(origin_id, destination_id, date=None, access_token=None
     headers = get_request_headers(access_token)
 
     url = 'https://tickets.oebb.at/api/offer/v2/travelActions'
-    data = {'from':
     # TODO: lat,long not needed, name not relevant
+    data = \
         {
-            # 'latitude': 48208548, 'longitude': 16372132,
-            'name': 'Wien',
-            'number': origin_id
-        },
-        'to':
-            {
-                # 'latitude': 47263774, 'longitude': 11400973,
-                'name': 'Innsbruck',
-                'number': destination_id},
-        'datetime': date.isoformat(), 'customerVias': [], 'ignoreHistory': True,
-        'filter':
-            {'productTypes': [], 'history': True, 'maxEntries': 5, 'channel': 'inet'}
-    }
+            'from':
+                {
+                    # 'latitude': 48208548, 'longitude': 16372132,
+                    'name': 'Wien',
+                    'number': origin_id
+                },
+            'to':
+                {
+                    # 'latitude': 47263774, 'longitude': 11400973,
+                    'name': 'Innsbruck',
+                    'number': destination_id},
+            'datetime': date.isoformat(), 'customerVias': [], 'ignoreHistory': True,
+            'filter':
+                {'productTypes': [], 'history': True, 'maxEntries': 5, 'channel': 'inet'}
+        }
 
     r = requests.post(url, json=data, headers=headers)
 
@@ -187,9 +189,3 @@ def get_price_generator(origin, destination, date=None, has_vc66=False, access_t
         return
 
     yield f'event: UpdateEvent\ndata: Price for a ticket from {origin} to {destination}: <b>{price} €</b>\n\n'
-
-
-# TODO: delete
-if __name__ == '__main__':
-    print(get_price('Wien', 'Bozen'))
-    print(get_price('Wien', 'Bozen', has_vc66=True))
