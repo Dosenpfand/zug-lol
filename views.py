@@ -18,14 +18,15 @@ def price_form():
     return render_template('form.html', form=form)
 
 
-@ticket_price.route('/get_price/<string:origin>/<string:destination>')
-def get_price(origin, destination):
-    return Response(stream_with_context(get_price_generator(origin, destination)), mimetype='text/event-stream')
+@ticket_price.route('/get_price/<string:origin>/<string:destination>/<int:vorteilscard>')
+def get_price(origin, destination, vorteilscard=False):
+    return Response(stream_with_context(get_price_generator(origin, destination, has_vc66=vorteilscard)),
+                    mimetype='text/event-stream')
 
 
 # TODO: split?
 def get_price_generator(origin, destination, date=None, has_vc66=False, access_token=None):
-    price_query = Price.query.filter_by(origin=origin, destination=destination)
+    price_query = Price.query.filter_by(origin=origin, destination=destination, is_vorteilscard=has_vc66)
     price_exists = db.session.query(price_query.exists()).scalar()
     total_steps = 8
     current_step = 0
@@ -103,7 +104,7 @@ def get_price_generator(origin, destination, date=None, has_vc66=False, access_t
         yield render(message)
         return
 
-    db.session.add(Price(origin=origin, destination=destination, price=price))
+    db.session.add(Price(origin=origin, destination=destination, is_vorteilscard=has_vc66, price=price))
     db.session.commit()
     message = f'Price for a ticket from {origin} to {destination}: <b>{price} €</b>'
     yield render(message)
