@@ -23,7 +23,8 @@ def price_form():
 def get_price():
     origin = request.args.get('origin', type=str)
     destination = request.args.get('destination', type=str)
-    has_vorteilscard = request.args.get('vorteilscard', type=bool, default=False)
+    has_vorteilscard = request.args.get('vorteilscard', type=str, default='False') == 'True'
+
     return Response(stream_with_context(get_price_generator(origin, destination, has_vc66=has_vorteilscard)),
                     mimetype='text/event-stream')
 
