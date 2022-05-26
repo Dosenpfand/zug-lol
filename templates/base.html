@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Train Ticket Price Search</title>
+    <title>Train Ticket Prices</title>
     {{ bootstrap.load_css() }}
     <style>
         pre {
@@ -19,21 +19,22 @@
             margin: 20px;
         }
     </style>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <div class="bg-light mb-4">
         <div class="container">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                {{ render_nav_item('ticket_price.price_form', 'Train Ticket Price Search', use_li=True) }}
-            </ul>
+              <div class="row">
+                  <div class="col-md-auto my-auto">
+                      <img src="{{ url_for('static', filename='favicon.ico') }}">
+                  </div>
+                  <div class="col my-auto display-4">
+                      Train Ticket Prices
+                  </div>
+              </div>
+
         </div>
-        </div>
-    </nav>
+    </div>
 
     <main class="container">
         {{ render_messages(container=False, dismissible=True) }}
@@ -41,12 +42,13 @@
     </main>
 
     {{ bootstrap.load_js() }}
-    <script id="htmx-script" src="https://unpkg.com/htmx.org@1.7.0" integrity="sha384-EzBXYPt0/T6gxNp0nuPtLkmRpmDBbjg6WmCUZRLXBBwYYmwAUxzlSGej0ARHX0Bo" crossorigin="anonymous" defer></script>
-    <script id="htmx-sse-script" src="https://unpkg.com/htmx.org/dist/ext/sse.js" defer></script>
+    <script id="htmx-script" src="{{ url_for('static', filename='htmx.min.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='sse.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.7/dist/latest/bootstrap-autocomplete.min.js"></script>
 
-    <script defer>
+    <script>
+        // HTMX and SSE
         function onHtmxLoaded() {
-            // TODO: htmx.logAll();
             htmx.on('htmx:sseError', function(evt) {
                 htmx.find("#price-output").innerHTML = htmx.find("#price-log").innerHTML
                 htmx.remove(htmx.find("#sse-container"));
@@ -59,6 +61,12 @@
             script.addEventListener('load', onHtmxLoaded);
         }
 
+        // Auto-Complete
+        $('.basicAutoComplete').autoComplete({
+            resolverSettings: {
+                url: '/station_autocomplete'
+            }
+        })
     </script>
 </body>
 </html>

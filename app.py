@@ -3,10 +3,10 @@ import logging
 import click
 from flask import Flask
 from flask.cli import with_appcontext
-from flask_bootstrap import Bootstrap5
+from flask_bootstrap import Bootstrap4
 from flask_sqlalchemy import SQLAlchemy
 
-bootstrap = Bootstrap5()
+bootstrap = Bootstrap4()
 db = SQLAlchemy()
 
 

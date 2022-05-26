@@ -1,10 +1,11 @@
-from flask import render_template, Blueprint, Response, stream_with_context
+from flask import render_template, Blueprint, Response, stream_with_context, request
 
 from app import db
 from forms import PriceForm
 from models import Price
 from util.oebb import get_access_token, get_station_id, get_travel_action_id, get_connection_id, \
-    get_price_for_connection
+    get_price_for_connection, get_station_names
+from json import dumps
 
 ticket_price = Blueprint('ticket_price', __name__, template_folder='templates')
 
@@ -24,8 +25,25 @@ def get_price(origin, destination, vorteilscard=False):
                     mimetype='text/event-stream')
 
 
+@ticket_price.route('/station_autocomplete')
+def station_autocomplete():
+    # TODO: save access token locally!
+    name = request.args.get('q')
+    if not name:
+        result = []
+    else:
+        access_token = get_access_token()
+        if not access_token:
+            result = []
+        else:
+            result = get_station_names(name, access_token=access_token)
+    return Response(dumps(result), mimetype='application/json')
+
+
 # TODO: split?
 def get_price_generator(origin, destination, date=None, has_vc66=False, access_token=None):
+    price_message_template = \
+        '<p>Price for a ticket from {origin} to {destination}:</p><p><mark class="display-4">{price} €</mark></p>'
     price_query = Price.query.filter_by(origin=origin, destination=destination, is_vorteilscard=has_vc66)
     price_exists = db.session.query(price_query.exists()).scalar()
     total_steps = 8
@@ -44,7 +62,7 @@ def get_price_generator(origin, destination, date=None, has_vc66=False, access_t
 
     if price_exists:
         price = price_query.first().price
-        message = f'Price for a ticket from {origin} to {destination}: <b>{price} €</b>'
+        message = price_message_template.format(origin=origin, destination=destination, price=price)
         yield render(message)
         return
 
@@ -106,5 +124,5 @@ def get_price_generator(origin, destination, date=None, has_vc66=False, access_t
 
     db.session.add(Price(origin=origin, destination=destination, is_vorteilscard=has_vc66, price=price))
     db.session.commit()
-    message = f'Price for a ticket from {origin} to {destination}: <b>{price} €</b>'
+    message = price_message_template.format(origin=origin, destination=destination, price=price)
     yield render(message)

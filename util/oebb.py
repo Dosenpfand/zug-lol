@@ -28,6 +28,13 @@ def get_station_id(name, access_token=None):
         return None
     return r.json()[0]['number']
 
+def get_station_names(name, access_token=None):
+    headers = get_request_headers(access_token)
+    params = {'name': name, 'count': 5}
+    r = requests.get('https://tickets.oebb.at/api/hafas/v1/stations', params, headers=headers)
+    if not type(r.json()) is list or not len(r.json()):
+        return []
+    return [station['name'] for station in r.json()]
 
 def get_travel_action_id(origin_id, destination_id, date=None, access_token=None):
     if not date:
