@@ -19,9 +19,12 @@ def price_form():
     return render_template('form.html', form=form)
 
 
-@ticket_price.route('/get_price/<string:origin>/<string:destination>/<int:vorteilscard>')
-def get_price(origin, destination, vorteilscard=False):
-    return Response(stream_with_context(get_price_generator(origin, destination, has_vc66=vorteilscard)),
+@ticket_price.route('/get_price')
+def get_price():
+    origin = request.args.get('origin', type=str)
+    destination = request.args.get('destination', type=str)
+    has_vorteilscard = request.args.get('vorteilscard', type=bool, default=False)
+    return Response(stream_with_context(get_price_generator(origin, destination, has_vc66=has_vorteilscard)),
                     mimetype='text/event-stream')
 
 
