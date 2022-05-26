@@ -1,8 +1,5 @@
 <h2>
     Result
-    <div id="loading-spinner" class="spinner-grow" role="status">
-        <span class="visually-hidden">Loading...</span>
-    </div>
 </h2>
 <p id="sse-container" hx-ext="sse" sse-connect="{{ url_for('ticket_price.get_price', origin=form.origin.data, destination=form.destination.data, vorteilscard=form.vorteilscard.data) }}" sse-swap="UpdateEvent" hx-target="#price-log">
     <span id="price-log">Waiting for connection</span>

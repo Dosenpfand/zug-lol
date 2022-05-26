@@ -49,7 +49,6 @@
             // TODO: htmx.logAll();
             htmx.on('htmx:sseError', function(evt) {
                 htmx.find("#price-output").innerHTML = htmx.find("#price-log").innerHTML
-                htmx.remove(htmx.find("#loading-spinner"));
                 htmx.remove(htmx.find("#sse-container"));
             });
         }
