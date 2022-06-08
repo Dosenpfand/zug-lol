@@ -145,15 +145,18 @@ def get_price_for_connection(connection_id, access_token=None):
     headers = get_request_headers(access_token)
     r = requests.get(url, params=params, headers=headers)
 
-    prices = filter(None, [offer.get('price') for offer in r.json()['offers']])
-    price = median(prices)
+    prices = [offer.get('price') if not offer.get('reducedScope') else None for offer in r.json()['offers']]
+    prices_cleaned = filter(None, prices)
+
+    if prices_cleaned:
+        price = median(prices_cleaned)
+    else:
+        price = None
 
     return price
 
 
 def get_price(origin, destination, date=None, has_vc66=False, access_token=None):
-    # TODO: support for "Ticket für Teilstrecke"
-    # TODO: do not only take first but average/median over multiple?
     if not access_token:
         access_token = get_access_token()
     if not access_token:
