@@ -29,13 +29,17 @@ To run the application locally follow these steps.
     pip install -r requirements.txt
     ```
 3. Adapt the config, either by changing the contents in ```config.py``` or by pointing the environment variable ```APPLICATION_SETTINGS``` to an alternative file.
-4. Run the app
+4. Initialize the database
+   ```
+   flask init-db
+   ```
+5. Run the app
     ```
     export FLASK_ENV=development
     export FLASK_APP=app
     flask run
     ```
-5. Open in your browser: http://localhost:5000
+6. Open in your browser: http://localhost:5000
 
 ## Live Demo
 A live version can be reached at https://train.sad.bz

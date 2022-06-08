@@ -1,4 +1,5 @@
 from app import db
+from time import time
 
 
 class Price(db.Model):
@@ -9,3 +10,15 @@ class Price(db.Model):
 
     def __repr__(self):
         return f'<Price {self.price}>'
+
+
+class AuthToken(db.Model):
+    # Tokens are usually valid for 300 seconds
+    expires_at = db.Column(db.Integer, primary_key=True)
+    token = db.Column(db.Text)
+
+    def is_valid(self, safety_margin_sec=10):
+        return self.expires_at > (time() + safety_margin_sec)
+
+    def __repr__(self):
+        return f'<AuthToken {self.expires_at}>'

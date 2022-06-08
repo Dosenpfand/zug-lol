@@ -34,7 +34,7 @@ def get_station_names(name, access_token=None):
     r = requests.get('https://tickets.oebb.at/api/hafas/v1/stations', params, headers=headers)
     if not type(r.json()) is list or not len(r.json()):
         return []
-    return [station['name'] for station in r.json()]
+    return [station['name'] if station['name'] != '' else station['meta'] for station in r.json()]
 
 def get_travel_action_id(origin_id, destination_id, date=None, access_token=None):
     if not date:

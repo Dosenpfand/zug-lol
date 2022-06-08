@@ -2,6 +2,7 @@ from flask import render_template
 
 from app import db
 from models import Price
+from util.auth_token import get_valid_access_token
 from util.oebb import get_access_token, get_station_id, get_travel_action_id, get_connection_id, \
     get_price_for_connection
 
@@ -35,7 +36,7 @@ def get_price_generator(origin, destination, date=None, has_vc66=False, access_t
     if not access_token:
         message = 'Generating access token'
         render(message, current_step)
-        access_token = get_access_token()
+        access_token = get_valid_access_token()
 
         if not access_token:
             message = 'Failed to generate access token'
