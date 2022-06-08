@@ -6,7 +6,7 @@ from util.oebb import get_access_token
 
 
 def get_valid_access_token():
-    current_token = AuthToken.query.first()
+    current_token: AuthToken = AuthToken.query.first()
 
     if current_token and current_token.is_valid():
         return current_token.token

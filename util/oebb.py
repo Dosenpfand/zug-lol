@@ -1,3 +1,5 @@
+from statistics import median
+
 import requests
 from datetime import datetime
 import time
@@ -28,6 +30,7 @@ def get_station_id(name, access_token=None):
         return None
     return r.json()[0]['number']
 
+
 def get_station_names(name, access_token=None):
     headers = get_request_headers(access_token)
     params = {'name': name, 'count': 5}
@@ -36,9 +39,10 @@ def get_station_names(name, access_token=None):
         return []
     return [station['name'] if station['name'] != '' else station['meta'] for station in r.json()]
 
+
 def get_travel_action_id(origin_id, destination_id, date=None, access_token=None):
     if not date:
-        date = datetime.now()
+        date = datetime.utcnow()
     headers = get_request_headers(access_token)
 
     url = 'https://tickets.oebb.at/api/offer/v2/travelActions'
@@ -67,7 +71,7 @@ def get_travel_action_id(origin_id, destination_id, date=None, access_token=None
     if not travel_actions:
         return None
 
-    travel_action = next(action for action in travel_actions if action['type'] == 'timetable')
+    travel_action = next(action for action in travel_actions if action['entrypoint']['id'] == 'timetable')
     if not travel_action:
         return None
 
@@ -75,10 +79,10 @@ def get_travel_action_id(origin_id, destination_id, date=None, access_token=None
     return travel_action_id
 
 
-def get_connection_id(travel_action_id, date=None, has_vc66=False, access_token=None):
+def get_connection_id(travel_action_id, date=None, has_vc66=False, get_only_first=True, access_token=None):
     url = 'https://tickets.oebb.at/api/hafas/v4/timetable'
     if not date:
-        date = datetime.now()
+        date = datetime.utcnow()
 
     cards = []
     if has_vc66:
@@ -123,16 +127,28 @@ def get_connection_id(travel_action_id, date=None, has_vc66=False, access_token=
     if not r.json().get('connections') or not type(r.json()['connections']) is list or not len(r.json()['connections']):
         return None
 
-    connection_id = r.json()['connections'][0]['id']
-    return connection_id
+    if get_only_first:
+        connection_id = r.json()['connections'][0]['id']
+        return connection_id
+
+    connection_ids = [connection['id'] for connection in r.json()['connections']]
+    return connection_ids
 
 
 def get_price_for_connection(connection_id, access_token=None):
     url = 'https://tickets.oebb.at/api/offer/v1/prices'
-    params = {'connectionIds[]': connection_id, 'sortType': 'DEPARTURE', 'bestPriceId': 'undefined'}
+    if type(connection_id) is not list:
+        connection_id = [connection_id]
+
+    connection_id_params = [('connectionIds[]', current_id) for current_id in connection_id]
+    params = connection_id_params + [('sortType', 'DEPARTURE'), ('bestPriceId', 'undefined')]
     headers = get_request_headers(access_token)
-    r = requests.get(url, params, headers=headers)
-    return r.json()['offers'][0].get('price')
+    r = requests.get(url, params=params, headers=headers)
+
+    prices = filter(None, [offer.get('price') for offer in r.json()['offers']])
+    price = median(prices)
+
+    return price
 
 
 def get_price(origin, destination, date=None, has_vc66=False, access_token=None):
@@ -155,5 +171,3 @@ def get_price(origin, destination, date=None, has_vc66=False, access_token=None)
 
     price = get_price_for_connection(connection_id, access_token=access_token)
     return price
-
-

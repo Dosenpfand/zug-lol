@@ -1,13 +1,17 @@
+from datetime import datetime, timedelta
+
 from flask import render_template
 
 from app import db
 from models import Price
 from util.auth_token import get_valid_access_token
-from util.oebb import get_access_token, get_station_id, get_travel_action_id, get_connection_id, \
-    get_price_for_connection
+from util.oebb import get_station_id, get_travel_action_id, get_connection_id, get_price_for_connection
 
 
 def get_price_generator(origin, destination, date=None, has_vc66=False, access_token=None):
+    if not date:
+        date = (datetime.utcnow() + timedelta(days=1)).replace(hour=8, minute=0, second=0, microsecond=0)
+
     price_message_template = \
         '<p>Price for a ticket from {origin} to {destination}:</p><p><mark class="display-4">{price} €</mark></p>'
     price_query = Price.query.filter_by(origin=origin, destination=destination, is_vorteilscard=has_vc66)
@@ -71,18 +75,18 @@ def get_price_generator(origin, destination, date=None, has_vc66=False, access_t
         return
 
     current_step += 1
-    message = 'Processing connection'
+    message = 'Processing connections'
     yield render(message, current_step)
-    connection_id = get_connection_id(travel_action_id, date=date, has_vc66=has_vc66, access_token=access_token)
-    if not connection_id:
-        message = 'Failed to process connection'
+    connection_ids = get_connection_id(travel_action_id, date=date, has_vc66=has_vc66, get_only_first=False, access_token=access_token)
+    if not connection_ids:
+        message = 'Failed to process connections'
         yield render(message)
         return
 
     current_step += 1
     message = 'Retrieving price'
     yield render(message, current_step)
-    price = get_price_for_connection(connection_id, access_token=access_token)
+    price = get_price_for_connection(connection_ids, access_token=access_token)
     if not price:
         message = 'Failed to retrieve price'
         yield render(message)
