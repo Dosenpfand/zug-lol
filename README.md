@@ -1,5 +1,5 @@
 # oebb-ticket-price
-Minimal web app to retrieve prices for train journeys from [oebb.at](oebb.at) (Austrian Federal Railways).
+Minimal web app to retrieve prices for train journeys from [oebb.at](https://www.oebb.at) (Austrian Federal Railways).
 
 ## Components
 The application uses the following components.

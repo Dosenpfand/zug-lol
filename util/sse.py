@@ -32,67 +32,68 @@ def get_price_generator(origin, destination, date=None, has_vc66=False, access_t
 
     if price_exists:
         price = price_query.first().price
-        message = price_message_template.format(origin=origin, destination=destination, price=price)
-        yield render(message)
+        current_message = price_message_template.format(origin=origin, destination=destination, price=price)
+        yield render(current_message)
         return
 
     current_step += 1
     if not access_token:
-        message = 'Generating access token'
-        render(message, current_step)
+        current_message = 'Generating access token'
+        render(current_message, current_step)
         access_token = get_valid_access_token()
 
         if not access_token:
-            message = 'Failed to generate access token'
-            yield render(message)
+            current_message = 'Failed to generate access token'
+            yield render(current_message)
             return
 
     current_step += 1
-    message = 'Processing origin'
-    yield render(message, current_step)
+    current_message = 'Processing origin'
+    yield render(current_message, current_step)
     origin_id = get_station_id(origin, access_token=access_token)
     if not origin_id:
-        message = 'Failed to process origin'
-        yield render(message)
+        current_message = 'Failed to process origin'
+        yield render(current_message)
         return
 
     current_step += 1
-    message = 'Processing destination'
-    yield render(message, current_step)
+    current_message = 'Processing destination'
+    yield render(current_message, current_step)
     destination_id = get_station_id(destination, access_token=access_token)
     if not destination_id:
-        message = 'Failed to process destination'
-        yield render(message)
+        current_message = 'Failed to process destination'
+        yield render(current_message)
         return
 
     current_step += 1
-    message = 'Processing travel action'
-    yield render(message, current_step)
+    current_message = 'Processing travel action'
+    yield render(current_message, current_step)
     travel_action_id = get_travel_action_id(origin_id, destination_id, date=date, access_token=access_token)
     if not travel_action_id:
-        message = 'Failed to process travel action'
-        yield render(message)
+        current_message = 'Failed to process travel action'
+        yield render(current_message)
         return
 
     current_step += 1
-    message = 'Processing connections'
-    yield render(message, current_step)
-    connection_ids = get_connection_id(travel_action_id, date=date, has_vc66=has_vc66, get_only_first=False, access_token=access_token)
+    current_message = 'Processing connections'
+    yield render(current_message, current_step)
+    connection_ids = get_connection_id(travel_action_id, date=date, has_vc66=has_vc66, get_only_first=False,
+                                       access_token=access_token)
     if not connection_ids:
-        message = 'Failed to process connections'
-        yield render(message)
+        current_message = 'Failed to process connections'
+        yield render(current_message)
         return
 
     current_step += 1
-    message = 'Retrieving price'
-    yield render(message, current_step)
+    current_message = 'Retrieving price'
+    yield render(current_message, current_step)
     price = get_price_for_connection(connection_ids, access_token=access_token)
     if not price:
-        message = 'Failed to retrieve price'
-        yield render(message)
+        current_message = 'Failed to retrieve price'
+        yield render(current_message)
         return
 
     db.session.add(Price(origin=origin, destination=destination, is_vorteilscard=has_vc66, price=price))
     db.session.commit()
-    message = price_message_template.format(origin=origin, destination=destination, price=price)
-    yield render(message)
+    current_message = price_message_template.format(origin=origin, destination=destination, price=price)
+    yield render(current_message)
