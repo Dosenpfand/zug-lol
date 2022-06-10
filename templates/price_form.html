@@ -2,7 +2,14 @@
 {% from 'bootstrap4/form.html' import render_form %}
 
 {% block content %}
-    <h2>Search</h2>
-    {{ render_form(form, form_type='inline', render_kw={'hx-post': '/form', 'hx-target': '#output'}) }}
+    <div class="card bg-light mb-3" id="sse-container-outer">
+      <div class="card-body">
+        <h5 class="card-title">Search</h5>
+        <p class="card-text">
+           {{ render_form(form, form_type='inline', render_kw={'hx-post': '/price_form', 'hx-target': '#output'}) }}
+        </p>
+      </div>
+    </div>
+
     <div id="output"></div>
 {% endblock %}

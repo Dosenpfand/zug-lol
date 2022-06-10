@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Train Ticket Prices</title>
+    <title>zug.lol</title>
     {{ bootstrap.load_css() }}
     <style>
         pre {
@@ -29,7 +29,7 @@
                       <img src="{{ url_for('static', filename='favicon.ico') }}" alt="Logo: A Train">
                   </div>
                   <div class="col my-auto display-4">
-                      <a href="{{ url_for('ticket_price.price_form') }}">Train Go Brrr</a>
+                    zug.lol
                   </div>
               </div>
         </div>
@@ -62,8 +62,13 @@
         // HTMX and SSE
         function onHtmxLoaded() {
             htmx.on('htmx:sseError', function(evt) {
-                htmx.find("#price-output").innerHTML = htmx.find("#price-log").innerHTML
-                htmx.remove(htmx.find("#sse-container"));
+                if(htmx.find("#price")) {
+                    htmx.find("#price").value = htmx.find("#price-log").innerHTML
+                    htmx.remove(htmx.find("#sse-container-outer"));
+                } else {
+                    htmx.find("#price-output").innerHTML = htmx.find("#price-log").innerHTML
+                    htmx.remove(htmx.find("#sse-container"));
+                }
             });
         }
         if ('htmx' in window) {

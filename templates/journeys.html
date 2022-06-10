@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% from 'bootstrap4/form.html' import render_form %}
+{% from 'bootstrap4/form.html' import render_field %}
 {% from 'bootstrap4/table.html' import render_table %}
 
 {% block content %}
@@ -7,7 +7,15 @@
       <div class="card-body">
         <h5 class="card-title">Add Journey</h5>
         <p class="card-text">
-            {{ render_form(form)}}
+            <form action="" method="post" class="form" role="form">
+                {{ form.hidden_tag() }}
+                {{ render_field(form.origin) }}
+                {{ render_field(form.destination) }}
+                {{ render_field(form.price) }}
+                {{ render_field(form.date) }}
+                {{ render_field(form.submit) }}
+                <a class="btn btn-primary btn-md" id="determine-price" hx-post="/sse_container" hx-target="#output">Determine Price</a>
+            </form>
         </p>
       </div>
     </div>
@@ -21,7 +29,15 @@
       <ul class="list-group list-group-flush">
         <li class="list-group-item">Journeys made: <mark class="font-weight-bold">{{ journey_count }}</mark></li>
         <li class="list-group-item">Price sum: <mark class="font-weight-bold">{{ price_sum }}</mark> €</li>
-        <li class="list-group-item">Klimaticket ROI: <mark class="font-weight-bold">{{klimaticket_gains}}</mark> €</li>
+        <li class="list-group-item">
+            Klimaticket ROI:
+            <mark class="font-weight-bold">{{klimaticket_gains}}</mark> €
+            {% if klimaticket_gains > 0 %}
+                <span class="badge rounded-pill bg-success">POSITIVE</span>
+            {% else %}
+                <span class="badge rounded-pill bg-warning text-dark">NEGATIVE</span>
+            {% endif %}
+        </li>
       </ul>
     </div>
 

@@ -8,11 +8,12 @@ from util.auth_token import get_valid_access_token
 from util.oebb import get_station_id, get_travel_action_id, get_connection_id, get_price_for_connection
 
 
-def get_price_generator(origin, destination, date=None, has_vc66=False, access_token=None):
+def get_price_generator(origin, destination, date=None, has_vc66=False, output_only_price=False, access_token=None):
     if not date:
         date = (datetime.utcnow() + timedelta(days=1)).replace(hour=8, minute=0, second=0, microsecond=0)
 
-    price_message_template = \
+
+    price_message_template = '{price}' if output_only_price else \
         '<p>Price for a ticket from {origin} to {destination}:</p><p><mark class="display-4">{price} €</mark></p>'
     price_query = Price.query.filter_by(origin=origin, destination=destination, is_vorteilscard=has_vc66)
     price_exists = db.session.query(price_query.exists()).scalar()

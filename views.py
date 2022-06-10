@@ -27,8 +27,9 @@ def get_price():
     origin = request.args.get('origin', type=str)
     destination = request.args.get('destination', type=str)
     has_vorteilscard = request.args.get('vorteilscard', type=str, default='False') == 'True'
+    output_only_price = request.args.get('output_only_price', type=bool, default='False')
 
-    return Response(stream_with_context(get_price_generator(origin, destination, has_vc66=has_vorteilscard)),
+    return Response(stream_with_context(get_price_generator(origin, destination, has_vc66=has_vorteilscard, output_only_price=output_only_price)),
                     mimetype='text/event-stream')
 
 
@@ -58,13 +59,26 @@ def journeys():
         db.session.commit()
     journeys = Journey.query.filter_by(user_id=current_user.id).all()
 
-    titles = [('origin', 'Origin'), ('destination', 'Destination'), ('price', 'Price'), ('date', 'Date')]
+    titles = [('origin', 'Origin'), ('destination', 'Destination'), ('price', 'Price in €'), ('date', 'Date')]
     journey_count = len(journeys)
-    price_sum = sum(journey.price for journey in journeys)
-    klimaticket_gains = price_sum - current_user.klimaticket_price
+    price_sum = round(sum(journey.price for journey in journeys), 2)
+    klimaticket_gains = round(price_sum - current_user.klimaticket_price, 2)
 
     return render_template('journeys.html', form=form, table=journeys, titles=titles, journey_count=journey_count,
                            price_sum=price_sum, klimaticket_gains=klimaticket_gains)
+
+# TODO: whole view mostly temporary
+@ticket_price.route('/sse_container', methods=['POST'])
+@auth_required()
+def sse_container():
+    # TODO: do not use the price form!
+    form = PriceForm()
+    print(form.vorteilscard.data)
+    form.vorteilscard.data = current_user.has_vorteilscard
+    print(form.vorteilscard.data)
+    print(current_user.has_vorteilscard)
+
+    return render_template('sse_container.html', form=form, output_only_price=True)
 
 
 @ticket_price.route("/profile", methods=['GET', 'POST'])
