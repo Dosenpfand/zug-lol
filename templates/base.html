@@ -38,6 +38,7 @@
                 {{ render_nav_item('ticket_price.price_form', 'Ticket Price') }}
                 {% if current_user and current_user.is_authenticated %}
                 {{ render_nav_item('ticket_price.journeys', 'Journey Log') }}
+                {{ render_nav_item('ticket_price.profile', 'Profile') }}
                 {{ render_nav_item('security.logout', 'Logout') }}
                 {% else %}
                 {{ render_nav_item('security.login', 'Login') }}

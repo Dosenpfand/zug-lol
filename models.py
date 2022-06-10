@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from flask import current_app
+
 from app import db
 from time import time
 from flask_security.models import fsqla_v2 as fsqla
@@ -33,6 +35,8 @@ class Role(db.Model, fsqla.FsRoleMixin):
 
 
 class User(db.Model, fsqla.FsUserMixin):
+    has_vorteilscard = db.Column(db.Boolean, default=False)
+    klimaticket_price = db.Column(db.Float, default=current_app.config['KLIMATICKET_DEFAULT_PRICE'])
     journeys = db.relationship('Journey', back_populates='user', lazy=True)
 
 

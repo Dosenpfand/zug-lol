@@ -3,8 +3,8 @@ from json import dumps
 from flask import render_template, Blueprint, Response, stream_with_context, request
 from flask_security import auth_required, current_user
 
-from forms import PriceForm, JourneyForm
-from models import Journey
+from forms import PriceForm, JourneyForm, ProfileForm
+from models import Journey, User
 from util.auth_token import get_valid_access_token
 from util.oebb import get_station_names
 from util.sse import get_price_generator
@@ -61,6 +61,24 @@ def journeys():
     titles = [('origin', 'Origin'), ('destination', 'Destination'), ('price', 'Price'), ('date', 'Date')]
     journey_count = len(journeys)
     price_sum = sum(journey.price for journey in journeys)
+    klimaticket_gains = price_sum - current_user.klimaticket_price
 
     return render_template('journeys.html', form=form, table=journeys, titles=titles, journey_count=journey_count,
-                           price_sum=price_sum)
+                           price_sum=price_sum, klimaticket_gains=klimaticket_gains)
+
+
+@ticket_price.route("/profile", methods=['GET', 'POST'])
+@auth_required()
+def profile():
+    form = ProfileForm()
+
+    if form.validate_on_submit():
+        user = User.query.filter_by(id=current_user.id).one()
+        user.has_vorteilscard = form.has_vorteilscard.data
+        user.klimaticket_price = form.klimaticket_price.data
+        db.session.commit()
+    else:
+        form.has_vorteilscard.data = current_user.has_vorteilscard
+        form.klimaticket_price.data = current_user.klimaticket_price
+
+    return render_template('profile.html', form=form)

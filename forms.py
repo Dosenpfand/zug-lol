@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, BooleanField, FloatField, DateField, validators
 from wtforms.validators import InputRequired
+from flask import current_app
 
 
 class PriceForm(FlaskForm):
@@ -28,3 +29,10 @@ class JourneyForm(FlaskForm):
     # TODO
     date = DateField(label='Date', validators=[validators.Optional()], render_kw={'placeholder': 'Date TODO'})
     submit = SubmitField(label='Add Journey')
+
+
+class ProfileForm(FlaskForm):
+    has_vorteilscard = BooleanField(label='Vorteilscard')
+    klimaticket_price = FloatField(label='Klimaticket price in €', render_kw={
+        'placeholder': 'e.g. {}'.format(current_app.config['KLIMATICKET_DEFAULT_PRICE'])})
+    submit = SubmitField(label='Save')
