@@ -4,10 +4,13 @@ import click
 from flask import Flask
 from flask.cli import with_appcontext
 from flask_bootstrap import Bootstrap4
+from flask_security import SQLAlchemyUserDatastore, Security
+from flask_security.models import fsqla_v2 as fsqla
 from flask_sqlalchemy import SQLAlchemy
 
 bootstrap = Bootstrap4()
 db = SQLAlchemy()
+security = Security()
 
 
 def create_app(config='config'):
@@ -22,6 +25,11 @@ def create_app(config='config'):
         bootstrap.init_app(app)
         db.init_app(app)
         app.cli.add_command(init_db_command)
+
+        fsqla.FsModels.set_db_info(db)
+        from models import User, Role  # noqa
+        user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+        security.init_app(app, user_datastore)
 
         from views import ticket_price  # noqa
         app.register_blueprint(ticket_price)

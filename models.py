@@ -2,6 +2,7 @@ from datetime import datetime
 
 from app import db
 from time import time
+from flask_security.models import fsqla_v2 as fsqla
 
 
 class Price(db.Model):
@@ -25,3 +26,22 @@ class AuthToken(db.Model):
 
     def __repr__(self):
         return f'<AuthToken {self.expires_at}>'
+
+
+class Role(db.Model, fsqla.FsRoleMixin):
+    pass
+
+
+class User(db.Model, fsqla.FsUserMixin):
+    journeys = db.relationship('Journey', backref='user', lazy=True)
+
+
+class Journey(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    # TODO:
+    #  user = db.relationship('User', back_populates='journeys', lazy=True)
+    origin = db.Column(db.Text)
+    destination = db.Column(db.Text)
+    price = db.Column(db.Float, nullable=False)
+    date = db.Column(db.DateTime(), default=datetime.utcnow)

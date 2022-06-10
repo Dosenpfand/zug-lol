@@ -8,3 +8,4 @@ SQLAlchemy~=1.4
 Flask-SQLAlchemy~=2.5
 click~=8.1
 PyJWT~=2.4
+Flask-Security-Too~=4.1

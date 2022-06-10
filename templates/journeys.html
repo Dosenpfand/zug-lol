@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% from 'bootstrap4/form.html' import render_form %}
+{% from 'bootstrap4/table.html' import render_table %}
+
+{% block content %}
+    <h2>Add Journey</h2>
+    {{ render_form(form)}}
+    <div id="output"></div>
+
+    <h2>Journey Statistics</h2>
+    <p>Journeys made: <mark class="font-weight-bold">{{ journey_count }}</mark></p>
+    <p>Price sum: <mark class="font-weight-bold">{{ price_sum }}</mark> €</p>
+
+    <h2>Past Journeys</h2>
+    {{ render_table(table) }}
+{% endblock %}
