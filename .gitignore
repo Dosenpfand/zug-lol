@@ -108,4 +108,7 @@ ENV/
 
 # Other
 .DS_Store
+
+# Project specific
 /oebb-ticket-price.sqlite
+/.env
