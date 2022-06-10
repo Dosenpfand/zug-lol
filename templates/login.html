@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% from 'bootstrap4/form.html' import render_field %}
+
+{% macro render_form_errors(form) %}
+  {% if form.form_errors %}
+    <div class="fs-div" id="fs-form-errors">
+    <ul>
+    {% for error in form.form_errors %}
+      <li class="fs-error-msg">{{ error }}</li>
+    {% endfor %}
+    </ul>
+    </div>
+  {% endif %}
+{% endmacro %}
+
+{% block content %}
+    <form action="{{ url_for_security('login') }}" method="post" class="form" role="form" name="login_user_form">
+    {{ login_user_form.hidden_tag() }}
+    {{ render_form_errors(login_user_form) }}
+    {{ render_field(login_user_form.email) }}
+    <div class="fs-gap">
+      {{ render_field(login_user_form.password) }}</div>
+    {{ render_field(login_user_form.remember) }}
+    {{ render_field(login_user_form.csrf_token) }}
+    {{ render_field(login_user_form.submit) }}
+    </form>
+{% endblock %}

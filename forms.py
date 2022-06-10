@@ -26,5 +26,5 @@ class JourneyForm(FlaskForm):
     price = FloatField(label='Price in €', validators=[validators.Optional()],
                        render_kw={'placeholder': 'e.g. 10.5 (Leave empty to auto calculate)'})
     # TODO
-    date = DateField(label='Date', render_kw={'placeholder': 'Date TODO'})
+    date = DateField(label='Date', validators=[validators.Optional()], render_kw={'placeholder': 'Date TODO'})
     submit = SubmitField(label='Add Journey')

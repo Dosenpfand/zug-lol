@@ -29,11 +29,22 @@
                       <img src="{{ url_for('static', filename='favicon.ico') }}" alt="Logo: A Train">
                   </div>
                   <div class="col my-auto display-4">
-                      Train Ticket Prices
+                      <a href="{{ url_for('ticket_price.price_form') }}">Train Go Brrr</a>
                   </div>
               </div>
-
         </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="navbar-nav mr-auto">
+                {{ render_nav_item('ticket_price.price_form', 'Ticket Price') }}
+                {% if current_user and current_user.is_authenticated %}
+                {{ render_nav_item('ticket_price.journeys', 'Journey Log') }}
+                {{ render_nav_item('security.logout', 'Logout') }}
+                {% else %}
+                {{ render_nav_item('security.login', 'Login') }}
+                {{ render_nav_item('security.register', 'Register') }}
+                {% endif %}
+            </div>
+        </nav>
     </div>
 
     <main class="container">

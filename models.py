@@ -33,14 +33,13 @@ class Role(db.Model, fsqla.FsRoleMixin):
 
 
 class User(db.Model, fsqla.FsUserMixin):
-    journeys = db.relationship('Journey', backref='user', lazy=True)
+    journeys = db.relationship('Journey', back_populates='user', lazy=True)
 
 
 class Journey(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    # TODO:
-    #  user = db.relationship('User', back_populates='journeys', lazy=True)
+    user = db.relationship('User', back_populates='journeys', lazy=True)
     origin = db.Column(db.Text)
     destination = db.Column(db.Text)
     price = db.Column(db.Float, nullable=False)

@@ -3,14 +3,33 @@
 {% from 'bootstrap4/table.html' import render_table %}
 
 {% block content %}
-    <h2>Add Journey</h2>
-    {{ render_form(form)}}
+    <div class="card bg-light mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Add Journey</h5>
+        <p class="card-text">
+            {{ render_form(form)}}
+        </p>
+      </div>
+    </div>
+
     <div id="output"></div>
 
-    <h2>Journey Statistics</h2>
-    <p>Journeys made: <mark class="font-weight-bold">{{ journey_count }}</mark></p>
-    <p>Price sum: <mark class="font-weight-bold">{{ price_sum }}</mark> €</p>
+    <div class="card bg-light mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Journey Statistics</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Journeys made: <mark class="font-weight-bold">{{ journey_count }}</mark></li>
+        <li class="list-group-item">Price sum: <mark class="font-weight-bold">{{ price_sum }}</mark> €</li>
+      </ul>
+    </div>
 
-    <h2>Past Journeys</h2>
-    {{ render_table(table) }}
+    <div class="card bg-light mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Past Journeys</h5>
+        <p class="card-text">
+            {{ render_table(table, titles=titles) }}
+        </p>
+      </div>
+    </div>
 {% endblock %}

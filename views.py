@@ -48,15 +48,19 @@ def station_autocomplete():
 
 @ticket_price.route("/journeys", methods=['GET', 'POST'])
 @auth_required()
-def home():
+def journeys():
     form = JourneyForm()
     if form.validate_on_submit():
         # TODO: support price retrieval!
-        journey = Journey(user_id=current_user.id, origin=form.origin.data, destination=form.destination.data, price=form.price.data)
+        journey = Journey(user_id=current_user.id, origin=form.origin.data, destination=form.destination.data,
+                          price=form.price.data)
         db.session.add(journey)
         db.session.commit()
     journeys = Journey.query.filter_by(user_id=current_user.id).all()
+
+    titles = [('origin', 'Origin'), ('destination', 'Destination'), ('price', 'Price'), ('date', 'Date')]
     journey_count = len(journeys)
     price_sum = sum(journey.price for journey in journeys)
 
-    return render_template('journeys.html', form=form, table=journeys, journey_count=journey_count, price_sum=price_sum)
+    return render_template('journeys.html', form=form, table=journeys, titles=titles, journey_count=journey_count,
+                           price_sum=price_sum)
