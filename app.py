@@ -22,7 +22,7 @@ def create_app(config='config'):
     with app.app_context():
         app.config.from_object(config)
         app.config.from_envvar('APPLICATION_SETTINGS', silent=True)
-        app.config.from_prefixed_env()
+        app.config.from_prefixed_env(loads=str)
         bootstrap.init_app(app)
         db.init_app(app)
         app.cli.add_command(init_db_command)
