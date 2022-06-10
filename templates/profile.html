@@ -2,6 +2,21 @@
 {% from 'bootstrap4/form.html' import render_form %}
 
 {% block content %}
-    <h2>Profile</h2>
-    {{ render_form(form) }}
+    <div class="card bg-light mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Welcome</h5>
+        <p class="card-text">
+            Hi {{ name }}!
+        </p>
+      </div>
+    </div>
+
+    <div class="card bg-light mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Settings</h5>
+        <p class="card-text">
+            {{ render_form(form) }}
+        </p>
+      </div>
+    </div>
 {% endblock %}

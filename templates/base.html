@@ -33,11 +33,12 @@
                   </div>
               </div>
         </div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="navbar-nav mr-auto">
+                {{ render_nav_item('ticket_price.home', 'Home') }}
                 {{ render_nav_item('ticket_price.price_form', 'Ticket Price') }}
+                {{ render_nav_item('ticket_price.journeys', 'Travel Journal') }}
                 {% if current_user and current_user.is_authenticated %}
-                {{ render_nav_item('ticket_price.journeys', 'Journey Log') }}
                 {{ render_nav_item('ticket_price.profile', 'Profile') }}
                 {{ render_nav_item('security.logout', 'Logout') }}
                 {% else %}
@@ -49,8 +50,9 @@
     </div>
 
     <main class="container">
-        {{ render_messages(container=False, dismissible=True) }}
-        {% block content %}{% endblock %}
+        {{ render_messages(container=False, dismissible=False) }}
+        {% block content %}
+        {% endblock %}
     </main>
 
     {{ bootstrap.load_js() }}

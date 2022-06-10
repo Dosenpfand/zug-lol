@@ -12,7 +12,6 @@ def get_price_generator(origin, destination, date=None, has_vc66=False, output_o
     if not date:
         date = (datetime.utcnow() + timedelta(days=1)).replace(hour=8, minute=0, second=0, microsecond=0)
 
-
     price_message_template = '{price}' if output_only_price else \
         '<p>Price for a ticket from {origin} to {destination}:</p><p><mark class="display-4">{price} €</mark></p>'
     price_query = Price.query.filter_by(origin=origin, destination=destination, is_vorteilscard=has_vc66)

@@ -2,16 +2,23 @@
 {% from 'bootstrap4/form.html' import render_field %}
 
 {% block content %}
-    <form action="{{ url_for_security('register') }}" method="post" class="form" role="form" name="register_user_form">
-      {{ register_user_form.hidden_tag() }}
-      {{ render_field(register_user_form.email) }}
-      {% if security.username_enable %}
-        {{ render_field(register_user_form.username) }}
-      {%  endif %}
-      {{ render_field(register_user_form.password) }}
-      {% if register_user_form.password_confirm %}
-        {{ render_field(register_user_form.password_confirm) }}
-      {% endif %}
-      {{ render_field(register_user_form.submit) }}
-    </form>
+    <div class="card bg-light mb-3" id="sse-container-outer">
+      <div class="card-body">
+        <h5 class="card-title">Register</h5>
+        <p class="card-text">
+          <form action="{{ url_for_security('register') }}" method="post" class="form" role="form" name="register_user_form">
+            {{ register_user_form.hidden_tag() }}
+            {{ render_field(register_user_form.email) }}
+            {% if security.username_enable %}
+              {{ render_field(register_user_form.username) }}
+            {%  endif %}
+            {{ render_field(register_user_form.password) }}
+            {% if register_user_form.password_confirm %}
+              {{ render_field(register_user_form.password_confirm) }}
+            {% endif %}
+            {{ render_field(register_user_form.submit) }}
+          </form>
+        </p>
+      </div>
+    </div>
 {% endblock %}

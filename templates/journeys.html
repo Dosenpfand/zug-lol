@@ -7,7 +7,7 @@
       <div class="card-body">
         <h5 class="card-title">Add Journey</h5>
         <p class="card-text">
-            <form action="" method="post" class="form" role="form">
+            <form action="{{ url_for('ticket_price.journeys') }}" method="post" class="form" role="form">
                 {{ form.hidden_tag() }}
                 {{ render_field(form.origin) }}
                 {{ render_field(form.destination) }}
@@ -24,11 +24,11 @@
 
     <div class="card bg-light mb-3">
       <div class="card-body">
-        <h5 class="card-title">Journey Statistics</h5>
+        <h5 class="card-title">Travel Statistics</h5>
       </div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">Journeys made: <mark class="font-weight-bold">{{ journey_count }}</mark></li>
-        <li class="list-group-item">Price sum: <mark class="font-weight-bold">{{ price_sum }}</mark> €</li>
+        <li class="list-group-item">Journeys: <mark class="font-weight-bold">{{ journey_count }}</mark></li>
+        <li class="list-group-item">Expenses: <mark class="font-weight-bold">{{ price_sum }}</mark> €</li>
         <li class="list-group-item">
             Klimaticket ROI:
             <mark class="font-weight-bold">{{klimaticket_gains}}</mark> €
@@ -43,7 +43,7 @@
 
     <div class="card bg-light mb-3">
       <div class="card-body">
-        <h5 class="card-title">Past Journeys</h5>
+        <h5 class="card-title">Travel Journal</h5>
         <p class="card-text">
             {{ render_table(table, titles=titles) }}
         </p>

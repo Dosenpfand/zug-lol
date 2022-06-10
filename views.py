@@ -1,6 +1,6 @@
 from json import dumps
 
-from flask import render_template, Blueprint, Response, stream_with_context, request
+from flask import render_template, Blueprint, Response, stream_with_context, request, flash
 from flask_security import auth_required, current_user
 
 from forms import PriceForm, JourneyForm, ProfileForm
@@ -13,8 +13,12 @@ from app import db
 ticket_price = Blueprint('ticket_price', __name__, template_folder='templates')
 
 
+@ticket_price.route('/', methods=['GET'])
+def home():
+    return render_template('home.html')
+
+
 @ticket_price.route('/price_form', methods=['GET', 'POST'])
-@ticket_price.route('/', methods=['GET', 'POST'])
 def price_form():
     form = PriceForm()
     if form.validate_on_submit():
@@ -29,7 +33,8 @@ def get_price():
     has_vorteilscard = request.args.get('vorteilscard', type=str, default='False') == 'True'
     output_only_price = request.args.get('output_only_price', type=bool, default='False')
 
-    return Response(stream_with_context(get_price_generator(origin, destination, has_vc66=has_vorteilscard, output_only_price=output_only_price)),
+    return Response(stream_with_context(
+        get_price_generator(origin, destination, has_vc66=has_vorteilscard, output_only_price=output_only_price)),
                     mimetype='text/event-stream')
 
 
@@ -52,20 +57,21 @@ def station_autocomplete():
 def journeys():
     form = JourneyForm()
     if form.validate_on_submit():
-        # TODO: support price retrieval!
         journey = Journey(user_id=current_user.id, origin=form.origin.data, destination=form.destination.data,
                           price=form.price.data)
         db.session.add(journey)
         db.session.commit()
-    journeys = Journey.query.filter_by(user_id=current_user.id).all()
+        flash('Journal entry added.')
+    journeys_list = Journey.query.filter_by(user_id=current_user.id).all()
 
     titles = [('origin', 'Origin'), ('destination', 'Destination'), ('price', 'Price in €'), ('date', 'Date')]
-    journey_count = len(journeys)
-    price_sum = round(sum(journey.price for journey in journeys), 2)
+    journey_count = len(journeys_list)
+    price_sum = round(sum(journey.price for journey in journeys_list), 2)
     klimaticket_gains = round(price_sum - current_user.klimaticket_price, 2)
 
-    return render_template('journeys.html', form=form, table=journeys, titles=titles, journey_count=journey_count,
+    return render_template('journeys.html', form=form, table=journeys_list, titles=titles, journey_count=journey_count,
                            price_sum=price_sum, klimaticket_gains=klimaticket_gains)
+
 
 # TODO: whole view mostly temporary
 @ticket_price.route('/sse_container', methods=['POST'])
@@ -95,4 +101,4 @@ def profile():
         form.has_vorteilscard.data = current_user.has_vorteilscard
         form.klimaticket_price.data = current_user.klimaticket_price
 
-    return render_template('profile.html', form=form)
+    return render_template('profile.html', form=form, name=current_user.email)

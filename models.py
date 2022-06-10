@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 from flask import current_app
 
@@ -47,4 +47,4 @@ class Journey(db.Model):
     origin = db.Column(db.Text)
     destination = db.Column(db.Text)
     price = db.Column(db.Float, nullable=False)
-    date = db.Column(db.DateTime(), default=datetime.utcnow)
+    date = db.Column(db.Date(), default=date.today)
