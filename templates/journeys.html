@@ -8,13 +8,13 @@
         <h5 class="card-title">Add Journey</h5>
         <p class="card-text">
             <form action="{{ url_for('ticket_price.journeys') }}" method="post" class="form" role="form">
-                {{ form.hidden_tag() }}
-                {{ render_field(form.origin) }}
-                {{ render_field(form.destination) }}
-                {{ render_field(form.price) }}
-                {{ render_field(form.date) }}
-                {{ render_field(form.submit) }}
-                <a class="btn btn-primary btn-md" id="determine-price" hx-post="/sse_container" hx-target="#output">Determine Price</a>
+                {{ add_journey_form.hidden_tag() }}
+                {{ render_field(add_journey_form.origin) }}
+                {{ render_field(add_journey_form.destination) }}
+                {{ render_field(add_journey_form.price) }}
+                {{ render_field(add_journey_form.date) }}
+                {{ render_field(add_journey_form.submit) }}
+                <a class="btn btn-primary btn-md" id="determine-price" hx-post="{{ url_for('ticket_price.sse_container') }}" hx-target="#output">Determine Price</a>
             </form>
         </p>
       </div>
@@ -45,8 +45,39 @@
       <div class="card-body">
         <h5 class="card-title">Travel Journal</h5>
         <p class="card-text">
+          <div class="mb-3">
+            <a class="btn btn-primary" href="{{ url_for('ticket_price.export_journeys') }}">Export</a>
+            <button type="button" class="btn btn-secondary" disabled>Import</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete-journal-modal">Delete all</button>
+          </div>
+          <div>
             {{ render_table(table, titles=titles) }}
+          </div>
         </p>
       </div>
     </div>
+
+    <div class="modal fade" id="delete-journal-modal" tabindex="-1" role="dialog" aria-labelledby="delete-journal-modal-label" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="delete-journal-modal-label">Danger Zone</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete <strong>ALL</strong> your journal entries?
+          </div>
+          <div class="modal-footer">
+            <form action="{{ url_for('ticket_price.journeys') }}" method="post" class="form" role="form">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                {{ delete_journeys_form.hidden_tag() }}
+                {{ render_field(delete_journeys_form.delete) }}
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
 {% endblock %}

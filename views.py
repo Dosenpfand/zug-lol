@@ -1,9 +1,11 @@
+import csv
+from io import StringIO
 from json import dumps
 
 from flask import render_template, Blueprint, Response, stream_with_context, request, flash
 from flask_security import auth_required, current_user
 
-from forms import PriceForm, JourneyForm, ProfileForm
+from forms import PriceForm, JourneyForm, ProfileForm, DeleteJournalForm
 from models import Journey, User
 from util.auth_token import get_valid_access_token
 from util.oebb import get_station_names
@@ -35,7 +37,7 @@ def get_price():
 
     return Response(stream_with_context(
         get_price_generator(origin, destination, has_vc66=has_vorteilscard, output_only_price=output_only_price)),
-                    mimetype='text/event-stream')
+        mimetype='text/event-stream')
 
 
 @ticket_price.route('/station_autocomplete')
@@ -55,13 +57,22 @@ def station_autocomplete():
 @ticket_price.route("/journeys", methods=['GET', 'POST'])
 @auth_required()
 def journeys():
-    form = JourneyForm()
-    if form.validate_on_submit():
-        journey = Journey(user_id=current_user.id, origin=form.origin.data, destination=form.destination.data,
-                          price=form.price.data, date=form.date.data)
+    add_journey_form = JourneyForm()
+    delete_journeys_form = DeleteJournalForm()
+
+    if add_journey_form.submit.data and add_journey_form.validate():
+        journey = Journey(user_id=current_user.id, origin=add_journey_form.origin.data,
+                          destination=add_journey_form.destination.data,
+                          price=add_journey_form.price.data, date=add_journey_form.date.data)
         db.session.add(journey)
         db.session.commit()
         flash('Journal entry added.')
+
+    if delete_journeys_form.delete.data and delete_journeys_form.validate():
+        Journey.query.filter_by(user_id=current_user.id).delete()
+        db.session.commit()
+        flash('All journal entries deleted.')
+
     journeys_list = Journey.query.filter_by(user_id=current_user.id).all()
 
     titles = [('origin', 'Origin'), ('destination', 'Destination'), ('price', 'Price in €'), ('date', 'Date')]
@@ -69,8 +80,33 @@ def journeys():
     price_sum = round(sum(journey.price for journey in journeys_list), 2)
     klimaticket_gains = round(price_sum - current_user.klimaticket_price, 2)
 
-    return render_template('journeys.html', form=form, table=journeys_list, titles=titles, journey_count=journey_count,
+    return render_template('journeys.html', add_journey_form=add_journey_form,
+                           delete_journeys_form=delete_journeys_form, table=journeys_list, titles=titles,
+                           journey_count=journey_count,
                            price_sum=price_sum, klimaticket_gains=klimaticket_gains)
+
+
+@ticket_price.route('/export_journeys')
+@auth_required()
+def export_journeys():
+    def generate():
+        data = StringIO()
+        w = csv.writer(data)
+        w.writerow(('Origin', 'Destination', 'Price in €', 'Date'))
+        yield data.getvalue()
+        data.seek(0)
+        data.truncate(0)
+
+        journeys_list = Journey.query.filter_by(user_id=current_user.id).all()
+        for journey in journeys_list:
+            w.writerow((journey.origin, journey.destination, journey.price, journey.date))
+            yield data.getvalue()
+            data.seek(0)
+            data.truncate(0)
+
+    response = Response(stream_with_context(generate()), mimetype='text/csv')
+    response.headers.set("Content-Disposition", "attachment", filename="exported_journeys.csv")
+    return response
 
 
 # TODO: whole view mostly temporary

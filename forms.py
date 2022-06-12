@@ -34,3 +34,6 @@ class ProfileForm(FlaskForm):
     klimaticket_price = FloatField(label='Klimaticket price in €', render_kw={
         'placeholder': 'e.g. {}'.format(current_app.config['KLIMATICKET_DEFAULT_PRICE'])})
     submit = SubmitField(label='Save')
+
+class DeleteJournalForm(FlaskForm):
+    delete = SubmitField(label='Delete', render_kw={'class': 'btn btn-danger'})
