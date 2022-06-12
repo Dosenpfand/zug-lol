@@ -58,7 +58,7 @@ def journeys():
     form = JourneyForm()
     if form.validate_on_submit():
         journey = Journey(user_id=current_user.id, origin=form.origin.data, destination=form.destination.data,
-                          price=form.price.data)
+                          price=form.price.data, date=form.date.data)
         db.session.add(journey)
         db.session.commit()
         flash('Journal entry added.')
