@@ -73,7 +73,7 @@ def journeys():
         db.session.commit()
         flash('All journal entries deleted.')
 
-    journeys_list = Journey.query.filter_by(user_id=current_user.id).all()
+    journeys_list = Journey.query.filter_by(user_id=current_user.id).order_by(Journey.date.desc()).all()
 
     titles = [('origin', 'Origin'), ('destination', 'Destination'), ('price', 'Price in €'), ('date', 'Date')]
     journey_count = len(journeys_list)
