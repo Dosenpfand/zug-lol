@@ -7,10 +7,12 @@ from flask_bootstrap import Bootstrap4
 from flask_security import SQLAlchemyUserDatastore, Security
 from flask_security.models import fsqla_v2 as fsqla
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 bootstrap = Bootstrap4()
 db = SQLAlchemy()
 security = Security()
+migrate = Migrate()
 
 
 def create_app(config='config'):
@@ -25,6 +27,7 @@ def create_app(config='config'):
         app.config.from_prefixed_env(loads=str)
         bootstrap.init_app(app)
         db.init_app(app)
+        migrate.init_app(app, db)
         app.cli.add_command(init_db_command)
 
         fsqla.FsModels.set_db_info(db)
@@ -38,6 +41,7 @@ def create_app(config='config'):
     return app
 
 
+# TODO: Can/Should no be deleted?
 def init_db():
     db.drop_all()
     db.create_all()

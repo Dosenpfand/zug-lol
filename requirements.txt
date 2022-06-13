@@ -10,3 +10,4 @@ click~=8.1
 PyJWT~=2.4
 Flask-Security-Too~=4.1
 bcrypt~=3.2
+Flask-Migrate~=3.1
