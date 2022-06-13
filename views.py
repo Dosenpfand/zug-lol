@@ -3,7 +3,7 @@ from io import StringIO
 from json import dumps
 
 from flask import render_template, Blueprint, Response, stream_with_context, request, flash
-from flask_babel import gettext as _
+from flask_babel import gettext as _, format_date, format_decimal
 from flask_security import auth_required, current_user
 
 from forms import PriceForm, JourneyForm, ProfileForm, DeleteJournalForm
@@ -84,15 +84,22 @@ def journeys():
         db.session.commit()
         flash(_('All journal entries deleted.'))
 
-    journeys_list = Journey.query.filter_by(user_id=current_user.id).order_by(Journey.date.desc()).all()
+    journeys_objs = Journey.query.filter_by(user_id=current_user.id).order_by(Journey.date.desc()).all()
 
-    titles = [('origin', _('Origin')), ('destination', _('Destination')), ('price', _('Price in €')), ('date', _('Date'))]
-    journey_count = len(journeys_list)
-    price_sum = round(sum(journey.price for journey in journeys_list), 2)
+    journey_dicts = []
+    for journey_obj in journeys_objs:
+        journey_dict = {'origin': journey_obj.origin, 'destination': journey_obj.destination,
+                        'price': format_decimal(journey_obj.price), 'date': format_date(journey_obj.date)}
+        journey_dicts.append(journey_dict)
+
+    titles = [('origin', _('Origin')), ('destination', _('Destination')), ('price', _('Price in €')),
+              ('date', _('Date'))]
+    journey_count = len(journeys_objs)
+    price_sum = round(sum(journey.price for journey in journeys_objs), 2)
     klimaticket_gains = round(price_sum - current_user.klimaticket_price, 2)
 
     return render_template('journeys.html', add_journey_form=add_journey_form,
-                           delete_journeys_form=delete_journeys_form, table=journeys_list, titles=titles,
+                           delete_journeys_form=delete_journeys_form, table=journey_dicts, titles=titles,
                            journey_count=journey_count,
                            price_sum=price_sum, klimaticket_gains=klimaticket_gains)
 
@@ -146,6 +153,6 @@ def profile():
         db.session.commit()
     else:
         form.has_vorteilscard.data = current_user.has_vorteilscard
-        form.klimaticket_price.data = current_user.klimaticket_price
+        form.klimaticket_price.data = format_decimal(current_user.klimaticket_price)
 
     return render_template('profile.html', form=form, name=current_user.email)

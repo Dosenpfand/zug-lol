@@ -8,7 +8,7 @@ from flask_security import SQLAlchemyUserDatastore, Security
 from flask_security.models import fsqla_v2 as fsqla
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_babel import Babel
+from flask_babel import Babel, format_number
 
 bootstrap = Bootstrap4()
 db = SQLAlchemy()
@@ -32,6 +32,7 @@ def create_app(config='config'):
         migrate.init_app(app, db)
         babel.init_app(app)
         app.jinja_env.add_extension('jinja2.ext.i18n')
+        app.jinja_env.filters['format_number'] = format_number
 
         app.cli.add_command(init_db_command)
 
@@ -46,12 +47,6 @@ def create_app(config='config'):
         @babel.localeselector
         def get_locale():
             # TODO
-            # if a user is logged in, use the locale from the user settings
-            # user = getattr(g, 'user', None)
-            # if user is not None:
-            #     return user.locale
-            # otherwise try to guess the language from the user accept
-            # header the browser transmits.
             return request.accept_languages.best_match(current_app.config['LANGUAGES'])
 
     return app

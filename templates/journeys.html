@@ -28,10 +28,10 @@
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">{{ _('Journeys') }}: <mark class="font-weight-bold">{{ journey_count }}</mark></li>
-        <li class="list-group-item">{{ _('Expenses') }}: <mark class="font-weight-bold">{{ price_sum }}</mark> €</li>
+        <li class="list-group-item">{{ _('Expenses') }}: <mark class="font-weight-bold">{{ price_sum|format_number }}</mark> €</li>
         <li class="list-group-item">
             {{ _('Klimaticket ROI') }}:
-            <mark class="font-weight-bold">{{klimaticket_gains}}</mark> €
+            <mark class="font-weight-bold">{{ klimaticket_gains|format_number }}</mark> €
             {% if klimaticket_gains > 0 %}
                 <span class="badge rounded-pill bg-success">{{ _('POSITIVE') }}</span>
             {% else %}

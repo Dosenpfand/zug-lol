@@ -3,7 +3,6 @@
 - [ ] Import
 - [ ] Delete (Edit) individual
 - [ ] Pagination
-- [ ] Translation to german
 - [ ] Account deletion
 - [ ] Cleanup, 2 blueprints, rename project, etc.
 - [ ] Migrate to postgres

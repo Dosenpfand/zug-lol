@@ -48,7 +48,7 @@ msgstr "Preis in €"
 
 #: forms.py:28
 msgid "e.g. 10.5"
-msgstr "z.B. 10.5"
+msgstr "z.B. 10,5"
 
 #: forms.py:29 views.py:89
 msgid "Date"

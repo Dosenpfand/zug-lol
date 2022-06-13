@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 from flask import render_template
-from flask_babel import lazy_gettext as _
+from flask_babel import lazy_gettext as _, format_decimal
 
 from app import db
 from models import Price
@@ -33,7 +33,8 @@ def get_price_generator(origin, destination, date=None, has_vc66=False, output_o
 
     if price_exists:
         price = price_query.first().price
-        current_message = price_message_template.format(origin=origin, destination=destination, price=price)
+        current_message = price_message_template.format(origin=origin, destination=destination,
+                                                        price=format_decimal(price))
         yield render(current_message)
         return
 
@@ -96,5 +97,5 @@ def get_price_generator(origin, destination, date=None, has_vc66=False, output_o
 
     db.session.add(Price(origin=origin, destination=destination, is_vorteilscard=has_vc66, price=price))
     db.session.commit()
-    current_message = price_message_template.format(origin=origin, destination=destination, price=price)
+    current_message = price_message_template.format(origin=origin, destination=destination, price=format(price))
     yield render(current_message)
