@@ -33,13 +33,20 @@ To run the application locally follow these steps.
    ```
    flask init-db
    ```
-5. Run the app
+5. Adapt the translation
+   ```bash
+   pybabel extract -F babel.cfg -k lazy_gettext -o messages.pot .
+   pybabel update -i messages.pot -d translation
+   # Adapt translations/de/LC_MESSAGES/messages.po
+   pybabel compile -d translations
+   ```
+6. Run the app
     ```
     export FLASK_ENV=development
     export FLASK_APP=app
     flask run
     ```
-6. Open in your browser: http://localhost:5000
+7. Open in your browser: http://localhost:5000
 
 ## Live Demo
 A live version can be reached at https://train.sad.bz

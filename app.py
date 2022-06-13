@@ -1,7 +1,7 @@
 import logging
 
 import click
-from flask import Flask
+from flask import Flask, current_app, request
 from flask.cli import with_appcontext
 from flask_bootstrap import Bootstrap4
 from flask_security import SQLAlchemyUserDatastore, Security
@@ -42,6 +42,17 @@ def create_app(config='config'):
 
         from views import ticket_price  # noqa
         app.register_blueprint(ticket_price)
+
+        @babel.localeselector
+        def get_locale():
+            # TODO
+            # if a user is logged in, use the locale from the user settings
+            # user = getattr(g, 'user', None)
+            # if user is not None:
+            #     return user.locale
+            # otherwise try to guess the language from the user accept
+            # header the browser transmits.
+            return request.accept_languages.best_match(current_app.config['LANGUAGES'])
 
     return app
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-13 13:49+0200\n"
+"POT-Creation-Date: 2022-06-13 15:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -227,5 +227,63 @@ msgstr ""
 
 #: templates/sse_container.html:6
 msgid "Waiting for connection"
+msgstr ""
+
+#: util/sse.py:17
+msgid ""
+"<p>Price for a ticket from {origin} to {destination}:</p><p><mark "
+"class=\"display-4\">{price} €</mark></p>"
+msgstr ""
+
+#: util/sse.py:32
+msgid "Checking local cache"
+msgstr ""
+
+#: util/sse.py:42
+msgid "Generating access token"
+msgstr ""
+
+#: util/sse.py:47
+msgid "Failed to generate access token"
+msgstr ""
+
+#: util/sse.py:52
+msgid "Processing origin"
+msgstr ""
+
+#: util/sse.py:56
+msgid "Failed to process origin"
+msgstr ""
+
+#: util/sse.py:61
+msgid "Processing destination"
+msgstr ""
+
+#: util/sse.py:65
+msgid "Failed to process destination"
+msgstr ""
+
+#: util/sse.py:70
+msgid "Processing travel action"
+msgstr ""
+
+#: util/sse.py:74
+msgid "Failed to process travel action"
+msgstr ""
+
+#: util/sse.py:79
+msgid "Processing connections"
+msgstr ""
+
+#: util/sse.py:84
+msgid "Failed to process connections"
+msgstr ""
+
+#: util/sse.py:89
+msgid "Retrieving price"
+msgstr ""
+
+#: util/sse.py:93
+msgid "Failed to retrieve price"
 msgstr ""
 

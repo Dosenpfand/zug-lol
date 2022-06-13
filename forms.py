@@ -1,4 +1,4 @@
-from flask_babel import gettext as _
+from flask_babel import lazy_gettext as _
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, BooleanField, FloatField, DateField, validators
 from wtforms.validators import InputRequired
