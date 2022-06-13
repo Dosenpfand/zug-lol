@@ -8,3 +8,5 @@
 - [ ] Translation to german
 - [ ] Account deletion
 - [ ] Cleanup, 2 blueprints, rename project, etc.
+- [ ] Migrate to postgres
+- [ ] Add db migration
