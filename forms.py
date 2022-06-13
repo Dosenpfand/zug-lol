@@ -1,8 +1,8 @@
+from flask import current_app
 from flask_babel import lazy_gettext as _
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, BooleanField, FloatField, DateField, validators, DecimalField
+from wtforms import StringField, SubmitField, BooleanField, DateField, validators, DecimalField
 from wtforms.validators import InputRequired
-from flask import current_app
 
 
 class PriceForm(FlaskForm):
