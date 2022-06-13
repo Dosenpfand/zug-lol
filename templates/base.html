@@ -58,7 +58,7 @@
     {{ bootstrap.load_js() }}
     <script id="htmx-script" src="{{ url_for('static', filename='htmx.min.js') }}" defer></script>
     <script src="{{ url_for('static', filename='sse.js') }}" defer></script>
-    <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.7/dist/latest/bootstrap-autocomplete.min.js"></script>
+    <script src="{{ url_for('static', filename='bootstrap-autocomplete.min.js') }}"></script>
 
     <script>
         // HTMX and SSE
