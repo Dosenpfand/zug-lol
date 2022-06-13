@@ -6,7 +6,7 @@ from flask import render_template, Blueprint, Response, stream_with_context, req
 from flask_security import auth_required, current_user
 
 from forms import PriceForm, JourneyForm, ProfileForm, DeleteJournalForm
-from models import Journey, User
+from models import Journey, User, StationAutocomplete
 from util.auth_token import get_valid_access_token
 from util.oebb import get_station_names
 from util.sse import get_price_generator
@@ -43,15 +43,25 @@ def get_price():
 @ticket_price.route('/station_autocomplete')
 def station_autocomplete():
     name = request.args.get('q')
+
     if not name:
-        result = []
+        result = dumps([])
     else:
-        access_token = get_valid_access_token()
-        if not access_token:
-            result = []
+        station_query = StationAutocomplete.query.filter_by(input=name)
+        station_exists = db.session.query(station_query.exists()).scalar()
+
+        if station_exists:
+            result = station_query.first().result
         else:
-            result = get_station_names(name, access_token=access_token)
-    return Response(dumps(result), mimetype='application/json')
+            access_token = get_valid_access_token()
+            if not access_token:
+                result = dumps([])
+            else:
+                result = dumps(get_station_names(name, access_token=access_token))
+                db.session.add(StationAutocomplete(input=name, result=result))
+                db.session.commit()
+
+    return Response(result, mimetype='application/json')
 
 
 @ticket_price.route("/journeys", methods=['GET', 'POST'])

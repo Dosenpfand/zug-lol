@@ -18,6 +18,14 @@ class Price(db.Model):
         return f'<Price {self.price}>'
 
 
+class StationAutocomplete(db.Model):
+    input = db.Column(db.Text, primary_key=True)
+    result = db.Column(db.Text)
+
+    def __repr__(self):
+        return f'<StationAutocomplete {self.input}>'
+
+
 class AuthToken(db.Model):
     # Tokens are usually valid for 300 seconds
     expires_at = db.Column(db.Integer, primary_key=True)

@@ -3,11 +3,10 @@
 - [ ] Import
 - [ ] Delete (Edit) individual
 - [ ] Pagination
-- [ ] Cache auto-complete
 - [ ] Translation to german
 - [ ] Account deletion
 - [ ] Cleanup, 2 blueprints, rename project, etc.
 - [ ] Migrate to postgres
-- [ ] Add db migration
 - [ ] Add recurring?
 - [ ] Sort by selectable
+- [ ] Cache invalidation
