@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-13 15:06+0200\n"
+"POT-Creation-Date: 2022-06-13 22:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,23 +17,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.1\n"
 
-#: forms.py:9 forms.py:21 views.py:89
+#: forms.py:9 forms.py:24 views.py:95
 msgid "Origin"
 msgstr ""
 
-#: forms.py:11 forms.py:23
+#: forms.py:11 forms.py:26
 msgid "Origin (e.g. Wien)"
 msgstr ""
 
-#: forms.py:12 forms.py:24 views.py:89
+#: forms.py:12 forms.py:27 views.py:95
 msgid "Destination"
 msgstr ""
 
-#: forms.py:14 forms.py:26
+#: forms.py:14 forms.py:29
 msgid "Destination (e.g. Innsbruck)"
 msgstr ""
 
-#: forms.py:16 forms.py:34
+#: forms.py:16 forms.py:40
 msgid "Vorteilscard"
 msgstr ""
 
@@ -41,35 +41,35 @@ msgstr ""
 msgid "Search Price"
 msgstr ""
 
-#: forms.py:28 views.py:89
+#: forms.py:31 views.py:95
 msgid "Price in €"
 msgstr ""
 
-#: forms.py:28
+#: forms.py:31
 msgid "e.g. 10.5"
 msgstr ""
 
-#: forms.py:29 views.py:89
+#: forms.py:32 views.py:96
 msgid "Date"
 msgstr ""
 
-#: forms.py:30 templates/journeys.html:8
+#: forms.py:33 templates/journeys.html:8
 msgid "Add Journey"
 msgstr ""
 
-#: forms.py:35
+#: forms.py:41
 msgid "Klimaticket price in €"
 msgstr ""
 
-#: forms.py:36
+#: forms.py:42
 msgid "e.g."
 msgstr ""
 
-#: forms.py:37
+#: forms.py:43
 msgid "Save"
 msgstr ""
 
-#: forms.py:41
+#: forms.py:47
 msgid "Delete"
 msgstr ""
 
@@ -79,6 +79,18 @@ msgstr ""
 
 #: views.py:85
 msgid "All journal entries deleted."
+msgstr ""
+
+#: views.py:97
+msgid "Actions"
+msgstr ""
+
+#: views.py:117
+msgid "Journal entry deleted."
+msgstr ""
+
+#: views.py:119
+msgid "Failed to delete journal entry."
 msgstr ""
 
 #: templates/base.html:29
@@ -239,51 +251,51 @@ msgstr ""
 msgid "Checking local cache"
 msgstr ""
 
-#: util/sse.py:42
+#: util/sse.py:43
 msgid "Generating access token"
 msgstr ""
 
-#: util/sse.py:47
+#: util/sse.py:48
 msgid "Failed to generate access token"
 msgstr ""
 
-#: util/sse.py:52
+#: util/sse.py:53
 msgid "Processing origin"
 msgstr ""
 
-#: util/sse.py:56
+#: util/sse.py:57
 msgid "Failed to process origin"
 msgstr ""
 
-#: util/sse.py:61
+#: util/sse.py:62
 msgid "Processing destination"
 msgstr ""
 
-#: util/sse.py:65
+#: util/sse.py:66
 msgid "Failed to process destination"
 msgstr ""
 
-#: util/sse.py:70
+#: util/sse.py:71
 msgid "Processing travel action"
 msgstr ""
 
-#: util/sse.py:74
+#: util/sse.py:75
 msgid "Failed to process travel action"
 msgstr ""
 
-#: util/sse.py:79
+#: util/sse.py:80
 msgid "Processing connections"
 msgstr ""
 
-#: util/sse.py:84
+#: util/sse.py:85
 msgid "Failed to process connections"
 msgstr ""
 
-#: util/sse.py:89
+#: util/sse.py:90
 msgid "Retrieving price"
 msgstr ""
 
-#: util/sse.py:93
+#: util/sse.py:94
 msgid "Failed to retrieve price"
 msgstr ""
 

@@ -2,7 +2,7 @@ import csv
 from io import StringIO
 from json import dumps
 
-from flask import render_template, Blueprint, Response, stream_with_context, request, flash
+from flask import render_template, Blueprint, Response, stream_with_context, request, flash, redirect, url_for
 from flask_babel import gettext as _, format_date, format_decimal
 from flask_security import auth_required, current_user
 
@@ -88,20 +88,36 @@ def journeys():
 
     journey_dicts = []
     for journey_obj in journeys_objs:
-        journey_dict = {'origin': journey_obj.origin, 'destination': journey_obj.destination,
+        journey_dict = {'id': journey_obj.id, 'origin': journey_obj.origin, 'destination': journey_obj.destination,
                         'price': format_decimal(journey_obj.price), 'date': format_date(journey_obj.date)}
         journey_dicts.append(journey_dict)
 
     titles = [('origin', _('Origin')), ('destination', _('Destination')), ('price', _('Price in €')),
               ('date', _('Date'))]
+    actions_title = _('Actions')
     journey_count = len(journeys_objs)
     price_sum = round(sum(journey.price for journey in journeys_objs), 2)
     klimaticket_gains = round(price_sum - current_user.klimaticket_price, 2)
 
     return render_template('journeys.html', add_journey_form=add_journey_form,
                            delete_journeys_form=delete_journeys_form, table=journey_dicts, titles=titles,
+                           actions_title=actions_title,
+                           journey_model=Journey,
                            journey_count=journey_count,
                            price_sum=price_sum, klimaticket_gains=klimaticket_gains)
+
+
+@ticket_price.route('/delete_journey/<int:journey_id>', methods=['GET', 'POST'])
+@auth_required()
+def delete_journey(journey_id):
+    journey_result = Journey.query.filter_by(id=journey_id).first()
+    if journey_result and journey_result.user_id == current_user.id:
+        Journey.query.filter_by(id=journey_id).delete()
+        db.session.commit()
+        flash(_('Journal entry deleted.'))
+    else:
+        flash(_('Failed to delete journal entry.'))
+    return redirect(url_for('ticket_price.journeys'))
 
 
 @ticket_price.route('/export_journeys')
@@ -150,6 +166,7 @@ def profile():
         db.session.commit()
     else:
         form.has_vorteilscard.data = current_user.has_vorteilscard
-        form.klimaticket_price.data = format_decimal(current_user.klimaticket_price)
+        # TODO: format_decimal() but produces error in german
+        form.klimaticket_price.data = current_user.klimaticket_price
 
     return render_template('profile.html', form=form, name=current_user.email)

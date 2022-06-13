@@ -50,6 +50,8 @@ class User(db.Model, fsqla.FsUserMixin):
 
 class Journey(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    # TODO: when moved to postgres
+    # id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', back_populates='journeys', lazy=True)
     origin = db.Column(db.Text)

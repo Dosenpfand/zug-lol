@@ -9,12 +9,14 @@ from flask_security.models import fsqla_v2 as fsqla
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_babel import Babel, format_number
+from flask_wtf.csrf import CSRFProtect
 
 bootstrap = Bootstrap4()
 db = SQLAlchemy()
 security = Security()
 migrate = Migrate()
 babel = Babel()
+csrf = CSRFProtect()
 
 
 def create_app(config='config'):
@@ -31,6 +33,8 @@ def create_app(config='config'):
         db.init_app(app)
         migrate.init_app(app, db)
         babel.init_app(app)
+        csrf.init_app(app)
+
         app.jinja_env.add_extension('jinja2.ext.i18n')
         app.jinja_env.filters['format_number'] = format_number
 

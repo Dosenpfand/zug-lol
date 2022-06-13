@@ -14,7 +14,7 @@ The application is structured as follows.
 - ```app.py``` is the Flask application's implementation.
 - ```config.py``` contains configuration parameters for the application.
 - ```views.py``` contains the routes offered by the app.
-- ```forms.py``` conatins the input forms.
+- ```forms.py``` contains the input forms.
 
 ## Run
 To run the application locally follow these steps.
@@ -36,7 +36,7 @@ To run the application locally follow these steps.
 5. Adapt the translation
    ```bash
    pybabel extract -F babel.cfg -k lazy_gettext -o messages.pot .
-   pybabel update -i messages.pot -d translation
+   pybabel update -i messages.pot -d translations
    # Adapt translations/de/LC_MESSAGES/messages.po
    pybabel compile -d translations
    ```

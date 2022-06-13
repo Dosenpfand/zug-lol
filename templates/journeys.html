@@ -51,7 +51,7 @@
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete-journal-modal">{{ _('Delete all') }}</button>
           </div>
           <div>
-            {{ render_table(table, titles=titles) }}
+            {{ render_table(table, titles=titles, actions_title=actions_title, show_actions=True, model=journey_model, delete_url=('ticket_price.delete_journey', [('journey_id', ':id')])) }}
           </div>
         </p>
       </div>

@@ -1,13 +1,14 @@
 # TODO
 - [ ] Better caching
 - [ ] Import
-- [ ] Delete (Edit) individual
+- [ ] Edit journey
 - [ ] Pagination
 - [ ] Account deletion
-- [ ] Cleanup, 2 blueprints, rename project, etc.
+- [ ] Cleanup, split into (at least) 2 blueprints, rename project, etc.
 - [ ] Migrate to postgres
 - [ ] Add recurring?
 - [ ] Sort by selectable
 - [ ] Cache invalidation
 - [ ] DB migration
 - [ ] Automate deployment
+- [ ] HTML titles

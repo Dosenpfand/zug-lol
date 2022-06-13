@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-13 15:06+0200\n"
+"POT-Creation-Date: 2022-06-13 22:44+0200\n"
 "PO-Revision-Date: 2022-06-13 13:50+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,23 +18,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.1\n"
 
-#: forms.py:9 forms.py:21 views.py:89
+#: forms.py:9 forms.py:24 views.py:95
 msgid "Origin"
 msgstr "Von"
 
-#: forms.py:11 forms.py:23
+#: forms.py:11 forms.py:26
 msgid "Origin (e.g. Wien)"
 msgstr "Von (z.B. Wien)"
 
-#: forms.py:12 forms.py:24 views.py:89
+#: forms.py:12 forms.py:27 views.py:95
 msgid "Destination"
 msgstr "Nach"
 
-#: forms.py:14 forms.py:26
+#: forms.py:14 forms.py:29
 msgid "Destination (e.g. Innsbruck)"
 msgstr "Nach (z.B. Innsbruck)"
 
-#: forms.py:16 forms.py:34
+#: forms.py:16 forms.py:40
 msgid "Vorteilscard"
 msgstr "Vorteilscard"
 
@@ -42,35 +42,35 @@ msgstr "Vorteilscard"
 msgid "Search Price"
 msgstr "Suche Preis"
 
-#: forms.py:28 views.py:89
+#: forms.py:31 views.py:95
 msgid "Price in €"
 msgstr "Preis in €"
 
-#: forms.py:28
+#: forms.py:31
 msgid "e.g. 10.5"
 msgstr "z.B. 10,5"
 
-#: forms.py:29 views.py:89
+#: forms.py:32 views.py:96
 msgid "Date"
 msgstr "Datum"
 
-#: forms.py:30 templates/journeys.html:8
+#: forms.py:33 templates/journeys.html:8
 msgid "Add Journey"
 msgstr "Fahrt hinzufügen"
 
-#: forms.py:35
+#: forms.py:41
 msgid "Klimaticket price in €"
 msgstr "Klimaticket-Preis in €"
 
-#: forms.py:36
+#: forms.py:42
 msgid "e.g."
 msgstr "z.B."
 
-#: forms.py:37
+#: forms.py:43
 msgid "Save"
 msgstr "Speichern"
 
-#: forms.py:41
+#: forms.py:47
 msgid "Delete"
 msgstr "Löschen"
 
@@ -81,6 +81,18 @@ msgstr "Eintrag hinzugefügt"
 #: views.py:85
 msgid "All journal entries deleted."
 msgstr "Alle Einträge wurden gelöscht."
+
+#: views.py:97
+msgid "Actions"
+msgstr "Aktionen"
+
+#: views.py:117
+msgid "Journal entry deleted."
+msgstr "Eintrag gelöscht."
+
+#: views.py:119
+msgid "Failed to delete journal entry."
+msgstr "Eintrag löschen fehlgeschlagen"
 
 #: templates/base.html:29
 msgid "Logo: A Train"
@@ -236,58 +248,59 @@ msgstr "Warte auf Verbindung"
 msgid ""
 "<p>Price for a ticket from {origin} to {destination}:</p><p><mark "
 "class=\"display-4\">{price} €</mark></p>"
-msgstr "<p>Preis für ein Ticket von {origin} nach {destination}:</p><p><mark "
+msgstr ""
+"<p>Preis für ein Ticket von {origin} nach {destination}:</p><p><mark "
 "class=\"display-4\">{price} €</mark></p>"
 
 #: util/sse.py:32
 msgid "Checking local cache"
 msgstr "Lokaler Cache wird überprüft"
 
-#: util/sse.py:42
+#: util/sse.py:43
 msgid "Generating access token"
 msgstr "Generiere Zugangscode"
 
-#: util/sse.py:47
+#: util/sse.py:48
 msgid "Failed to generate access token"
 msgstr "Zugangscode generieren fehlgeschlagen"
 
-#: util/sse.py:52
+#: util/sse.py:53
 msgid "Processing origin"
 msgstr "Verarbeite Start"
 
-#: util/sse.py:56
+#: util/sse.py:57
 msgid "Failed to process origin"
 msgstr "Verarbeitung von Start fehlgeschlagen"
 
-#: util/sse.py:61
+#: util/sse.py:62
 msgid "Processing destination"
 msgstr "Verarbeite Ziel"
 
-#: util/sse.py:65
+#: util/sse.py:66
 msgid "Failed to process destination"
 msgstr "Verarbeitung von Ziel fehlgeschlagen"
 
-#: util/sse.py:70
+#: util/sse.py:71
 msgid "Processing travel action"
 msgstr "Verarbeite Reise-Aktion"
 
-#: util/sse.py:74
+#: util/sse.py:75
 msgid "Failed to process travel action"
 msgstr "Verarbeitung von Reise-Aktion fehlgeschlagen"
 
-#: util/sse.py:79
+#: util/sse.py:80
 msgid "Processing connections"
 msgstr "Verarbeite Verbindungen"
 
-#: util/sse.py:84
+#: util/sse.py:85
 msgid "Failed to process connections"
 msgstr "Verarbeitung von Verbindungen fehlgeschlagen"
 
-#: util/sse.py:89
+#: util/sse.py:90
 msgid "Retrieving price"
 msgstr "Preis wird ermittelt"
 
-#: util/sse.py:93
+#: util/sse.py:94
 msgid "Failed to retrieve price"
 msgstr "Preis-Ermittlung fehlgeschlagen"
 
