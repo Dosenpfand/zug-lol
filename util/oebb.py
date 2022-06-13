@@ -146,7 +146,7 @@ def get_price_for_connection(connection_id, access_token=None):
     r = requests.get(url, params=params, headers=headers)
 
     prices = [offer.get('price') if not offer.get('reducedScope') else None for offer in r.json()['offers']]
-    prices_cleaned = filter(None, prices)
+    prices_cleaned = list(filter(None, prices))
 
     if prices_cleaned:
         price = median(prices_cleaned)
