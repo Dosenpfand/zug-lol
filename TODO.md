@@ -10,3 +10,4 @@
 - [ ] Sort by selectable
 - [ ] Cache invalidation
 - [ ] DB migration
+- [ ] Automate deployment
