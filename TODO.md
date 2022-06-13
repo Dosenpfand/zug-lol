@@ -10,3 +10,4 @@
 - [ ] Add recurring?
 - [ ] Sort by selectable
 - [ ] Cache invalidation
+- [ ] DB migration
