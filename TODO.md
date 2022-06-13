@@ -2,7 +2,6 @@
 - [ ] Better caching
 - [ ] Import
 - [ ] Delete (Edit) individual
-- [ ] Sort by...
 - [ ] Pagination
 - [ ] Cache auto-complete
 - [ ] Translation to german
@@ -10,3 +9,5 @@
 - [ ] Cleanup, 2 blueprints, rename project, etc.
 - [ ] Migrate to postgres
 - [ ] Add db migration
+- [ ] Add recurring?
+- [ ] Sort by selectable
