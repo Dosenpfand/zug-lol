@@ -133,10 +133,7 @@ def export_journeys():
 def sse_container():
     # TODO: do not use the price form!
     form = PriceForm()
-    print(form.vorteilscard.data)
     form.vorteilscard.data = current_user.has_vorteilscard
-    print(form.vorteilscard.data)
-    print(current_user.has_vorteilscard)
 
     return render_template('sse_container.html', form=form, output_only_price=True)
 
