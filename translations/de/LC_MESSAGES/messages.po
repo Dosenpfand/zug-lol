@@ -1,0 +1,232 @@
+# German translations for PROJECT.
+# Copyright (C) 2022 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2022-06-13 13:49+0200\n"
+"PO-Revision-Date: 2022-06-13 13:50+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.1\n"
+
+#: forms.py:9 forms.py:21 views.py:89
+msgid "Origin"
+msgstr "Von"
+
+#: forms.py:11 forms.py:23
+msgid "Origin (e.g. Wien)"
+msgstr "Von (z.B. Wien)"
+
+#: forms.py:12 forms.py:24 views.py:89
+msgid "Destination"
+msgstr "Nach"
+
+#: forms.py:14 forms.py:26
+msgid "Destination (e.g. Innsbruck)"
+msgstr "Nach (z.B. Innsbruck)"
+
+#: forms.py:16 forms.py:34
+msgid "Vorteilscard"
+msgstr "Vorteilscard"
+
+#: forms.py:17
+msgid "Search Price"
+msgstr "Suche Preis"
+
+#: forms.py:28 views.py:89
+msgid "Price in €"
+msgstr "Preis in €"
+
+#: forms.py:28
+msgid "e.g. 10.5"
+msgstr "z.B. 10.5"
+
+#: forms.py:29 views.py:89
+msgid "Date"
+msgstr "Datum"
+
+#: forms.py:30 templates/journeys.html:8
+msgid "Add Journey"
+msgstr "Fahrt hinzufügen"
+
+#: forms.py:35
+msgid "Klimaticket price in €"
+msgstr "Klimaticket-Preis in €"
+
+#: forms.py:36
+msgid "e.g."
+msgstr "z.B."
+
+#: forms.py:37
+msgid "Save"
+msgstr "Speichern"
+
+#: forms.py:41
+msgid "Delete"
+msgstr "Löschen"
+
+#: views.py:80
+msgid "Journal entry added."
+msgstr "Eintrag hinzugefügt"
+
+#: views.py:85
+msgid "All journal entries deleted."
+msgstr "Alle Einträge wurden gelöscht."
+
+#: templates/base.html:29
+msgid "Logo: A Train"
+msgstr "Logo: Ein Zug"
+
+#: templates/base.html:38
+msgid "Home"
+msgstr "Start"
+
+#: templates/base.html:39
+msgid "Ticket Price"
+msgstr "Ticketpreis"
+
+#: templates/base.html:40 templates/journeys.html:46
+msgid "Travel Journal"
+msgstr "Reisetagebuch"
+
+#: templates/base.html:42
+msgid "Profile"
+msgstr "Profil"
+
+#: templates/base.html:43
+msgid "Logout"
+msgstr "Abmelden"
+
+#: templates/base.html:45 templates/login.html:19
+msgid "Login"
+msgstr "Anmelden"
+
+#: templates/base.html:46 templates/register.html:7
+msgid "Register"
+msgstr "Registieren"
+
+#: templates/home.html:7 templates/profile.html:7
+msgid "Welcome"
+msgstr "Willkommen"
+
+#: templates/home.html:8
+msgid "This site offers 2 services"
+msgstr "Diese Seite bietet 2 Dienste an"
+
+#: templates/home.html:11
+msgid "Search for"
+msgstr "Suche nach"
+
+#: templates/home.html:11
+msgid "train ticket prices"
+msgstr "Zugticket-Preise"
+
+#: templates/home.html:11
+msgid "in Austria"
+msgstr "in Österreich"
+
+#: templates/home.html:12
+msgid "Create a"
+msgstr "Erstelle ein"
+
+#: templates/home.html:12
+msgid "travel journal"
+msgstr "Reisetagebuch"
+
+#: templates/home.html:12
+msgid "to find out if your Klimaticket pays off"
+msgstr "um herauszufinden ob sich das Klimaticket auszahlt"
+
+#: templates/home.html:18
+msgid "Contact"
+msgstr "Kontakt"
+
+#: templates/home.html:19
+msgid "For complaints, bug reports or any other feedback you can open an"
+msgstr "Für Beschwerden, Fehlermeldungen oder jegliches andere Feedback kannst du ein"
+
+#: templates/home.html:19
+msgid "issue"
+msgstr "Ticket erstellen"
+
+#: templates/journeys.html:17
+msgid "Determine Price"
+msgstr "Preis ermitteln"
+
+#: templates/journeys.html:27
+msgid "Travel Statistics"
+msgstr "Reisestatistik"
+
+#: templates/journeys.html:30
+msgid "Journeys"
+msgstr "Fahrten"
+
+#: templates/journeys.html:31
+msgid "Expenses"
+msgstr "Ausgaben"
+
+#: templates/journeys.html:33
+msgid "Klimaticket ROI"
+msgstr "Klimaticket ROI"
+
+#: templates/journeys.html:36
+msgid "POSITIVE"
+msgstr "POSITIV"
+
+#: templates/journeys.html:38
+msgid "NEGATIVE"
+msgstr "NEGATIV"
+
+#: templates/journeys.html:49
+msgid "Export"
+msgstr "Export"
+
+#: templates/journeys.html:50
+msgid "Import"
+msgstr "Import"
+
+#: templates/journeys.html:51
+msgid "Delete all"
+msgstr "Alle löschen"
+
+#: templates/journeys.html:64
+msgid "Danger Zone"
+msgstr "Gefahrenbereich"
+
+#: templates/journeys.html:70
+msgid "Are you sure you want to delete <strong>ALL</strong> your journal entries?"
+msgstr "Bist du dir sicher, dass du <strong>ALLE</strong> Einträge löschen willst?"
+
+#: templates/journeys.html:74
+msgid "Close"
+msgstr "Schließen"
+
+#: templates/price_form.html:7
+msgid "Ticket Price Search"
+msgstr "Ticketpreis-Suche"
+
+#: templates/profile.html:9
+msgid "Hi"
+msgstr "Hallo"
+
+#: templates/profile.html:16
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: templates/sse_container.html:3
+msgid "Result"
+msgstr "Ergebnis"
+
+#: templates/sse_container.html:6
+msgid "Waiting for connection"
+msgstr "Warte auf Verbindung"
+

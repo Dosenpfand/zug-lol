@@ -1,0 +1,231 @@
+# Translations template for PROJECT.
+# Copyright (C) 2022 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2022-06-13 13:49+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.1\n"
+
+#: forms.py:9 forms.py:21 views.py:89
+msgid "Origin"
+msgstr ""
+
+#: forms.py:11 forms.py:23
+msgid "Origin (e.g. Wien)"
+msgstr ""
+
+#: forms.py:12 forms.py:24 views.py:89
+msgid "Destination"
+msgstr ""
+
+#: forms.py:14 forms.py:26
+msgid "Destination (e.g. Innsbruck)"
+msgstr ""
+
+#: forms.py:16 forms.py:34
+msgid "Vorteilscard"
+msgstr ""
+
+#: forms.py:17
+msgid "Search Price"
+msgstr ""
+
+#: forms.py:28 views.py:89
+msgid "Price in €"
+msgstr ""
+
+#: forms.py:28
+msgid "e.g. 10.5"
+msgstr ""
+
+#: forms.py:29 views.py:89
+msgid "Date"
+msgstr ""
+
+#: forms.py:30 templates/journeys.html:8
+msgid "Add Journey"
+msgstr ""
+
+#: forms.py:35
+msgid "Klimaticket price in €"
+msgstr ""
+
+#: forms.py:36
+msgid "e.g."
+msgstr ""
+
+#: forms.py:37
+msgid "Save"
+msgstr ""
+
+#: forms.py:41
+msgid "Delete"
+msgstr ""
+
+#: views.py:80
+msgid "Journal entry added."
+msgstr ""
+
+#: views.py:85
+msgid "All journal entries deleted."
+msgstr ""
+
+#: templates/base.html:29
+msgid "Logo: A Train"
+msgstr ""
+
+#: templates/base.html:38
+msgid "Home"
+msgstr ""
+
+#: templates/base.html:39
+msgid "Ticket Price"
+msgstr ""
+
+#: templates/base.html:40 templates/journeys.html:46
+msgid "Travel Journal"
+msgstr ""
+
+#: templates/base.html:42
+msgid "Profile"
+msgstr ""
+
+#: templates/base.html:43
+msgid "Logout"
+msgstr ""
+
+#: templates/base.html:45 templates/login.html:19
+msgid "Login"
+msgstr ""
+
+#: templates/base.html:46 templates/register.html:7
+msgid "Register"
+msgstr ""
+
+#: templates/home.html:7 templates/profile.html:7
+msgid "Welcome"
+msgstr ""
+
+#: templates/home.html:8
+msgid "This site offers 2 services"
+msgstr ""
+
+#: templates/home.html:11
+msgid "Search for"
+msgstr ""
+
+#: templates/home.html:11
+msgid "train ticket prices"
+msgstr ""
+
+#: templates/home.html:11
+msgid "in Austria"
+msgstr ""
+
+#: templates/home.html:12
+msgid "Create a"
+msgstr ""
+
+#: templates/home.html:12
+msgid "travel journal"
+msgstr ""
+
+#: templates/home.html:12
+msgid "to find out if your Klimaticket pays off"
+msgstr ""
+
+#: templates/home.html:18
+msgid "Contact"
+msgstr ""
+
+#: templates/home.html:19
+msgid "For complaints, bug reports or any other feedback you can open an"
+msgstr ""
+
+#: templates/home.html:19
+msgid "issue"
+msgstr ""
+
+#: templates/journeys.html:17
+msgid "Determine Price"
+msgstr ""
+
+#: templates/journeys.html:27
+msgid "Travel Statistics"
+msgstr ""
+
+#: templates/journeys.html:30
+msgid "Journeys"
+msgstr ""
+
+#: templates/journeys.html:31
+msgid "Expenses"
+msgstr ""
+
+#: templates/journeys.html:33
+msgid "Klimaticket ROI"
+msgstr ""
+
+#: templates/journeys.html:36
+msgid "POSITIVE"
+msgstr ""
+
+#: templates/journeys.html:38
+msgid "NEGATIVE"
+msgstr ""
+
+#: templates/journeys.html:49
+msgid "Export"
+msgstr ""
+
+#: templates/journeys.html:50
+msgid "Import"
+msgstr ""
+
+#: templates/journeys.html:51
+msgid "Delete all"
+msgstr ""
+
+#: templates/journeys.html:64
+msgid "Danger Zone"
+msgstr ""
+
+#: templates/journeys.html:70
+msgid "Are you sure you want to delete <strong>ALL</strong> your journal entries?"
+msgstr ""
+
+#: templates/journeys.html:74
+msgid "Close"
+msgstr ""
+
+#: templates/price_form.html:7
+msgid "Ticket Price Search"
+msgstr ""
+
+#: templates/profile.html:9
+msgid "Hi"
+msgstr ""
+
+#: templates/profile.html:16
+msgid "Settings"
+msgstr ""
+
+#: templates/sse_container.html:3
+msgid "Result"
+msgstr ""
+
+#: templates/sse_container.html:6
+msgid "Waiting for connection"
+msgstr ""
+

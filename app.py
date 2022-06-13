@@ -8,11 +8,13 @@ from flask_security import SQLAlchemyUserDatastore, Security
 from flask_security.models import fsqla_v2 as fsqla
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_babel import Babel
 
 bootstrap = Bootstrap4()
 db = SQLAlchemy()
 security = Security()
 migrate = Migrate()
+babel = Babel()
 
 
 def create_app(config='config'):
@@ -28,6 +30,9 @@ def create_app(config='config'):
         bootstrap.init_app(app)
         db.init_app(app)
         migrate.init_app(app, db)
+        babel.init_app(app)
+        app.jinja_env.add_extension('jinja2.ext.i18n')
+
         app.cli.add_command(init_db_command)
 
         fsqla.FsModels.set_db_info(db)

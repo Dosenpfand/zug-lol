@@ -26,7 +26,7 @@
         <div class="container">
               <div class="row">
                   <div class="col-md-auto my-auto">
-                      <img src="{{ url_for('static', filename='favicon.ico') }}" alt="Logo: A Train">
+                      <img src="{{ url_for('static', filename='favicon.ico') }}" alt="{{ _('Logo: A Train') }}">
                   </div>
                   <div class="col my-auto display-4">
                     zug.lol
@@ -35,15 +35,15 @@
         </div>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="navbar-nav mr-auto">
-                {{ render_nav_item('ticket_price.home', 'Home') }}
-                {{ render_nav_item('ticket_price.price_form', 'Ticket Price') }}
-                {{ render_nav_item('ticket_price.journeys', 'Travel Journal') }}
+                {{ render_nav_item('ticket_price.home', _('Home')) }}
+                {{ render_nav_item('ticket_price.price_form', _('Ticket Price')) }}
+                {{ render_nav_item('ticket_price.journeys', _('Travel Journal')) }}
                 {% if current_user and current_user.is_authenticated %}
-                {{ render_nav_item('ticket_price.profile', 'Profile') }}
-                {{ render_nav_item('security.logout', 'Logout') }}
+                {{ render_nav_item('ticket_price.profile', _('Profile')) }}
+                {{ render_nav_item('security.logout', _('Logout')) }}
                 {% else %}
-                {{ render_nav_item('security.login', 'Login') }}
-                {{ render_nav_item('security.register', 'Register') }}
+                {{ render_nav_item('security.login', _('Login')) }}
+                {{ render_nav_item('security.register', _('Register')) }}
                 {% endif %}
             </div>
         </nav>

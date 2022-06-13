@@ -4,7 +4,7 @@
 {% block content %}
     <div class="card bg-light mb-3" id="sse-container-outer">
       <div class="card-body">
-        <h5 class="card-title">Register</h5>
+        <h5 class="card-title">{{ _('Register') }}</h5>
         <p class="card-text">
           <form action="{{ url_for_security('register') }}" method="post" class="form" role="form" name="register_user_form">
             {{ register_user_form.hidden_tag() }}

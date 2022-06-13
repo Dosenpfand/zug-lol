@@ -4,16 +4,16 @@
 {% block content %}
     <div class="card bg-light mb-3">
       <div class="card-body">
-        <h5 class="card-title">Welcome</h5>
+        <h5 class="card-title">{{ _('Welcome') }}</h5>
         <p class="card-text">
-            Hi {{ name }}!
+            {{ _('Hi') }} {{ name }}!
         </p>
       </div>
     </div>
 
     <div class="card bg-light mb-3">
       <div class="card-body">
-        <h5 class="card-title">Settings</h5>
+        <h5 class="card-title">{{ _('Settings') }}</h5>
         <p class="card-text">
             {{ render_form(form) }}
         </p>

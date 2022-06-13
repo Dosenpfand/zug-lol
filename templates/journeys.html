@@ -5,7 +5,7 @@
 {% block content %}
     <div class="card bg-light mb-3">
       <div class="card-body">
-        <h5 class="card-title">Add Journey</h5>
+        <h5 class="card-title">{{ _('Add Journey') }}</h5>
         <p class="card-text">
             <form action="{{ url_for('ticket_price.journeys') }}" method="post" class="form" role="form">
                 {{ add_journey_form.hidden_tag() }}
@@ -14,7 +14,7 @@
                 {{ render_field(add_journey_form.price) }}
                 {{ render_field(add_journey_form.date) }}
                 {{ render_field(add_journey_form.submit) }}
-                <a class="btn btn-primary btn-md" id="determine-price" hx-post="{{ url_for('ticket_price.sse_container') }}" hx-target="#output">Determine Price</a>
+                <a class="btn btn-primary btn-md" id="determine-price" hx-post="{{ url_for('ticket_price.sse_container') }}" hx-target="#output">{{ _('Determine Price') }}</a>
             </form>
         </p>
       </div>
@@ -24,18 +24,18 @@
 
     <div class="card bg-light mb-3">
       <div class="card-body">
-        <h5 class="card-title">Travel Statistics</h5>
+        <h5 class="card-title">{{ _('Travel Statistics') }}</h5>
       </div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">Journeys: <mark class="font-weight-bold">{{ journey_count }}</mark></li>
-        <li class="list-group-item">Expenses: <mark class="font-weight-bold">{{ price_sum }}</mark> €</li>
+        <li class="list-group-item">{{ _('Journeys') }}: <mark class="font-weight-bold">{{ journey_count }}</mark></li>
+        <li class="list-group-item">{{ _('Expenses') }}: <mark class="font-weight-bold">{{ price_sum }}</mark> €</li>
         <li class="list-group-item">
-            Klimaticket ROI:
+            {{ _('Klimaticket ROI') }}:
             <mark class="font-weight-bold">{{klimaticket_gains}}</mark> €
             {% if klimaticket_gains > 0 %}
-                <span class="badge rounded-pill bg-success">POSITIVE</span>
+                <span class="badge rounded-pill bg-success">{{ _('POSITIVE') }}</span>
             {% else %}
-                <span class="badge rounded-pill bg-warning text-dark">NEGATIVE</span>
+                <span class="badge rounded-pill bg-warning text-dark">{{ _('NEGATIVE') }}</span>
             {% endif %}
         </li>
       </ul>
@@ -43,12 +43,12 @@
 
     <div class="card bg-light mb-3">
       <div class="card-body">
-        <h5 class="card-title">Travel Journal</h5>
+        <h5 class="card-title">{{ _('Travel Journal') }}</h5>
         <p class="card-text">
           <div class="mb-3">
-            <a class="btn btn-primary" href="{{ url_for('ticket_price.export_journeys') }}">Export</a>
-            <button type="button" class="btn btn-secondary" disabled>Import</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete-journal-modal">Delete all</button>
+            <a class="btn btn-primary" href="{{ url_for('ticket_price.export_journeys') }}">{{ _('Export') }}</a>
+            <button type="button" class="btn btn-secondary" disabled>{{ _('Import') }}</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete-journal-modal">{{ _('Delete all') }}</button>
           </div>
           <div>
             {{ render_table(table, titles=titles) }}
@@ -61,17 +61,17 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="delete-journal-modal-label">Danger Zone</h5>
+            <h5 class="modal-title" id="delete-journal-modal-label">{{ _('Danger Zone') }}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            Are you sure you want to delete <strong>ALL</strong> your journal entries?
+            {{ _('Are you sure you want to delete <strong>ALL</strong> your journal entries?') }}
           </div>
           <div class="modal-footer">
             <form action="{{ url_for('ticket_price.journeys') }}" method="post" class="form" role="form">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ _('Close') }}</button>
                 {{ delete_journeys_form.hidden_tag() }}
                 {{ render_field(delete_journeys_form.delete) }}
             </form>

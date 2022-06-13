@@ -4,9 +4,9 @@
 {% block content %}
     <div class="card bg-light mb-3" id="sse-container-outer">
       <div class="card-body">
-        <h5 class="card-title">Ticket Price Search</h5>
+        <h5 class="card-title">{{ _('Ticket Price Search') }}</h5>
         <p class="card-text">
-           {{ render_form(form, form_type='inline', render_kw={'hx-post': '/price_form', 'hx-target': '#output'}) }}
+           {{ render_form(form, form_type='inline', render_kw={'hx-post': url_for('ticket_price.price_form'), 'hx-target': '#output'}) }}
         </p>
       </div>
     </div>

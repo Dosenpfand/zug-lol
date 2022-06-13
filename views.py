@@ -3,6 +3,7 @@ from io import StringIO
 from json import dumps
 
 from flask import render_template, Blueprint, Response, stream_with_context, request, flash
+from flask_babel import gettext as _
 from flask_security import auth_required, current_user
 
 from forms import PriceForm, JourneyForm, ProfileForm, DeleteJournalForm
@@ -76,16 +77,16 @@ def journeys():
                           price=add_journey_form.price.data, date=add_journey_form.date.data)
         db.session.add(journey)
         db.session.commit()
-        flash('Journal entry added.')
+        flash(_('Journal entry added.'))
 
     if delete_journeys_form.delete.data and delete_journeys_form.validate():
         Journey.query.filter_by(user_id=current_user.id).delete()
         db.session.commit()
-        flash('All journal entries deleted.')
+        flash(_('All journal entries deleted.'))
 
     journeys_list = Journey.query.filter_by(user_id=current_user.id).order_by(Journey.date.desc()).all()
 
-    titles = [('origin', 'Origin'), ('destination', 'Destination'), ('price', 'Price in €'), ('date', 'Date')]
+    titles = [('origin', _('Origin')), ('destination', _('Destination')), ('price', _('Price in €')), ('date', _('Date'))]
     journey_count = len(journeys_list)
     price_sum = round(sum(journey.price for journey in journeys_list), 2)
     klimaticket_gains = round(price_sum - current_user.klimaticket_price, 2)
