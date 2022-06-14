@@ -63,7 +63,7 @@ def create_app(config='config'):
     return app
 
 
-# TODO: Can/Should no be deleted?
+# TODO: Can/Should now be deleted?
 def init_db():
     db.drop_all()
     db.create_all()
