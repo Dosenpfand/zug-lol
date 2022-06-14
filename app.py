@@ -1,7 +1,7 @@
 import logging
 
 import click
-from flask import Flask, current_app, request, session
+from flask import Flask, current_app, request, session, flash
 from flask.cli import with_appcontext
 from flask_bootstrap import Bootstrap4
 from flask_security import SQLAlchemyUserDatastore, Security
@@ -9,6 +9,7 @@ from flask_security.models import fsqla_v2 as fsqla
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_babel import Babel, format_number
+from flask_babel import lazy_gettext as _
 from flask_wtf.csrf import CSRFProtect
 
 bootstrap = Bootstrap4()
@@ -52,6 +53,7 @@ def create_app(config='config'):
         def get_locale():
             lang = request.args.get("lang", None)
             if lang in current_app.config['LANGUAGES']:
+                flash(_('Language changed'))
                 session['lang'] = lang
             elif 'lang' not in session:
                 lang = request.accept_languages.best_match(list(current_app.config['LANGUAGES'].keys()))
