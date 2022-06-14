@@ -1,14 +1,18 @@
 # TODO
-- [ ] Better caching
+
+## Prio 1
+
+## Prio 2
 - [ ] Import
+- [ ] Account deletion
 - [ ] Edit journey
 - [ ] Pagination
-- [ ] Account deletion
 - [ ] Cleanup, split into (at least) 2 blueprints, rename project, etc.
-- [ ] Migrate to postgres
-- [ ] Add recurring?
-- [ ] Sort by selectable
 - [ ] Cache invalidation
 - [ ] DB migration
 - [ ] admin interface using flask-admin
-- [ ] Captcha when registering
+
+## Prio 100
+- [ ] Better caching
+- [ ] Add recurring?
+- [ ] Sort by selectable
