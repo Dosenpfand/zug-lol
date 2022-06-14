@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-14 14:26+0200\n"
+"POT-Creation-Date: 2022-06-14 16:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.1\n"
 
-#: app.py:56
+#: app.py:58
 msgid "Language changed"
 msgstr ""
 
@@ -82,6 +82,18 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
+#: forms_security.py:7
+msgid "Prove that you are human"
+msgstr ""
+
+#: templates/base.html:39 views.py:21
+msgid "Home"
+msgstr ""
+
+#: templates/base.html:40 views.py:28 views.py:29
+msgid "Ticket Price"
+msgstr ""
+
 #: views.py:80
 msgid "Journal entry added."
 msgstr ""
@@ -94,43 +106,35 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: views.py:117
-msgid "Journal entry deleted."
-msgstr ""
-
-#: views.py:119
-msgid "Failed to delete journal entry."
-msgstr ""
-
-#: templates/base.html:29
-msgid "Logo: A Train"
-msgstr ""
-
-#: templates/base.html:38
-msgid "Home"
-msgstr ""
-
-#: templates/base.html:39
-msgid "Ticket Price"
-msgstr ""
-
-#: templates/base.html:40 templates/journeys.html:46
+#: templates/base.html:41 templates/journeys.html:46 views.py:103
 msgid "Travel Journal"
 msgstr ""
 
-#: templates/base.html:42
+#: views.py:121
+msgid "Journal entry deleted."
+msgstr ""
+
+#: views.py:123
+msgid "Failed to delete journal entry."
+msgstr ""
+
+#: templates/base.html:43 views.py:176
 msgid "Profile"
 msgstr ""
 
-#: templates/base.html:43
+#: templates/base.html:30
+msgid "Logo: A Train"
+msgstr ""
+
+#: templates/base.html:44
 msgid "Logout"
 msgstr ""
 
-#: templates/base.html:45 templates/login.html:19
+#: templates/base.html:46 templates/login.html:1 templates/login.html:20
 msgid "Login"
 msgstr ""
 
-#: templates/base.html:46 templates/register.html:7
+#: templates/base.html:47 templates/register.html:1 templates/register.html:8
 msgid "Register"
 msgstr ""
 

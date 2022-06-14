@@ -20,3 +20,9 @@ KLIMATICKET_DEFAULT_PRICE = 1095
 BABEL_DEFAULT_LOCALE = 'de'
 LANGUAGES = {'en': 'English', 'de': 'Deutsch'}
 SITE_TITLE = 'zug.lol'
+RECAPTCHA_SCRIPT = 'https://hcaptcha.com/1/api.js'
+RECAPTCHA_VERIFY_SERVER = 'https://hcaptcha.com/siteverify'
+RECAPTCHA_PUBLIC_KEY = '10000000-ffff-ffff-ffff-000000000001'
+RECAPTCHA_PRIVATE_KEY = '0x0000000000000000000000000000000000000000'
+
+# TODO: Add to README.md which values should be set in .env

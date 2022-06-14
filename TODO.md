@@ -11,3 +11,4 @@
 - [ ] Cache invalidation
 - [ ] DB migration
 - [ ] admin interface using flask-admin
+- [ ] Captcha when registering

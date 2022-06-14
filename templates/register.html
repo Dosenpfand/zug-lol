@@ -17,6 +17,7 @@
             {% if register_user_form.password_confirm %}
               {{ render_field(register_user_form.password_confirm) }}
             {% endif %}
+            {{ render_field(register_user_form.captcha) }}
             {{ render_field(register_user_form.submit) }}
           </form>
         </p>

@@ -12,6 +12,8 @@ from flask_babel import Babel, format_number
 from flask_babel import lazy_gettext as _
 from flask_wtf.csrf import CSRFProtect
 
+from forms_security import ExtendedRegisterForm
+
 bootstrap = Bootstrap4()
 db = SQLAlchemy()
 security = Security()
@@ -44,7 +46,7 @@ def create_app(config='config'):
         fsqla.FsModels.set_db_info(db)
         from models import User, Role  # noqa
         user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-        security.init_app(app, user_datastore)
+        security.init_app(app, user_datastore, register_form=ExtendedRegisterForm)
 
         from views import ticket_price  # noqa
         app.register_blueprint(ticket_price)
