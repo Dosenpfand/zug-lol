@@ -170,7 +170,6 @@ def profile():
         db.session.commit()
     else:
         form.has_vorteilscard.data = current_user.has_vorteilscard
-        # TODO: format_decimal() but produces error in german
         form.klimaticket_price.data = current_user.klimaticket_price
 
     return render_template('profile.html', title=_('Profile'), form=form, name=current_user.email)
