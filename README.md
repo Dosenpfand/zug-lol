@@ -49,12 +49,17 @@ To run the application locally follow these steps.
 7. Open in your browser: http://localhost:5000
 
 ## Live Demo
-A live version can be reached at https://train.sad.bz
+A live version can be reached at https://zug.lol
 
 ![An animation showing the functionality](demo.gif "Demo")
 
 ## Deploy
-```oebb-ticket-price.service``` and ```wsgi.py``` can be used to deploy the application using Gunicorn. To use nginx as a proxy the following config snippet can be used inside a ```server``` section.
+The following files can be helpful to deploy the application:
+1. `oebb-ticket-price.service` as systemd service file.
+2. `wsgi.py` to start the WSGI.
+3. `post-receive` as git post-receive hook to finish deployment.
+
+To use nginx as a proxy the following config snippet can be used inside a ```server``` section.
 
 ```
 location / {

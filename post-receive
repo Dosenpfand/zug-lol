@@ -1,0 +1,9 @@
+#!/bin/sh
+
+git --work-tree=/var/www/oebb-ticket-price --git-dir=/var/www/oebb-ticket-price.git checkout -f
+cd /var/www/oebb-ticket-price
+python3 -m venv venv
+venv/bin/pip install wheel
+venv/bin/pip install -r requirements.txt
+venv/bin/pybabel compile -d translations
+sudo systemctl restart oebb-ticket-price.service
