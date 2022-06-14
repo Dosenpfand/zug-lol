@@ -10,6 +10,4 @@
 - [ ] Sort by selectable
 - [ ] Cache invalidation
 - [ ] DB migration
-- [ ] Automate deployment
-- [ ] HTML titles
 - [ ] admin interface using flask-admin

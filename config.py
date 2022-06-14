@@ -19,3 +19,4 @@ SECURITY_MSG_LOGIN = (_("Please log in to access this page."), "info")
 KLIMATICKET_DEFAULT_PRICE = 1095
 BABEL_DEFAULT_LOCALE = 'de'
 LANGUAGES = {'en': 'English', 'de': 'Deutsch'}
+SITE_TITLE = 'zug.lol'

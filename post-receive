@@ -1,7 +1,7 @@
 #!/bin/sh
 
 git --work-tree=/var/www/oebb-ticket-price --git-dir=/var/www/oebb-ticket-price.git checkout -f
-cd /var/www/oebb-ticket-price
+cd /var/www/oebb-ticket-price || exit
 python3 -m venv venv
 venv/bin/pip install wheel
 venv/bin/pip install -r requirements.txt

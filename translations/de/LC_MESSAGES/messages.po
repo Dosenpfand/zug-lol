@@ -132,7 +132,7 @@ msgstr "Anmelden"
 
 #: templates/base.html:46 templates/register.html:7
 msgid "Register"
-msgstr "Registieren"
+msgstr "Registrieren"
 
 #: templates/home.html:7 templates/profile.html:7
 msgid "Welcome"

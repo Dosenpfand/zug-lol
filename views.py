@@ -18,15 +18,15 @@ ticket_price = Blueprint('ticket_price', __name__, template_folder='templates')
 
 @ticket_price.route('/', methods=['GET'])
 def home():
-    return render_template('home.html')
+    return render_template('home.html', title=_('Home'))
 
 
 @ticket_price.route('/price_form', methods=['GET', 'POST'])
 def price_form():
     form = PriceForm()
     if form.validate_on_submit():
-        return render_template('sse_container.html', form=form)
-    return render_template('price_form.html', form=form)
+        return render_template('sse_container.html', form=form, title=_('Ticket Price'))
+    return render_template('price_form.html', form=form, title=_('Ticket Price'))
 
 
 @ticket_price.route('/get_price')
@@ -99,8 +99,12 @@ def journeys():
     price_sum = round(sum(journey.price for journey in journeys_objs), 2)
     klimaticket_gains = round(price_sum - current_user.klimaticket_price, 2)
 
-    return render_template('journeys.html', add_journey_form=add_journey_form,
-                           delete_journeys_form=delete_journeys_form, table=journey_dicts, titles=titles,
+    return render_template('journeys.html',
+                           title=_('Travel Journal'),
+                           add_journey_form=add_journey_form,
+                           delete_journeys_form=delete_journeys_form,
+                           table=journey_dicts,
+                           titles=titles,
                            actions_title=actions_title,
                            journey_model=Journey,
                            journey_count=journey_count,
@@ -169,4 +173,4 @@ def profile():
         # TODO: format_decimal() but produces error in german
         form.klimaticket_price.data = current_user.klimaticket_price
 
-    return render_template('profile.html', form=form, name=current_user.email)
+    return render_template('profile.html', title=_('Profile'), form=form, name=current_user.email)
