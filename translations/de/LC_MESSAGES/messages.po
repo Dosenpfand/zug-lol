@@ -84,7 +84,7 @@ msgstr "Löschen"
 
 #: forms_security.py:7
 msgid "Prove that you are human"
-msgstr "Beweise, dass du ein Mensch bist"
+msgstr "Mensch oder Maschine?"
 
 #: templates/base.html:39 views.py:21
 msgid "Home"
