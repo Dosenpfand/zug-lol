@@ -3,8 +3,8 @@ Description=oebb-ticket-price.service - A Flask application run with Gunicorn.
 After=network.target
 
 [Service]
-User=www-data
-Group=www-data
+User=m
+Group=m
 WorkingDirectory=/var/www/oebb-ticket-price/
 EnvironmentFile=/var/www/oebb-ticket-price/.env
 ExecStart=/var/www/oebb-ticket-price/venv/bin/gunicorn --workers 5 --bind unix:/var/www/oebb-ticket-price/oebb-ticket-price.sock wsgi:app
