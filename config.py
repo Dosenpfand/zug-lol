@@ -14,4 +14,4 @@ SECURITY_REGISTER_USER_TEMPLATE = 'register.html'
 SECURITY_LOGIN_USER_TEMPLATE = 'login.html'
 KLIMATICKET_DEFAULT_PRICE = 1095
 BABEL_DEFAULT_LOCALE = 'de'
-LANGUAGES = ['en', 'de']
+LANGUAGES = {'en': 'English', 'de': 'Deutsch'}

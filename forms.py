@@ -19,7 +19,7 @@ class PriceForm(FlaskForm):
 
 class JourneyForm(FlaskForm):
     class Meta:
-        locales = current_app.config['LANGUAGES']
+        locales = list(current_app.config['LANGUAGES'].keys())
 
     origin = StringField(label=_('Origin'), validators=[InputRequired()],
                          render_kw={'autocomplete': 'off', 'class': 'basicAutoComplete',
@@ -35,7 +35,7 @@ class JourneyForm(FlaskForm):
 
 class ProfileForm(FlaskForm):
     class Meta:
-        locales = current_app.config['LANGUAGES']
+        locales = list(current_app.config['LANGUAGES'].keys())
 
     has_vorteilscard = BooleanField(label=_('Vorteilscard'))
     klimaticket_price = DecimalField(use_locale=True, label=_('Klimaticket price in €'), render_kw={

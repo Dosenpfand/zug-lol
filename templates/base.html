@@ -45,6 +45,11 @@
                 {{ render_nav_item('security.login', _('Login')) }}
                 {{ render_nav_item('security.register', _('Register')) }}
                 {% endif %}
+                {% for code, lang in config['LANGUAGES'].items() %}
+                {% if not code == session['lang'] %}
+                {{ render_nav_item(request.url_rule.endpoint, lang, lang=code) }}
+                {% endif %}
+                {% endfor %}
             </div>
         </nav>
     </div>
