@@ -39,7 +39,7 @@ class JourneyForm(FlaskForm):
 
 class ProfileForm(FlaskForm):
     has_vorteilscard = BooleanField(label=_('Vorteilscard'))
-    klimaticket_price = FlexibleFloatField(use_locale=True, label=_('Klimaticket price in €'), render_kw={
+    klimaticket_price = FlexibleFloatField(label=_('Klimaticket price in €'), render_kw={
         'placeholder': '{} {}'.format(_('e.g.'), current_app.config['KLIMATICKET_DEFAULT_PRICE'])})
     submit = SubmitField(label=_('Save'))
 
