@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-14 16:01+0200\n"
+"POT-Creation-Date: 2022-06-20 10:47+0200\n"
 "PO-Revision-Date: 2022-06-13 13:50+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -26,23 +26,23 @@ msgstr "Sprache geändert"
 msgid "Please log in to access this page."
 msgstr "Bitte melde dich an, um diese Seite zu sehen."
 
-#: forms.py:9 forms.py:24 views.py:95
+#: forms.py:9 forms.py:28 views.py:95
 msgid "Origin"
 msgstr "Von"
 
-#: forms.py:11 forms.py:26
+#: forms.py:11
 msgid "Origin (e.g. Wien)"
 msgstr "Von (z.B. Wien)"
 
-#: forms.py:12 forms.py:27 views.py:95
+#: forms.py:12 forms.py:31 views.py:95
 msgid "Destination"
 msgstr "Nach"
 
-#: forms.py:14 forms.py:29
+#: forms.py:14
 msgid "Destination (e.g. Innsbruck)"
 msgstr "Nach (z.B. Innsbruck)"
 
-#: forms.py:16 forms.py:40
+#: forms.py:16 forms.py:41
 msgid "Vorteilscard"
 msgstr "Vorteilscard"
 
@@ -50,35 +50,43 @@ msgstr "Vorteilscard"
 msgid "Search Price"
 msgstr "Suche Preis"
 
-#: forms.py:31 views.py:95
+#: forms.py:30
+msgid "e.g. Wien"
+msgstr "z.B. Wien"
+
+#: forms.py:33
+msgid "e.g. Innsbruck"
+msgstr "z.B. Innsbruck"
+
+#: forms.py:35 views.py:95
 msgid "Price in €"
 msgstr "Preis in €"
 
-#: forms.py:31
+#: forms.py:35
 msgid "e.g. 10.5"
 msgstr "z.B. 10,5"
 
-#: forms.py:32 views.py:96
+#: forms.py:36 views.py:96
 msgid "Date"
 msgstr "Datum"
 
-#: forms.py:33 templates/journeys.html:8
+#: forms.py:37 templates/journeys.html:8
 msgid "Add Journey"
 msgstr "Fahrt hinzufügen"
 
-#: forms.py:41
+#: forms.py:42
 msgid "Klimaticket price in €"
 msgstr "Klimaticket-Preis in €"
 
-#: forms.py:42
+#: forms.py:43
 msgid "e.g."
 msgstr "z.B."
 
-#: forms.py:43
+#: forms.py:44
 msgid "Save"
 msgstr "Speichern"
 
-#: forms.py:47
+#: forms.py:48
 msgid "Delete"
 msgstr "Löschen"
 
@@ -118,7 +126,7 @@ msgstr "Eintrag gelöscht."
 msgid "Failed to delete journal entry."
 msgstr "Eintrag löschen fehlgeschlagen"
 
-#: templates/base.html:43 views.py:176
+#: templates/base.html:43 views.py:175
 msgid "Profile"
 msgstr "Profil"
 

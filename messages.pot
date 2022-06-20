@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-14 16:01+0200\n"
+"POT-Creation-Date: 2022-06-20 10:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,28 +21,27 @@ msgstr ""
 msgid "Language changed"
 msgstr ""
 
-# TODO: temporary, until https://github.com/Flask-Middleware/flask-security/pull/629 is merged and released.
 #: config.py:18
 msgid "Please log in to access this page."
 msgstr ""
 
-#: forms.py:9 forms.py:24 views.py:95
+#: forms.py:9 forms.py:28 views.py:95
 msgid "Origin"
 msgstr ""
 
-#: forms.py:11 forms.py:26
+#: forms.py:11
 msgid "Origin (e.g. Wien)"
 msgstr ""
 
-#: forms.py:12 forms.py:27 views.py:95
+#: forms.py:12 forms.py:31 views.py:95
 msgid "Destination"
 msgstr ""
 
-#: forms.py:14 forms.py:29
+#: forms.py:14
 msgid "Destination (e.g. Innsbruck)"
 msgstr ""
 
-#: forms.py:16 forms.py:40
+#: forms.py:16 forms.py:41
 msgid "Vorteilscard"
 msgstr ""
 
@@ -50,35 +49,43 @@ msgstr ""
 msgid "Search Price"
 msgstr ""
 
-#: forms.py:31 views.py:95
+#: forms.py:30
+msgid "e.g. Wien"
+msgstr ""
+
+#: forms.py:33
+msgid "e.g. Innsbruck"
+msgstr ""
+
+#: forms.py:35 views.py:95
 msgid "Price in €"
 msgstr ""
 
-#: forms.py:31
+#: forms.py:35
 msgid "e.g. 10.5"
 msgstr ""
 
-#: forms.py:32 views.py:96
+#: forms.py:36 views.py:96
 msgid "Date"
 msgstr ""
 
-#: forms.py:33 templates/journeys.html:8
+#: forms.py:37 templates/journeys.html:8
 msgid "Add Journey"
 msgstr ""
 
-#: forms.py:41
+#: forms.py:42
 msgid "Klimaticket price in €"
 msgstr ""
 
-#: forms.py:42
+#: forms.py:43
 msgid "e.g."
 msgstr ""
 
-#: forms.py:43
+#: forms.py:44
 msgid "Save"
 msgstr ""
 
-#: forms.py:47
+#: forms.py:48
 msgid "Delete"
 msgstr ""
 
@@ -118,7 +125,7 @@ msgstr ""
 msgid "Failed to delete journal entry."
 msgstr ""
 
-#: templates/base.html:43 views.py:176
+#: templates/base.html:43 views.py:175
 msgid "Profile"
 msgstr ""
 

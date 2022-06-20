@@ -27,10 +27,10 @@ class FlexibleFloatField(FloatField):
 class JourneyForm(FlaskForm):
     origin = StringField(label=_('Origin'), validators=[InputRequired()],
                          render_kw={'autocomplete': 'off', 'class': 'basicAutoComplete',
-                                    'placeholder': _('Origin (e.g. Wien)')})
+                                    'placeholder': _('e.g. Wien')})
     destination = StringField(label=_('Destination'),
                               render_kw={'autocomplete': 'off', 'class': 'basicAutoComplete',
-                                         'placeholder': _('Destination (e.g. Innsbruck)')},
+                                         'placeholder': _('e.g. Innsbruck')},
                               validators=[InputRequired()])
     price = FlexibleFloatField(label=_('Price in €'), render_kw={'placeholder': _('e.g. 10.5')})
     date = DateField(label=_('Date'), validators=[validators.Optional()], render_kw={'placeholder': _('Date')})
