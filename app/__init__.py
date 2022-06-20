@@ -12,7 +12,7 @@ from flask_babel import Babel, format_number
 from flask_babel import lazy_gettext as _
 from flask_wtf.csrf import CSRFProtect
 
-from app.forms_security import ExtendedRegisterForm
+from app.extended_security.forms import ExtendedRegisterForm
 
 bootstrap = Bootstrap4()
 db = SQLAlchemy()
@@ -48,8 +48,14 @@ def create_app(config='config'):
         user_datastore = SQLAlchemyUserDatastore(db, User, Role)
         security.init_app(app, user_datastore, register_form=ExtendedRegisterForm)
 
-        from app.views import ticket_price  # noqa
-        app.register_blueprint(ticket_price)
+        from app.main import bp as main_bp # noqa
+        app.register_blueprint(main_bp)
+
+        from app.journal import bp as journal_bp # noqa
+        app.register_blueprint(journal_bp)
+
+        from app.ticket_price import bp as ticket_price_bp # noqa
+        app.register_blueprint(ticket_price_bp)
 
         @babel.localeselector
         def get_locale():

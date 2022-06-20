@@ -7,14 +7,14 @@
       <div class="card-body">
         <h5 class="card-title">{{ _('Add Journey') }}</h5>
         <p class="card-text">
-            <form action="{{ url_for('ticket_price.journeys') }}" method="post" class="form" role="form">
+            <form action="{{ url_for('journal.journeys') }}" method="post" class="form" role="form">
                 {{ add_journey_form.hidden_tag() }}
                 {{ render_field(add_journey_form.origin) }}
                 {{ render_field(add_journey_form.destination) }}
                 {{ render_field(add_journey_form.price) }}
                 {{ render_field(add_journey_form.date) }}
                 {{ render_field(add_journey_form.submit) }}
-                <a class="btn btn-primary btn-md" id="determine-price" hx-post="{{ url_for('ticket_price.sse_container') }}" hx-target="#output">{{ _('Determine Price') }}</a>
+                <a class="btn btn-primary btn-md" id="determine-price" hx-post="{{ url_for('journal.sse_container') }}" hx-target="#output">{{ _('Determine Price') }}</a>
             </form>
         </p>
       </div>
@@ -46,12 +46,12 @@
         <h5 class="card-title">{{ _('Travel Journal') }}</h5>
         <p class="card-text">
           <div class="mb-3">
-            <a class="btn btn-primary" href="{{ url_for('ticket_price.export_journeys') }}">{{ _('Export') }}</a>
+            <a class="btn btn-primary" href="{{ url_for('journal.export_journeys') }}">{{ _('Export') }}</a>
             <button type="button" class="btn btn-secondary" disabled>{{ _('Import') }}</button>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete-journal-modal">{{ _('Delete all') }}</button>
           </div>
           <div>
-            {{ render_table(table, titles=titles, actions_title=actions_title, show_actions=True, model=journey_model, delete_url=('ticket_price.delete_journey', [('journey_id', ':id')])) }}
+            {{ render_table(table, titles=titles, actions_title=actions_title, show_actions=True, model=journey_model, delete_url=('journal.delete_journey', [('journey_id', ':id')])) }}
           </div>
         </p>
       </div>
@@ -70,7 +70,7 @@
             {{ _('Are you sure you want to delete <strong>ALL</strong> your journal entries?') }}
           </div>
           <div class="modal-footer">
-            <form action="{{ url_for('ticket_price.journeys') }}" method="post" class="form" role="form">
+            <form action="{{ url_for('journal.journeys') }}" method="post" class="form" role="form">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ _('Close') }}</button>
                 {{ delete_journeys_form.hidden_tag() }}
                 {{ render_field(delete_journeys_form.delete) }}

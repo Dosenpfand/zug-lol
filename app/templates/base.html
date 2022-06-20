@@ -36,11 +36,11 @@
         </div>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="navbar-nav mr-auto">
-                {{ render_nav_item('ticket_price.home', _('Home')) }}
+                {{ render_nav_item('main.home', _('Home')) }}
                 {{ render_nav_item('ticket_price.price_form', _('Ticket Price')) }}
-                {{ render_nav_item('ticket_price.journeys', _('Travel Journal')) }}
+                {{ render_nav_item('journal.journeys', _('Travel Journal')) }}
                 {% if current_user and current_user.is_authenticated %}
-                {{ render_nav_item('ticket_price.profile', _('Profile')) }}
+                {{ render_nav_item('main.profile', _('Profile')) }}
                 {{ render_nav_item('security.logout', _('Logout')) }}
                 {% else %}
                 {{ render_nav_item('security.login', _('Login')) }}

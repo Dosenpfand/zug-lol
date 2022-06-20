@@ -1,71 +1,19 @@
 import csv
 from io import StringIO
-from json import dumps
 
-from flask import render_template, Blueprint, Response, stream_with_context, request, flash, redirect, url_for
-from flask_babel import gettext as _, format_date, format_decimal
-from flask_security import auth_required, current_user
+from flask import flash, render_template, redirect, url_for, Response, stream_with_context
+from flask_babel import gettext as _, format_decimal, format_date
+from flask_login import current_user
+from flask_security import auth_required
 
-from app.forms import PriceForm, JourneyForm, ProfileForm, DeleteJournalForm
-from app.models import Journey, User, StationAutocomplete
-from util.auth_token import get_valid_access_token
-from util.oebb import get_station_names
-from util.sse import get_price_generator
 from app import db
-
-ticket_price = Blueprint('ticket_price', __name__, template_folder='templates')
-
-
-@ticket_price.route('/', methods=['GET'])
-def home():
-    return render_template('home.html', title=_('Home'))
+from app.ticket_price.forms import PriceForm
+from app.journal.forms import JourneyForm, DeleteJournalForm
+from app.models import Journey
+from app.journal import bp
 
 
-@ticket_price.route('/price_form', methods=['GET', 'POST'])
-def price_form():
-    form = PriceForm()
-    if form.validate_on_submit():
-        return render_template('sse_container.html', form=form, title=_('Ticket Price'))
-    return render_template('price_form.html', form=form, title=_('Ticket Price'))
-
-
-@ticket_price.route('/get_price')
-def get_price():
-    origin = request.args.get('origin', type=str)
-    destination = request.args.get('destination', type=str)
-    has_vorteilscard = request.args.get('vorteilscard', type=str, default='False') == 'True'
-    output_only_price = request.args.get('output_only_price', type=bool, default='False')
-
-    return Response(stream_with_context(
-        get_price_generator(origin, destination, has_vc66=has_vorteilscard, output_only_price=output_only_price)),
-        mimetype='text/event-stream')
-
-
-@ticket_price.route('/station_autocomplete')
-def station_autocomplete():
-    name = request.args.get('q')
-
-    if not name:
-        result = dumps([])
-    else:
-        station_query = StationAutocomplete.query.filter_by(input=name)
-        station_exists = db.session.query(station_query.exists()).scalar()
-
-        if station_exists:
-            result = station_query.first().result
-        else:
-            access_token = get_valid_access_token()
-            if not access_token:
-                result = dumps([])
-            else:
-                result = dumps(get_station_names(name, access_token=access_token))
-                db.session.add(StationAutocomplete(input=name, result=result))
-                db.session.commit()
-
-    return Response(result, mimetype='application/json')
-
-
-@ticket_price.route("/journeys", methods=['GET', 'POST'])
+@bp.route("/journeys", methods=['GET', 'POST'])
 @auth_required()
 def journeys():
     add_journey_form = JourneyForm()
@@ -111,7 +59,7 @@ def journeys():
                            price_sum=price_sum, klimaticket_gains=klimaticket_gains)
 
 
-@ticket_price.route('/delete_journey/<int:journey_id>', methods=['GET', 'POST'])
+@bp.route('/delete_journey/<int:journey_id>', methods=['GET', 'POST'])
 @auth_required()
 def delete_journey(journey_id):
     journey_result = Journey.query.filter_by(id=journey_id).first()
@@ -124,7 +72,7 @@ def delete_journey(journey_id):
     return redirect(url_for('ticket_price.journeys'))
 
 
-@ticket_price.route('/export_journeys')
+@bp.route('/export_journeys')
 @auth_required()
 def export_journeys():
     def generate():
@@ -147,29 +95,11 @@ def export_journeys():
     return response
 
 
-# TODO: whole view mostly temporary
-@ticket_price.route('/sse_container', methods=['POST'])
+@bp.route('/sse_container', methods=['POST'])
 @auth_required()
 def sse_container():
-    # TODO: do not use the price form!
+    # TODO: whole view mostly temporary, do not use the price form!
     form = PriceForm()
     form.vorteilscard.data = current_user.has_vorteilscard
 
     return render_template('sse_container.html', form=form, output_only_price=True)
-
-
-@ticket_price.route("/profile", methods=['GET', 'POST'])
-@auth_required()
-def profile():
-    form = ProfileForm()
-
-    if form.validate_on_submit():
-        user = User.query.filter_by(id=current_user.id).one()
-        user.has_vorteilscard = form.has_vorteilscard.data
-        user.klimaticket_price = form.klimaticket_price.data
-        db.session.commit()
-    else:
-        form.has_vorteilscard.data = current_user.has_vorteilscard
-        form.klimaticket_price.data = current_user.klimaticket_price
-
-    return render_template('profile.html', title=_('Profile'), form=form, name=current_user.email)
