@@ -2,7 +2,7 @@
   <div class="card-body">
     <h5 class="card-title">{{ _('Result') }}</h5>
     <p class="card-text">
-        <p id="sse-container" hx-ext="sse" sse-connect="{{ url_for('ticket_price.get_price', origin=form.origin.data, destination=form.destination.data, vorteilscard=form.vorteilscard.data, output_only_price=output_only_price) }}" sse-swap="UpdateEvent" hx-target="#price-log">
+        <p id="sse-container" hx-ext="sse" sse-connect="{{ url_for('main.get_price', origin=form.origin.data, destination=form.destination.data, vorteilscard=form.vorteilscard.data, output_only_price=output_only_price) }}" sse-swap="UpdateEvent" hx-target="#price-log">
             <span id="price-log">{{ _('Waiting for connection') }}</span>
         </p>
         <p id="price-output"></p>
