@@ -6,8 +6,8 @@ from flask import render_template, Blueprint, Response, stream_with_context, req
 from flask_babel import gettext as _, format_date, format_decimal
 from flask_security import auth_required, current_user
 
-from forms import PriceForm, JourneyForm, ProfileForm, DeleteJournalForm
-from models import Journey, User, StationAutocomplete
+from app.forms import PriceForm, JourneyForm, ProfileForm, DeleteJournalForm
+from app.models import Journey, User, StationAutocomplete
 from util.auth_token import get_valid_access_token
 from util.oebb import get_station_names
 from util.sse import get_price_generator

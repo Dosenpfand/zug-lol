@@ -4,7 +4,7 @@ from flask import render_template
 from flask_babel import lazy_gettext as _, format_decimal
 
 from app import db
-from models import Price
+from app.models import Price
 from util.auth_token import get_valid_access_token
 from util.oebb import get_station_id, get_travel_action_id, get_connection_id, get_price_for_connection
 

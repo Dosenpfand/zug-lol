@@ -1,7 +1,7 @@
 import jwt
 
 from app import db
-from models import AuthToken
+from app.models import AuthToken
 from util.oebb import get_access_token
 
 
