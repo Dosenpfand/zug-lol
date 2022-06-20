@@ -1,8 +1,16 @@
 # TODO
 
 ## Prio 1
+- [ ] Vorteilscard: Statistics, paid off with VC, ... paid off without VC
+- [ ] Add journey, delete price after submission?
+- [ ] Reverse direction button
+- [ ] Mobile table layout messed up
+- [ ] Link to profile on first use
+- [ ] Save language in profile
 
 ## Prio 2
+- [ ] SEO
+- [ ] Grey out button while determining price
 - [ ] Import
 - [ ] Account deletion
 - [ ] Edit journey
