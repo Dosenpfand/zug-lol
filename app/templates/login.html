@@ -25,7 +25,9 @@
             {{ render_field(login_user_form.email) }}
             <div class="fs-gap">{{ render_field(login_user_form.password) }}</div>
             {{ render_field(login_user_form.remember) }}
-            {{ render_field(login_user_form.csrf_token) }}
+            {% if config['WTF_CSRF_ENABLED'] %}
+              {{ render_field(login_user_form.csrf_token) }}
+            {% endif %}
             {{ render_field(login_user_form.submit) }}
             </form>
         </p>
