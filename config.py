@@ -4,7 +4,7 @@ from flask_babel import lazy_gettext as _
 SECRET_KEY = 'sxnyY8z4wz862Vzzq33GM3yBq09SuSZyHuvHCt9hWh0'
 # secrets.SystemRandom().getrandbits(128)
 SECURITY_PASSWORD_SALT = '261571404880005318712872279376887086919'
-SQLALCHEMY_DATABASE_URI = 'sqlite:///oebb-ticket-price.sqlite'
+SQLALCHEMY_DATABASE_URI="postgresql+psycopg2://zug:zug@localhost:5432/zug"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_ENGINE_OPTIONS = {
     "pool_pre_ping": True,

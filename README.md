@@ -53,7 +53,7 @@ A live version can be reached at https://zug.lol
 
 ## Deploy
 The following files can be helpful to deploy the application:
-1. `oebb-ticket-price.service` as systemd service file.
+1. `zug-lol.service` as systemd service file.
 2. `wsgi.py` to start the WSGI.
 3. `post-receive` as git post-receive hook to finish deployment.
 
@@ -62,7 +62,7 @@ To use nginx as a proxy the following config snippet can be used inside a ```ser
 ```
 location / {
    include proxy_params;
-   proxy_pass http://unix:/var/www/oebb-ticket-price/oebb-ticket-price.sock;
+   proxy_pass http://unix:/var/www/zug-lol/zug-lol.sock;
    proxy_buffering off;
 }
 ```

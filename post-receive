@@ -1,10 +1,10 @@
 #!/bin/sh
 
-git --work-tree=/var/www/oebb-ticket-price --git-dir=/var/www/oebb-ticket-price.git checkout -f
-cd /var/www/oebb-ticket-price || exit
+git --work-tree=/var/www/zug-lol --git-dir=/var/www/zug-lol.git checkout -f
+cd /var/www/zug-lol || exit
 python3 -m venv venv
 venv/bin/pip install wheel
 venv/bin/pip install -r requirements.txt
 venv/bin/pybabel compile -d app/translations
 venv/bin/flask db upgrade
-sudo systemctl restart oebb-ticket-price.service
+sudo systemctl restart zug-lol.service

@@ -39,7 +39,8 @@ class AuthToken(db.Model):
 
 
 class Role(db.Model, fsqla.FsRoleMixin):
-    pass
+    def __repr__(self):
+        return f'<Role {self.name}>'
 
 
 class User(db.Model, fsqla.FsUserMixin):
