@@ -13,8 +13,7 @@ class AuthActions(object):
         )
 
     def logout(self):
-        return self._client.get('/auth/logout')
-
+        return self._client.get('/logout')
 
 @pytest.fixture()
 def app():
@@ -40,9 +39,9 @@ def client(app):
     return app.test_client()
 
 
-# def test_request_price_form(client):
-#     response = client.get("/price_form")
-#     assert b'Ticket Price Search' in response.data
+def test_request_price_form(client):
+    response = client.get("/price_form")
+    assert b'Ticket Price Search' in response.data
 
 
 def test_request_login(auth, client):
