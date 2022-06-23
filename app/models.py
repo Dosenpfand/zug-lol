@@ -43,7 +43,7 @@ class Role(db.Model, fsqla.FsRoleMixin):
 
 
 class User(db.Model, fsqla.FsUserMixin):
-    has_vorteilscard = db.Column(db.Boolean, default=False)
+    has_vorteilscard = db.Column(db.Boolean, default=True)
     klimaticket_price = db.Column(db.Float, default=current_app.config['KLIMATICKET_DEFAULT_PRICE'])
     journeys = db.relationship('Journey', back_populates='user', lazy=True)
 
