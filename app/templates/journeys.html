@@ -3,6 +3,22 @@
 {% from 'bootstrap4/table.html' import render_table %}
 
 {% block content %}
+    {% if journey_count == 0 %}
+    <div class="card bg-light mb-3">
+      <div class="card-body">
+        <h5 class="card-title">{{ _('Note') }}</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            {{ _('Here you can add journeys to your journal, see your current entries and if your Klimaticket already paid off.') }}
+        </li>
+        <li class="list-group-item">
+            {{ _('In your <a href="{}">profile</a> you can set the price that you paid for the Klimaticket and whether prices should be based on Vorteilscard prices.').format(url_for('main.profile')) }}
+        </li>
+      </ul>
+    </div>
+    {% endif %}
+
     <div class="card bg-light mb-3">
       <div class="card-body">
         <h5 class="card-title">{{ _('Add Journey') }}</h5>
@@ -28,9 +44,9 @@
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">{{ _('Journeys') }}: <mark class="font-weight-bold">{{ journey_count }}</mark></li>
-        <li class="list-group-item">{{ _('Expenses') }}: <mark class="font-weight-bold">{{ price_sum|format_number }}</mark> €</li>
+        <li class="list-group-item">{{ _('Sum ticket prices') }}: <mark class="font-weight-bold">{{ price_sum|format_number }}</mark> €</li>
         <li class="list-group-item">
-            {{ _('Klimaticket ROI') }}:
+            {{ _('Klimaticket gains') }}:
             <mark class="font-weight-bold">{{ klimaticket_gains|format_number }}</mark> €
             {% if klimaticket_gains > 0 %}
                 <span class="badge rounded-pill bg-success">{{ _('POSITIVE') }}</span>

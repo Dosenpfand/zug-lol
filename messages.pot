@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-20 10:47+0200\n"
+"POT-Creation-Date: 2022-06-23 13:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,248 +17,269 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.1\n"
 
-#: app.py:58
-msgid "Language changed"
-msgstr ""
-
 #: config.py:18
 msgid "Please log in to access this page."
 msgstr ""
 
-#: forms.py:9 forms.py:28 views.py:95
-msgid "Origin"
+#: app/__init__.py:64
+msgid "Language changed"
 msgstr ""
 
-#: forms.py:11
-msgid "Origin (e.g. Wien)"
-msgstr ""
-
-#: forms.py:12 forms.py:31 views.py:95
-msgid "Destination"
-msgstr ""
-
-#: forms.py:14
-msgid "Destination (e.g. Innsbruck)"
-msgstr ""
-
-#: forms.py:16 forms.py:41
-msgid "Vorteilscard"
-msgstr ""
-
-#: forms.py:17
-msgid "Search Price"
-msgstr ""
-
-#: forms.py:30
-msgid "e.g. Wien"
-msgstr ""
-
-#: forms.py:33
-msgid "e.g. Innsbruck"
-msgstr ""
-
-#: forms.py:35 views.py:95
-msgid "Price in €"
-msgstr ""
-
-#: forms.py:35
-msgid "e.g. 10.5"
-msgstr ""
-
-#: forms.py:36 views.py:96
-msgid "Date"
-msgstr ""
-
-#: forms.py:37 templates/journeys.html:8
-msgid "Add Journey"
-msgstr ""
-
-#: forms.py:42
-msgid "Klimaticket price in €"
-msgstr ""
-
-#: forms.py:43
-msgid "e.g."
-msgstr ""
-
-#: forms.py:44
-msgid "Save"
-msgstr ""
-
-#: forms.py:48
-msgid "Delete"
-msgstr ""
-
-#: forms_security.py:7
+#: app/extended_security/forms.py:7
 msgid "Prove that you are human"
 msgstr ""
 
-#: templates/base.html:39 views.py:21
-msgid "Home"
+#: app/journal/forms.py:10 app/journal/views.py:43 app/ticket_price/forms.py:8
+msgid "Origin"
 msgstr ""
 
-#: templates/base.html:40 views.py:28 views.py:29
-msgid "Ticket Price"
+#: app/journal/forms.py:12
+msgid "e.g. Wien"
 msgstr ""
 
-#: views.py:80
+#: app/journal/forms.py:13 app/journal/views.py:43 app/ticket_price/forms.py:11
+msgid "Destination"
+msgstr ""
+
+#: app/journal/forms.py:15
+msgid "e.g. Innsbruck"
+msgstr ""
+
+#: app/journal/forms.py:17 app/journal/views.py:43
+msgid "Price in €"
+msgstr ""
+
+#: app/journal/forms.py:17
+msgid "e.g. 10.5"
+msgstr ""
+
+#: app/journal/forms.py:18 app/journal/views.py:44
+msgid "Date"
+msgstr ""
+
+#: app/journal/forms.py:19 app/templates/journeys.html:24
+msgid "Add Journey"
+msgstr ""
+
+#: app/journal/forms.py:23
+msgid "Delete"
+msgstr ""
+
+#: app/journal/views.py:28
 msgid "Journal entry added."
 msgstr ""
 
-#: views.py:85
+#: app/journal/views.py:33
 msgid "All journal entries deleted."
 msgstr ""
 
-#: views.py:97
+#: app/journal/views.py:45
 msgid "Actions"
 msgstr ""
 
-#: templates/base.html:41 templates/journeys.html:46 views.py:103
+#: app/journal/views.py:51 app/templates/base.html:41
+#: app/templates/journeys.html:62
 msgid "Travel Journal"
 msgstr ""
 
-#: views.py:121
+#: app/journal/views.py:69
 msgid "Journal entry deleted."
 msgstr ""
 
-#: views.py:123
+#: app/journal/views.py:71
 msgid "Failed to delete journal entry."
 msgstr ""
 
-#: templates/base.html:43 views.py:175
+#: app/main/forms.py:15 app/ticket_price/forms.py:15
+msgid "Vorteilscard"
+msgstr ""
+
+#: app/main/forms.py:16
+msgid "Klimaticket price in €"
+msgstr ""
+
+#: app/main/forms.py:17
+msgid "e.g."
+msgstr ""
+
+#: app/main/forms.py:18
+msgid "Save"
+msgstr ""
+
+#: app/main/views.py:20 app/templates/base.html:39
+msgid "Home"
+msgstr ""
+
+#: app/main/views.py:37 app/templates/base.html:43
 msgid "Profile"
 msgstr ""
 
-#: templates/base.html:30
+#: app/templates/base.html:30
 msgid "Logo: A Train"
 msgstr ""
 
-#: templates/base.html:44
+#: app/templates/base.html:40 app/ticket_price/views.py:12
+#: app/ticket_price/views.py:13
+msgid "Ticket Price"
+msgstr ""
+
+#: app/templates/base.html:44
 msgid "Logout"
 msgstr ""
 
-#: templates/base.html:46 templates/login.html:1 templates/login.html:20
+#: app/templates/base.html:46 app/templates/login.html:1
+#: app/templates/login.html:20
 msgid "Login"
 msgstr ""
 
-#: templates/base.html:47 templates/register.html:1 templates/register.html:8
+#: app/templates/base.html:47 app/templates/register.html:1
+#: app/templates/register.html:8
 msgid "Register"
 msgstr ""
 
-#: templates/home.html:7 templates/profile.html:7
+#: app/templates/home.html:7 app/templates/profile.html:7
 msgid "Welcome"
 msgstr ""
 
-#: templates/home.html:8
+#: app/templates/home.html:8
 msgid "This site offers 2 services"
 msgstr ""
 
-#: templates/home.html:11
+#: app/templates/home.html:11
 msgid "Search for"
 msgstr ""
 
-#: templates/home.html:11
+#: app/templates/home.html:11
 msgid "train ticket prices"
 msgstr ""
 
-#: templates/home.html:11
+#: app/templates/home.html:11
 msgid "in Austria"
 msgstr ""
 
-#: templates/home.html:12
+#: app/templates/home.html:12
 msgid "Create a"
 msgstr ""
 
-#: templates/home.html:12
+#: app/templates/home.html:12
 msgid "travel journal"
 msgstr ""
 
-#: templates/home.html:12
+#: app/templates/home.html:12
 msgid "to find out if your Klimaticket pays off"
 msgstr ""
 
-#: templates/home.html:18
+#: app/templates/home.html:18
 msgid "Contact"
 msgstr ""
 
-#: templates/home.html:19
+#: app/templates/home.html:19
 msgid "For complaints, bug reports or any other feedback you can open an"
 msgstr ""
 
-#: templates/home.html:19
+#: app/templates/home.html:19
 msgid "issue"
 msgstr ""
 
-#: templates/journeys.html:17
+#: app/templates/journeys.html:9
+msgid "Note"
+msgstr ""
+
+#: app/templates/journeys.html:13
+msgid ""
+"Here you can add journeys to your journal, see your current entries and "
+"if your Klimaticket already paid off."
+msgstr ""
+
+#: app/templates/journeys.html:16
+msgid ""
+"In your <a href=\"{}\">profile</a> you can set the price that you paid "
+"for the Klimaticket and whether prices should be based on Vorteilscard "
+"prices."
+msgstr ""
+
+#: app/templates/journeys.html:33
 msgid "Determine Price"
 msgstr ""
 
-#: templates/journeys.html:27
+#: app/templates/journeys.html:43
 msgid "Travel Statistics"
 msgstr ""
 
-#: templates/journeys.html:30
+#: app/templates/journeys.html:46
 msgid "Journeys"
 msgstr ""
 
-#: templates/journeys.html:31
-msgid "Expenses"
+#: app/templates/journeys.html:47
+msgid "Sum ticket prices"
 msgstr ""
 
-#: templates/journeys.html:33
-msgid "Klimaticket ROI"
+#: app/templates/journeys.html:49
+msgid "Klimaticket gains"
 msgstr ""
 
-#: templates/journeys.html:36
+#: app/templates/journeys.html:52
 msgid "POSITIVE"
 msgstr ""
 
-#: templates/journeys.html:38
+#: app/templates/journeys.html:54
 msgid "NEGATIVE"
 msgstr ""
 
-#: templates/journeys.html:49
+#: app/templates/journeys.html:65
 msgid "Export"
 msgstr ""
 
-#: templates/journeys.html:50
+#: app/templates/journeys.html:66
 msgid "Import"
 msgstr ""
 
-#: templates/journeys.html:51
+#: app/templates/journeys.html:67
 msgid "Delete all"
 msgstr ""
 
-#: templates/journeys.html:64
+#: app/templates/journeys.html:80
 msgid "Danger Zone"
 msgstr ""
 
-#: templates/journeys.html:70
+#: app/templates/journeys.html:86
 msgid "Are you sure you want to delete <strong>ALL</strong> your journal entries?"
 msgstr ""
 
-#: templates/journeys.html:74
+#: app/templates/journeys.html:90
 msgid "Close"
 msgstr ""
 
-#: templates/price_form.html:7
+#: app/templates/price_form.html:7
 msgid "Ticket Price Search"
 msgstr ""
 
-#: templates/profile.html:9
+#: app/templates/profile.html:9
 msgid "Hi"
 msgstr ""
 
-#: templates/profile.html:16
+#: app/templates/profile.html:16
 msgid "Settings"
 msgstr ""
 
-#: templates/sse_container.html:3
+#: app/templates/sse_container.html:3
 msgid "Result"
 msgstr ""
 
-#: templates/sse_container.html:6
+#: app/templates/sse_container.html:6
 msgid "Waiting for connection"
+msgstr ""
+
+#: app/ticket_price/forms.py:10
+msgid "Origin (e.g. Wien)"
+msgstr ""
+
+#: app/ticket_price/forms.py:13
+msgid "Destination (e.g. Innsbruck)"
+msgstr ""
+
+#: app/ticket_price/forms.py:16
+msgid "Search Price"
 msgstr ""
 
 #: util/sse.py:17
@@ -318,4 +339,3 @@ msgstr ""
 #: util/sse.py:94
 msgid "Failed to retrieve price"
 msgstr ""
-
