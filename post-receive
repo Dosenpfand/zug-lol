@@ -6,4 +6,5 @@ python3 -m venv venv
 venv/bin/pip install wheel
 venv/bin/pip install -r requirements.txt
 venv/bin/pybabel compile -d app/translations
+venv/bin/flask db upgrade
 sudo systemctl restart oebb-ticket-price.service
