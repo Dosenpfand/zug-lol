@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-23 13:50+0200\n"
+"POT-Creation-Date: 2022-06-23 13:58+0200\n"
 "PO-Revision-Date: 2022-06-13 13:50+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: config.py:18
 msgid "Please log in to access this page."
-msgstr ""
+msgstr "Bitte melde dich an, um diese Seite zu sehen."
 
 #: app/__init__.py:64
 msgid "Language changed"
@@ -350,7 +350,3 @@ msgstr "Preis wird ermittelt"
 #: util/sse.py:94
 msgid "Failed to retrieve price"
 msgstr ""
-
-#~ msgid "Please log in to access this page."
-#~ msgstr "Bitte melde dich an, um diese Seite zu sehen."
-

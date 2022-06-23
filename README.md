@@ -36,9 +36,9 @@ To run the application locally follow these steps.
 5. Adapt the translation
    ```bash
    pybabel extract -F babel.cfg -k lazy_gettext -o messages.pot .
-   pybabel update -i messages.pot -d translations
-   # Adapt translations/de/LC_MESSAGES/messages.po
-   pybabel compile -d translations
+   pybabel update -i messages.pot -d app/translations
+   # Adapt app/translations/de/LC_MESSAGES/messages.po
+   pybabel compile -d app/translations
    ```
 6. Run the app
     ```
@@ -47,7 +47,10 @@ To run the application locally follow these steps.
     flask run
     ```
 7. Open in your browser: http://localhost:5000
-
+8. Install pre-commit checks before committing
+   ```
+   pre-commit install
+   ```
 ## Live Demo
 A live version can be reached at https://zug.lol
 
