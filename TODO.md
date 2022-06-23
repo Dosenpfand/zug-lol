@@ -5,7 +5,7 @@
 - [ ] Add journey, delete price after submission?
 - [ ] Reverse direction button
 - [ ] Mobile table layout messed up
-- [ ] Link to profile on first use and activate vorteilscard by default?
+- [ ] Activate vorteilscard by default?
 - [ ] Save language in profile
 
 ## Prio 2
@@ -21,8 +21,10 @@
 - [ ] admin interface using flask-admin
 - [ ] Add unit tests
 - [ ] Add password reset functionality
+- [ ] Impressum / Data Protection notice?
 
 ## Prio 100
 - [ ] Better caching
 - [ ] Add recurring?
 - [ ] Sort by selectable
+- [ ] Pre-commit checks
