@@ -15,7 +15,7 @@
 - [ ] Account deletion
 - [ ] Edit journey
 - [ ] Pagination
-- [ ] Cleanup, split into (at least) 2 blueprints, rename project, etc.
+- [ ] Cleanup: Rename project, etc.
 - [ ] Cache invalidation
 - [ ] DB migration
 - [ ] admin interface using flask-admin

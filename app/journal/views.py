@@ -69,7 +69,7 @@ def delete_journey(journey_id):
         flash(_('Journal entry deleted.'))
     else:
         flash(_('Failed to delete journal entry.'))
-    return redirect(url_for('ticket_price.journeys'))
+    return redirect(url_for('journal.journeys'))
 
 
 @bp.route('/export_journeys')
