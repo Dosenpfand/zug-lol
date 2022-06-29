@@ -14,7 +14,6 @@
 - [ ] Account deletion
 - [ ] Edit journey
 - [ ] Pagination
-- [ ] Cleanup: Rename project, etc.
 - [ ] Cache invalidation
 - [ ] admin interface using flask-admin
 - [ ] Add unit tests
