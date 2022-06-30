@@ -55,7 +55,10 @@ A live version can be reached at https://zug.lol
 The following files can be helpful to deploy the application:
 1. `zug-lol.service` as systemd service file.
 2. `wsgi.py` to start the WSGI.
-3. `post-receive` as git post-receive hook to finish deployment.
+3. `post-receive` as git post-receive hook to finish deployment. To use it the deploy user needs to have password-less sudo access to the systemctl command to restart the service, e.g. via `sudo visudo` add
+   ```
+   %sudo   ALL=(ALL:ALL) NOPASSWD: /bin/systemctl restart zug-lol.service
+   ```
 
 To use nginx as a proxy the following config snippet can be used inside a ```server``` section.
 
