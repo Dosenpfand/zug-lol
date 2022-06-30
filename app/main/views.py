@@ -1,12 +1,12 @@
 from json import dumps
 
-from flask import render_template, request, Response, stream_with_context
+from flask import render_template, request, Response, stream_with_context, redirect, url_for, flash
 from flask_babel import gettext as _
 from flask_login import current_user
 from flask_security import auth_required
 
 from app import db
-from app.main.forms import ProfileForm
+from app.main.forms import ProfileForm, DeleteAccountForm
 
 from app.models import User, StationAutocomplete
 from app.main import bp
@@ -35,6 +35,22 @@ def profile():
         form.klimaticket_price.data = current_user.klimaticket_price
 
     return render_template('profile.html', title=_('Profile'), form=form, name=current_user.email)
+
+
+@bp.route("/delete_account", methods=['GET', 'POST'])
+@auth_required()
+def delete_account():
+    form = DeleteAccountForm()
+
+    if form.validate_on_submit():
+        if form.is_sure.data:
+            user = User.query.filter_by(id=current_user.id).first()
+            db.session.delete(user)
+            db.session.commit()
+            flash(_('Your account has been deleted.'))
+            return redirect(url_for('main.home'))
+
+    return render_template('delete_account.html', title=_('Delete Account'), form=form)
 
 
 @bp.route('/station_autocomplete')

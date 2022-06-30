@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-23 13:58+0200\n"
+"POT-Creation-Date: 2022-06-30 16:53+0200\n"
 "PO-Revision-Date: 2022-06-13 13:50+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.10.1\n"
+"Generated-By: Babel 2.10.3\n"
 
 #: config.py:18
 msgid "Please log in to access this page."
@@ -107,6 +107,14 @@ msgstr "z.B."
 msgid "Save"
 msgstr "Speichern"
 
+#: app/main/forms.py:22
+msgid "Do you really want to delete your account?"
+msgstr "Willst du dein Konto wirklich löschen?"
+
+#: app/main/forms.py:23
+msgid "Delete account"
+msgstr "Konto löschen"
+
 #: app/main/views.py:20 app/templates/base.html:39
 msgid "Home"
 msgstr "Start"
@@ -114,6 +122,14 @@ msgstr "Start"
 #: app/main/views.py:37 app/templates/base.html:43
 msgid "Profile"
 msgstr "Profil"
+
+#: app/main/views.py:50
+msgid "Your account has been deleted."
+msgstr "Dein Konto wurde gelöscht."
+
+#: app/main/views.py:53 app/templates/delete_account.html:7
+msgid "Delete Account"
+msgstr "Konto löschen"
 
 #: app/templates/base.html:30
 msgid "Logo: A Train"
@@ -247,7 +263,7 @@ msgstr "Import"
 msgid "Delete all"
 msgstr "Alle löschen"
 
-#: app/templates/journeys.html:80
+#: app/templates/journeys.html:80 app/templates/profile.html:25
 msgid "Danger Zone"
 msgstr "Gefahrenbereich"
 
@@ -270,6 +286,14 @@ msgstr "Hallo"
 #: app/templates/profile.html:16
 msgid "Settings"
 msgstr "Einstellungen"
+
+#: app/templates/profile.html:27
+msgid "If you don't want to use this site anymore you can"
+msgstr "Falls du diese Seite nicht mehr benutzen möchtest, kannst du"
+
+#: app/templates/profile.html:27
+msgid "delete your account"
+msgstr "dein Konto löschen"
 
 #: app/templates/sse_container.html:3
 msgid "Result"
@@ -350,3 +374,4 @@ msgstr "Preis wird ermittelt"
 #: util/sse.py:94
 msgid "Failed to retrieve price"
 msgstr ""
+

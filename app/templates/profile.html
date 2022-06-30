@@ -19,4 +19,13 @@
         </p>
       </div>
     </div>
+
+    <div class="card bg-light mb-3">
+      <div class="card-body">
+        <h5 class="card-title">{{ _('Danger Zone') }}</h5>
+        <p class="card-text">
+            {{ _("If you don't want to use this site anymore you can") }} <a href="{{ url_for('main.delete_account') }}">{{ _('delete your account') }}</a>.
+        </p>
+      </div>
+    </div>
 {% endblock %}

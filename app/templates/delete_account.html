@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% from 'bootstrap4/form.html' import render_form %}
+
+{% block content %}
+    <div class="card bg-light mb-3">
+      <div class="card-body">
+        <h5 class="card-title">{{ _('Delete Account') }}</h5>
+        <p class="card-text">
+            {{ render_form(form) }}
+        </p>
+      </div>
+    </div>
+{% endblock %}

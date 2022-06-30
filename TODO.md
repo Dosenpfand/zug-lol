@@ -11,7 +11,6 @@
 - [ ] SEO
 - [ ] Grey out button while determining price
 - [ ] Import
-- [ ] Account deletion
 - [ ] Edit journey
 - [ ] Pagination
 - [ ] Cache invalidation
