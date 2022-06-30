@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-30 16:53+0200\n"
+"POT-Creation-Date: 2022-06-30 22:36+0200\n"
 "PO-Revision-Date: 2022-06-13 13:50+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -91,27 +91,31 @@ msgstr "Eintrag gelöscht."
 msgid "Failed to delete journal entry."
 msgstr "Eintrag löschen fehlgeschlagen"
 
-#: app/main/forms.py:15 app/ticket_price/forms.py:15
+#: app/main/forms.py:16 app/ticket_price/forms.py:15
 msgid "Vorteilscard"
 msgstr "Vorteilscard"
 
-#: app/main/forms.py:16
+#: app/main/forms.py:17
 msgid "Klimaticket price in €"
 msgstr "Klimaticket-Preis in €"
 
-#: app/main/forms.py:17
+#: app/main/forms.py:18
 msgid "e.g."
 msgstr "z.B."
 
-#: app/main/forms.py:18
+#: app/main/forms.py:19
 msgid "Save"
 msgstr "Speichern"
 
-#: app/main/forms.py:22
+#: app/main/forms.py:23
 msgid "Do you really want to delete your account?"
 msgstr "Willst du dein Konto wirklich löschen?"
 
-#: app/main/forms.py:23
+#: app/main/forms.py:24
+msgid "Needs to be selected"
+msgstr "Muss ausgewählt sein"
+
+#: app/main/forms.py:25
 msgid "Delete account"
 msgstr "Konto löschen"
 
@@ -373,5 +377,5 @@ msgstr "Preis wird ermittelt"
 
 #: util/sse.py:94
 msgid "Failed to retrieve price"
-msgstr ""
+msgstr "Preisermittlung fehlgeschlagen"
 

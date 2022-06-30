@@ -2,6 +2,7 @@ from flask import current_app
 from flask_babel import lazy_gettext as _
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, SubmitField, FloatField
+from wtforms.validators import NoneOf
 
 
 class FlexibleFloatField(FloatField):
@@ -19,5 +20,6 @@ class ProfileForm(FlaskForm):
 
 
 class DeleteAccountForm(FlaskForm):
-    is_sure = BooleanField(label=_('Do you really want to delete your account?'))
+    is_sure = BooleanField(label=_('Do you really want to delete your account?'),
+                           validators=[NoneOf([False], message=_('Needs to be selected'))])
     submit = SubmitField(label=_('Delete account'))

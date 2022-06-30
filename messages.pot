@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-30 16:53+0200\n"
+"POT-Creation-Date: 2022-06-30 22:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,27 +90,31 @@ msgstr ""
 msgid "Failed to delete journal entry."
 msgstr ""
 
-#: app/main/forms.py:15 app/ticket_price/forms.py:15
+#: app/main/forms.py:16 app/ticket_price/forms.py:15
 msgid "Vorteilscard"
 msgstr ""
 
-#: app/main/forms.py:16
+#: app/main/forms.py:17
 msgid "Klimaticket price in €"
 msgstr ""
 
-#: app/main/forms.py:17
+#: app/main/forms.py:18
 msgid "e.g."
 msgstr ""
 
-#: app/main/forms.py:18
+#: app/main/forms.py:19
 msgid "Save"
 msgstr ""
 
-#: app/main/forms.py:22
+#: app/main/forms.py:23
 msgid "Do you really want to delete your account?"
 msgstr ""
 
-#: app/main/forms.py:23
+#: app/main/forms.py:24
+msgid "Needs to be selected"
+msgstr ""
+
+#: app/main/forms.py:25
 msgid "Delete account"
 msgstr ""
 
