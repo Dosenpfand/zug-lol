@@ -18,14 +18,15 @@ def get_request_headers(access_token=None):
         if not access_token:
             return None
 
-    headers = {'AccessToken': access_token}
+    headers = {'AccessToken': access_token,
+               'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/104.0'}
     return headers
 
 
 def get_station_id(name, access_token=None):
     headers = get_request_headers(access_token)
     params = {'name': name, 'count': 1}
-    r = requests.get('https://tickets.oebb.at/api/hafas/v1/stations', params, headers=headers)
+    r = requests.get('https://shop.oebbtickets.at/api/hafas/v1/stations', params, headers=headers)
     if not type(r.json()) is list or not len(r.json()):
         return None
     return r.json()[0]['number']
@@ -33,8 +34,28 @@ def get_station_id(name, access_token=None):
 
 def get_station_names(name, access_token=None):
     headers = get_request_headers(access_token)
-    params = {'name': name, 'count': 5}
-    r = requests.get('https://tickets.oebb.at/api/hafas/v1/stations', params, headers=headers)
+    # TODO: Add more?
+    # add_headers = {
+    #     'Host': 'shop.oebbtickets.at',
+    #     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/104.0',
+    #     'Accept': 'application/json, text/plain, */*',
+    #     'Accept-Language': 'en-US,en;q=0.7,de;q=0.3',
+    #     'Accept-Encoding': 'gzip, deflate, br',
+    #     'Referer': 'https://shop.oebbtickets.at/de/ticket',
+    #     'Channel': 'inet',
+    #     'Lang': 'de',
+    #     'Cache-Control': 'no-cache',
+    #     'Pragma': 'no-cache',
+    #     'x-ts-supportid': 'WEB_kp0jm46z',
+    #     'ClientId': '4',
+    #     'clientversion': '2.4.8148 - TSPNEU - 102662 - b1 - cd83796',
+    #     'DNT': '1',
+    #     'Connection': 'keep-alive',
+    #     'Sec-Fetch-Dest': 'empty',
+    #     'Sec-Fetch-Mode': 'cors',
+    #     'Sec-Fetch-Site': 'same-origin'}
+    params = {'name': name, 'count': 10}
+    r = requests.get('https://shop.oebbtickets.at/api/hafas/v1/stations', params, headers=headers)
     if not type(r.json()) is list or not len(r.json()):
         return []
     return [station['name'] if station['name'] != '' else station['meta'] for station in r.json()]
@@ -45,19 +66,19 @@ def get_travel_action_id(origin_id, destination_id, date=None, access_token=None
         date = datetime.utcnow()
     headers = get_request_headers(access_token)
 
-    url = 'https://tickets.oebb.at/api/offer/v2/travelActions'
+    url = 'https://shop.oebbtickets.at/api/offer/v2/travelActions'
     # TODO: lat,long not needed, name not relevant
     data = \
         {
             'from':
                 {
-                    # 'latitude': 48208548, 'longitude': 16372132,
+                    'latitude': 48208548, 'longitude': 16372132,
                     'name': 'Wien',
                     'number': origin_id
                 },
             'to':
                 {
-                    # 'latitude': 47263774, 'longitude': 11400973,
+                    'latitude': 47263774, 'longitude': 11400973,
                     'name': 'Innsbruck',
                     'number': destination_id},
             'datetime': date.isoformat(), 'customerVias': [], 'ignoreHistory': True,
@@ -66,6 +87,7 @@ def get_travel_action_id(origin_id, destination_id, date=None, access_token=None
         }
 
     r = requests.post(url, json=data, headers=headers)
+    # TODO: here and for all requests handle responses != OK
 
     travel_actions = r.json().get('travelActions')
     if not travel_actions:
@@ -80,7 +102,7 @@ def get_travel_action_id(origin_id, destination_id, date=None, access_token=None
 
 
 def get_connection_id(travel_action_id, date=None, has_vc66=False, get_only_first=True, access_token=None):
-    url = 'https://tickets.oebb.at/api/hafas/v4/timetable'
+    url = 'https://shop.oebbtickets.at/api/hafas/v4/timetable'
     if not date:
         date = datetime.utcnow()
 
@@ -136,7 +158,8 @@ def get_connection_id(travel_action_id, date=None, has_vc66=False, get_only_firs
 
 
 def get_price_for_connection(connection_id, access_token=None):
-    url = 'https://tickets.oebb.at/api/offer/v1/prices'
+    # TODO: Here and for all URIs, put them (or parts) separately
+    url = 'https://shop.oebbtickets.at/api/offer/v1/prices'
     if type(connection_id) is not list:
         connection_id = [connection_id]
 
