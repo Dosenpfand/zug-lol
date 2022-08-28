@@ -4,9 +4,18 @@ import requests
 from datetime import datetime
 import time
 
+from flask import current_app
+
+API_PATHS = {'access_token': '/api/domain/v4/init',
+             'stations': '/api/hafas/v1/stations',
+             'travel_actions': '/api/offer/v2/travelActions',
+             'timetable': '/api/hafas/v4/timetable',
+             'prices': '/api/offer/v1/prices'}
+
 
 def get_access_token():
-    r = requests.get('https://tickets-mobile.oebb.at/api/domain/v4/init')
+    headers = {'User-Agent': current_app.config['API_USER_AGENT']}
+    r = requests.get(current_app.config['API_HOST'] + API_PATHS['access_token'], headers=headers)
     access_token = r.json().get('accessToken')
     return access_token
 
@@ -19,14 +28,14 @@ def get_request_headers(access_token=None):
             return None
 
     headers = {'AccessToken': access_token,
-               'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/104.0'}
+               'User-Agent': current_app.config['API_USER_AGENT']}
     return headers
 
 
 def get_station_id(name, access_token=None):
     headers = get_request_headers(access_token)
     params = {'name': name, 'count': 1}
-    r = requests.get('https://shop.oebbtickets.at/api/hafas/v1/stations', params, headers=headers)
+    r = requests.get(current_app.config['API_HOST'] + API_PATHS['stations'], params, headers=headers)
     if not type(r.json()) is list or not len(r.json()):
         return None
     return r.json()[0]['number']
@@ -41,7 +50,7 @@ def get_station_names(name, access_token=None):
     #     'Accept': 'application/json, text/plain, */*',
     #     'Accept-Language': 'en-US,en;q=0.7,de;q=0.3',
     #     'Accept-Encoding': 'gzip, deflate, br',
-    #     'Referer': 'https://shop.oebbtickets.at/de/ticket',
+    #     'Referer': current_app.config['API_HOST'] + API_PATHS['']/de/ticket',
     #     'Channel': 'inet',
     #     'Lang': 'de',
     #     'Cache-Control': 'no-cache',
@@ -55,7 +64,7 @@ def get_station_names(name, access_token=None):
     #     'Sec-Fetch-Mode': 'cors',
     #     'Sec-Fetch-Site': 'same-origin'}
     params = {'name': name, 'count': 10}
-    r = requests.get('https://shop.oebbtickets.at/api/hafas/v1/stations', params, headers=headers)
+    r = requests.get(current_app.config['API_HOST'] + API_PATHS['stations'], params, headers=headers)
     if not type(r.json()) is list or not len(r.json()):
         return []
     return [station['name'] if station['name'] != '' else station['meta'] for station in r.json()]
@@ -66,7 +75,7 @@ def get_travel_action_id(origin_id, destination_id, date=None, access_token=None
         date = datetime.utcnow()
     headers = get_request_headers(access_token)
 
-    url = 'https://shop.oebbtickets.at/api/offer/v2/travelActions'
+    url = current_app.config['API_HOST'] + API_PATHS['travel_actions']
     # TODO: lat,long not needed, name not relevant
     data = \
         {
@@ -102,7 +111,7 @@ def get_travel_action_id(origin_id, destination_id, date=None, access_token=None
 
 
 def get_connection_id(travel_action_id, date=None, has_vc66=False, get_only_first=True, access_token=None):
-    url = 'https://shop.oebbtickets.at/api/hafas/v4/timetable'
+    url = current_app.config['API_HOST'] + API_PATHS['timetable']
     if not date:
         date = datetime.utcnow()
 
@@ -158,8 +167,7 @@ def get_connection_id(travel_action_id, date=None, has_vc66=False, get_only_firs
 
 
 def get_price_for_connection(connection_id, access_token=None):
-    # TODO: Here and for all URIs, put them (or parts) separately
-    url = 'https://shop.oebbtickets.at/api/offer/v1/prices'
+    url = current_app.config['API_HOST'] + API_PATHS['prices']
     if type(connection_id) is not list:
         connection_id = [connection_id]
 
