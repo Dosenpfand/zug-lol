@@ -14,8 +14,6 @@ SECURITY_REGISTERABLE = True
 SECURITY_SEND_REGISTER_EMAIL = False
 SECURITY_REGISTER_USER_TEMPLATE = 'register.html'
 SECURITY_LOGIN_USER_TEMPLATE = 'login.html'
-# TODO: temporary until translation is fixed
-SECURITY_MSG_LOGIN = (_("Please log in to access this page."), "info")
 KLIMATICKET_DEFAULT_PRICE = 1095
 BABEL_DEFAULT_LOCALE = 'de'
 LANGUAGES = {'en': 'English', 'de': 'Deutsch'}
