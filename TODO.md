@@ -4,7 +4,6 @@
 - [ ] Vorteilscard: Statistics, paid off with VC, ... paid off without VC
 - [ ] Add journey, delete price after submission?
 - [ ] Reverse direction button
-- [ ] Mobile table layout messed up
 - [ ] Save language in profile
 
 ## Prio 2

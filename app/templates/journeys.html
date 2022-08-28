@@ -66,7 +66,7 @@
             <button type="button" class="btn btn-secondary" disabled>{{ _('Import') }}</button>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete-journal-modal">{{ _('Delete all') }}</button>
           </div>
-          <div>
+          <div class="table-responsive">
             {{ render_table(table, titles=titles, actions_title=actions_title, show_actions=True, model=journey_model, delete_url=('journal.delete_journey', [('journey_id', ':id')])) }}
           </div>
         </p>
