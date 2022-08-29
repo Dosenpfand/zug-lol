@@ -7,6 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{{ title }} - {{ config['SITE_TITLE'] }}</title>
 
+    <meta name="title" content="{{ title }} - {{ config['SITE_TITLE'] }}">
+    <meta name="description" content="{{ config['SITE_DESCRIPTION'] }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ config['SITE_BASE_URI'] }}">
+    <meta property="og:title" content="{{ title }} - {{ config['SITE_TITLE'] }}">
+    <meta property="og:site_name" content="{{ config['SITE_TITLE'] }}" />
+    <meta property="og:description" content="{{ config['SITE_DESCRIPTION'] }}">
+    <meta property="og:image" content="{{ url_for('static', filename='logo_w_name.png') }}">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ config['SITE_BASE_URI'] }}">
+    <meta property="twitter:title" content="{{ title }} - {{ config['SITE_TITLE'] }}">
+    <meta property="twitter:description" content="{{ config['SITE_DESCRIPTION'] }}">
+    <meta property="twitter:image" content="{{ url_for('static', filename='logo_w_name.png') }}">
+
     {{ bootstrap.load_css() }}
     <style>
         pre {
@@ -20,14 +34,18 @@
             margin: 20px;
         }
     </style>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" sizes="any">
+    <link rel="icon" href="{{ url_for('static', filename='icon.svg') }}" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.webmanifest') }}">
 </head>
 <body>
     <div class="bg-light mb-4">
         <div class="container">
               <div class="row">
                   <div class="col-md-auto my-auto">
-                      <img src="{{ url_for('static', filename='favicon.ico') }}" alt="{{ _('Logo: A Train') }}">
+                      <img src="{{ url_for('static', filename='logo.png') }}" alt="{{ _('Logo: A happy Train') }}">
                   </div>
                   <div class="col my-auto display-4">
                     zug.lol

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-29 20:47+0200\n"
+"POT-Creation-Date: 2022-08-30 00:21+0200\n"
 "PO-Revision-Date: 2022-06-13 13:50+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -17,6 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.1\n"
+
+#: config.py:19
+msgid ""
+"Search for train ticket prices in Austria and create a travel journal, to"
+" find out if your Klimaticket pays off."
+msgstr ""
+"Suche nach Zugticket-Preisen in Österreich und "
+"erstelle ein Reisetagebuch, um herauszufinden ob sich das Klimaticket auszahlt."
 
 #: app/__init__.py:68
 msgid "Language changed"
@@ -74,7 +82,7 @@ msgstr "Alle Einträge wurden gelöscht."
 msgid "Actions"
 msgstr "Aktionen"
 
-#: app/journal/views.py:51 app/templates/base.html:41
+#: app/journal/views.py:51 app/templates/base.html:59
 #: app/templates/journeys.html:68
 msgid "Travel Journal"
 msgstr "Reisetagebuch"
@@ -115,19 +123,19 @@ msgstr "Muss ausgewählt sein"
 msgid "Delete account"
 msgstr "Konto löschen"
 
-#: app/main/views.py:20 app/templates/base.html:39
+#: app/main/views.py:20 app/templates/base.html:57
 msgid "Home"
 msgstr "Start"
 
-#: app/main/views.py:25 app/templates/base.html:75
+#: app/main/views.py:25 app/templates/base.html:93
 msgid "Data Protection"
 msgstr "Datenschutz"
 
-#: app/main/views.py:29 app/templates/base.html:76
+#: app/main/views.py:29 app/templates/base.html:94
 msgid "Imprint"
 msgstr "Impressum"
 
-#: app/main/views.py:46 app/templates/base.html:43
+#: app/main/views.py:46 app/templates/base.html:61
 msgid "Profile"
 msgstr "Profil"
 
@@ -139,42 +147,43 @@ msgstr "Dein Konto wurde gelöscht."
 msgid "Delete Account"
 msgstr "Konto löschen"
 
-#: app/templates/base.html:30
-msgid "Logo: A Train"
+#: app/templates/base.html:48
+#, fuzzy
+msgid "Logo: A happy Train"
 msgstr "Logo: Ein Zug"
 
-#: app/templates/base.html:40 app/ticket_price/views.py:12
+#: app/templates/base.html:58 app/ticket_price/views.py:12
 #: app/ticket_price/views.py:13
 msgid "Ticket Price"
 msgstr "Ticketpreis"
 
-#: app/templates/base.html:44
+#: app/templates/base.html:62
 msgid "Logout"
 msgstr "Abmelden"
 
-#: app/templates/base.html:46 app/templates/login.html:1
+#: app/templates/base.html:64 app/templates/login.html:1
 #: app/templates/login.html:20
 msgid "Login"
 msgstr "Anmelden"
 
-#: app/templates/base.html:47 app/templates/register.html:1
+#: app/templates/base.html:65 app/templates/register.html:1
 #: app/templates/register.html:8
 msgid "Register"
 msgstr "Registrieren"
 
-#: app/templates/base.html:70
+#: app/templates/base.html:88
 msgid "A"
 msgstr "Eine"
 
-#: app/templates/base.html:70
+#: app/templates/base.html:88
 msgid "production"
 msgstr "Produktion"
 
-#: app/templates/base.html:81 app/templates/home.html:17
+#: app/templates/base.html:99 app/templates/home.html:17
 msgid "Contact"
 msgstr "Kontakt"
 
-#: app/templates/base.html:82
+#: app/templates/base.html:100
 msgid "Source Code"
 msgstr "Quellcode"
 
