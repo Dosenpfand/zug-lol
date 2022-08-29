@@ -48,13 +48,13 @@ def create_app(config='config'):
         user_datastore = SQLAlchemyUserDatastore(db, User, Role)
         security.init_app(app, user_datastore, register_form=ExtendedRegisterForm)
 
-        from app.main import bp as main_bp # noqa
+        from app.main import bp as main_bp  # noqa
         app.register_blueprint(main_bp)
 
-        from app.journal import bp as journal_bp # noqa
+        from app.journal import bp as journal_bp  # noqa
         app.register_blueprint(journal_bp)
 
-        from app.ticket_price import bp as ticket_price_bp # noqa
+        from app.ticket_price import bp as ticket_price_bp  # noqa
         app.register_blueprint(ticket_price_bp)
 
         @babel.localeselector
@@ -71,7 +71,6 @@ def create_app(config='config'):
     return app
 
 
-# TODO: Can/Should now be deleted?
 def init_db():
     db.drop_all()
     db.create_all()

@@ -20,7 +20,5 @@ def get_valid_access_token():
 
     new_token = AuthToken(token=access_token, expires_at=expires_at)
     db.session.add(new_token)
-
-    # TODO: roll back in case of error?
     db.session.commit()
     return access_token

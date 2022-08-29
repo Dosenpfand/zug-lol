@@ -98,7 +98,6 @@ def export_journeys():
 @bp.route('/sse_container', methods=['POST'])
 @auth_required()
 def sse_container():
-    # TODO: whole view mostly temporary, do not use the price form!
     form = PriceForm()
     form.vorteilscard.data = current_user.has_vorteilscard
 
