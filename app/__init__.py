@@ -4,7 +4,7 @@ import click
 from flask import Flask, current_app, request, session, flash
 from flask.cli import with_appcontext
 from flask_bootstrap import Bootstrap4
-from flask_security import SQLAlchemyUserDatastore, Security
+from flask_security import SQLAlchemyUserDatastore, Security, current_user
 from flask_security.models import fsqla_v2 as fsqla
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -61,8 +61,14 @@ def create_app(config='config'):
         def get_locale():
             lang = request.args.get("lang", None)
             if lang in current_app.config['LANGUAGES']:
+                if current_user.is_authenticated:
+                    user = User.query.filter_by(id=current_user.id).one()
+                    user.language = lang
+                    db.session.commit()
                 flash(_('Language changed'))
                 session['lang'] = lang
+            elif current_user.is_authenticated:
+                session['lang'] = current_user.language
             elif 'lang' not in session:
                 lang = request.accept_languages.best_match(list(current_app.config['LANGUAGES'].keys()))
                 if lang:

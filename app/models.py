@@ -47,6 +47,7 @@ class User(db.Model, fsqla.FsUserMixin):
     has_vorteilscard = db.Column(db.Boolean, default=True)
     klimaticket_price = db.Column(db.Float, default=current_app.config['KLIMATICKET_DEFAULT_PRICE'])
     journeys = db.relationship('Journey', back_populates='user', cascade='all, delete-orphan', lazy=True)
+    language = db.Column(db.String(length=255), default=current_app.config['BABEL_DEFAULT_LOCALE'])
 
 
 class Journey(db.Model):
