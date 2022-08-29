@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-28 11:36+0200\n"
+"POT-Creation-Date: 2022-08-29 15:25+0200\n"
 "PO-Revision-Date: 2022-06-13 13:50+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.1\n"
 
-#: app/__init__.py:64
+#: app/__init__.py:68
 msgid "Language changed"
 msgstr "Sprache geändert"
 
@@ -75,7 +75,7 @@ msgid "Actions"
 msgstr "Aktionen"
 
 #: app/journal/views.py:51 app/templates/base.html:41
-#: app/templates/journeys.html:62
+#: app/templates/journeys.html:68
 msgid "Travel Journal"
 msgstr "Reisetagebuch"
 
@@ -223,55 +223,59 @@ msgstr ""
 "Klimatickets konfigurieren und einstellen ob deine Ticketpreise auf dem "
 "Vorteilscardpreis basieren sollen."
 
-#: app/templates/journeys.html:33
+#: app/templates/journeys.html:34
 msgid "Determine Price"
 msgstr "Preis ermitteln"
 
-#: app/templates/journeys.html:43
+#: app/templates/journeys.html:37
+msgid "Reverse Direction"
+msgstr "Richtung wechseln"
+
+#: app/templates/journeys.html:49
 msgid "Travel Statistics"
 msgstr "Reisestatistik"
 
-#: app/templates/journeys.html:46
+#: app/templates/journeys.html:52
 msgid "Journeys"
 msgstr "Fahrten"
 
-#: app/templates/journeys.html:47
+#: app/templates/journeys.html:53
 msgid "Sum ticket prices"
 msgstr "Summe Ticketpreise"
 
-#: app/templates/journeys.html:49
+#: app/templates/journeys.html:55
 msgid "Klimaticket gains"
 msgstr "Klimaticket Gewinn"
 
-#: app/templates/journeys.html:52
+#: app/templates/journeys.html:58
 msgid "POSITIVE"
 msgstr "POSITIV"
 
-#: app/templates/journeys.html:54
+#: app/templates/journeys.html:60
 msgid "NEGATIVE"
 msgstr "NEGATIV"
 
-#: app/templates/journeys.html:65
+#: app/templates/journeys.html:71
 msgid "Export"
 msgstr "Export"
 
-#: app/templates/journeys.html:66
+#: app/templates/journeys.html:72
 msgid "Import"
 msgstr "Import"
 
-#: app/templates/journeys.html:67
+#: app/templates/journeys.html:73
 msgid "Delete all"
 msgstr "Alle löschen"
 
-#: app/templates/journeys.html:80 app/templates/profile.html:25
+#: app/templates/journeys.html:86 app/templates/profile.html:25
 msgid "Danger Zone"
 msgstr "Gefahrenbereich"
 
-#: app/templates/journeys.html:86
+#: app/templates/journeys.html:92
 msgid "Are you sure you want to delete <strong>ALL</strong> your journal entries?"
 msgstr "Bist du dir sicher, dass du <strong>ALLE</strong> Einträge löschen willst?"
 
-#: app/templates/journeys.html:90
+#: app/templates/journeys.html:96
 msgid "Close"
 msgstr "Schließen"
 
