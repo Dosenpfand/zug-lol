@@ -1,10 +1,6 @@
-from flask_babel import lazy_gettext as _
-
-# secrets.token_urlsafe()
-SECRET_KEY = 'sxnyY8z4wz862Vzzq33GM3yBq09SuSZyHuvHCt9hWh0'
-# secrets.SystemRandom().getrandbits(128)
-SECURITY_PASSWORD_SALT = '261571404880005318712872279376887086919'
-SQLALCHEMY_DATABASE_URI="postgresql+psycopg2://zug:zug@localhost:5432/zug"
+SECRET_KEY = 'fffffffffffffffffffffffffffffffffffffffffff'
+SECURITY_PASSWORD_SALT = '000000000000000000000000000000000000000'
+SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://zug:zug@localhost:5432/zug"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_ENGINE_OPTIONS = {
     "pool_pre_ping": True,
@@ -24,5 +20,3 @@ RECAPTCHA_SCRIPT = 'https://hcaptcha.com/1/api.js'
 RECAPTCHA_VERIFY_SERVER = 'https://hcaptcha.com/siteverify'
 RECAPTCHA_PUBLIC_KEY = '10000000-ffff-ffff-ffff-000000000001'
 RECAPTCHA_PRIVATE_KEY = '0x0000000000000000000000000000000000000000'
-
-# TODO: Add to README.md which values should be set in .env
