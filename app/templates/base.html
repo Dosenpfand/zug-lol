@@ -92,6 +92,13 @@
                 url: '/station_autocomplete'
             }
         })
+
+        // Swap origin and destination
+        function swapValues() {
+            const origin_temp = document.getElementById("origin").value;
+            document.getElementById("origin").value = document.getElementById("destination").value;
+            document.getElementById("destination").value = origin_temp;
+        }
     </script>
 </body>
 </html>
