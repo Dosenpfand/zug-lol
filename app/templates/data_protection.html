@@ -23,7 +23,7 @@
             Landsteinergasse 2/8<br>
             1160 Wien<br>
             Österreich<br>
-            E-Mail: <a href="mailto:zug@sad.bz">zug@sad.bz</a>
+            E-Mail: <a href="mailto:{{ config['SITE_EMAIL'] }}">{{ config['SITE_EMAIL'] }}</a>
         </p>
 
         <h2>Personenbezogenen Daten</h2>
@@ -149,7 +149,7 @@
             href="{{ url_for('main.profile') }}">Profil-Funktionalität</a> der Webseite abrufbar.
         Des Weiteren, hat die betroffene Person das Recht, eine Bestätigung zu verlangen, ob und inwiefern sie
         betreffende personenbezogende Daten verarbeitet werden. Kontaktieren Sie dazu bitte formlos <a
-            href="mailto:zug@sad.bz">zug@sad.bz</a>.
+            href="mailto:{{ config['SITE_EMAIL'] }}">{{ config['SITE_EMAIL'] }}</a>.
 
         <h2>Beschwerderecht</h2>
         <p>

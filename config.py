@@ -18,6 +18,7 @@ LANGUAGES = {'en': 'English', 'de': 'Deutsch'}
 SITE_TITLE = 'zug.lol'
 SITE_DESCRIPTION = _('Search for train ticket prices in Austria and create a travel journal, to find out if your Klimaticket pays off.')
 SITE_BASE_URI = 'https://zug.lol'
+SITE_EMAIL = 'zug@sad.bz'
 API_USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/104.0'
 API_HOST = 'https://shop.oebbtickets.at'
 RECAPTCHA_SCRIPT = 'https://hcaptcha.com/1/api.js'
