@@ -5,7 +5,7 @@
 - [ ] Add journey, delete price after submission?
 
 ## Prio 2
-- [ ] SEO
+- [ ] Add better explanation/introduction text
 - [ ] Grey out button while determining price
 - [ ] Import
 - [ ] Edit journey
