@@ -15,9 +15,18 @@ from util.oebb import get_station_names
 from util.sse import get_price_generator
 
 
-@bp.route('/', methods=['GET'])
+@bp.route('/')
 def home():
     return render_template('home.html', title=_('Home'))
+
+
+@bp.route('/data_protection')
+def data_protection():
+    return render_template('data_protection.html', title=_('Data Protection'))
+
+@bp.route('/imprint')
+def imprint():
+    return render_template('imprint.html', title=_('Imprint'))
 
 
 @bp.route("/profile", methods=['GET', 'POST'])

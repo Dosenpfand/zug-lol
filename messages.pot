@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-29 15:25+0200\n"
+"POT-Creation-Date: 2022-08-29 20:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -118,15 +118,23 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: app/main/views.py:37 app/templates/base.html:43
+#: app/main/views.py:25 app/templates/base.html:75
+msgid "Data Protection"
+msgstr ""
+
+#: app/main/views.py:29 app/templates/base.html:76
+msgid "Imprint"
+msgstr ""
+
+#: app/main/views.py:46 app/templates/base.html:43
 msgid "Profile"
 msgstr ""
 
-#: app/main/views.py:50
+#: app/main/views.py:59
 msgid "Your account has been deleted."
 msgstr ""
 
-#: app/main/views.py:53 app/templates/delete_account.html:7
+#: app/main/views.py:62 app/templates/delete_account.html:7
 msgid "Delete Account"
 msgstr ""
 
@@ -153,48 +161,64 @@ msgstr ""
 msgid "Register"
 msgstr ""
 
-#: app/templates/home.html:7 app/templates/profile.html:7
-msgid "Welcome"
+#: app/templates/base.html:70
+msgid "A"
 msgstr ""
 
-#: app/templates/home.html:8
-msgid "This site offers 2 services"
+#: app/templates/base.html:70
+msgid "production"
 msgstr ""
 
-#: app/templates/home.html:11
-msgid "Search for"
-msgstr ""
-
-#: app/templates/home.html:11
-msgid "train ticket prices"
-msgstr ""
-
-#: app/templates/home.html:11
-msgid "in Austria"
-msgstr ""
-
-#: app/templates/home.html:12
-msgid "Create a"
-msgstr ""
-
-#: app/templates/home.html:12
-msgid "travel journal"
-msgstr ""
-
-#: app/templates/home.html:12
-msgid "to find out if your Klimaticket pays off"
-msgstr ""
-
-#: app/templates/home.html:18
+#: app/templates/base.html:81 app/templates/home.html:17
 msgid "Contact"
 msgstr ""
 
-#: app/templates/home.html:19
-msgid "For complaints, bug reports or any other feedback you can open an"
+#: app/templates/base.html:82
+msgid "Source Code"
+msgstr ""
+
+#: app/templates/home.html:6 app/templates/profile.html:7
+msgid "Welcome"
+msgstr ""
+
+#: app/templates/home.html:7
+msgid "This site offers 2 services"
+msgstr ""
+
+#: app/templates/home.html:10
+msgid "Search for"
+msgstr ""
+
+#: app/templates/home.html:10
+msgid "train ticket prices"
+msgstr ""
+
+#: app/templates/home.html:10
+msgid "in Austria"
+msgstr ""
+
+#: app/templates/home.html:11
+msgid "Create a"
+msgstr ""
+
+#: app/templates/home.html:11
+msgid "travel journal"
+msgstr ""
+
+#: app/templates/home.html:11
+msgid "to find out if your Klimaticket pays off"
 msgstr ""
 
 #: app/templates/home.html:19
-msgid "issue"
+msgid "For complaints, bug reports or any other feedback you can send an email to"
+msgstr ""
+
+#: app/templates/home.html:20
+msgid "or open an issue on"
+msgstr ""
+
+#: app/templates/home.html:21
+msgid "the issue tracker"
 msgstr ""
 
 #: app/templates/journeys.html:9

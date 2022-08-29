@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% from 'bootstrap4/form.html' import render_form %}
 
 {% block content %}
     <div class="card bg-light mb-3" id="welcome">
@@ -16,7 +15,11 @@
     <div class="card bg-light mb-3" id="contact">
         <div class="card-body">
             <h5 class="card-title">{{ _('Contact') }}</h5>
-            <p class="card-text">{{ _('For complaints, bug reports or any other feedback you can open an') }} <a href="https://github.com/Dosenpfand/zug-lol/issues">{{ _('issue') }}</a>.</p>
+            <p class="card-text">
+                {{ _('For complaints, bug reports or any other feedback you can send an email to') }} <a href="mailto:zug@sad.bz">zug@sad.bz</a>
+                {{ _('or open an issue on') }}
+                <a href="https://github.com/Dosenpfand/zug-lol/issues">{{ _('the issue tracker') }}</a>.
+            </p>
         </div>
     </div>
 {% endblock %}

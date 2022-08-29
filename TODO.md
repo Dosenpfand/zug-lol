@@ -14,7 +14,6 @@
 - [ ] admin interface using flask-admin
 - [ ] Add unit tests
 - [ ] Add password reset functionality
-- [ ] Impressum / Data Protection notice?
 
 ## Prio 100
 - [ ] Better caching
