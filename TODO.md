@@ -2,7 +2,6 @@
 
 ## Prio 1
 - [ ] Vorteilscard: Statistics, paid off with VC, ... paid off without VC
-- [ ] Add journey, delete price after submission?
 
 ## Prio 2
 - [ ] Add better explanation/introduction text

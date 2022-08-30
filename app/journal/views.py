@@ -25,6 +25,8 @@ def journeys():
                           price=add_journey_form.price.data, date=add_journey_form.date.data)
         db.session.add(journey)
         db.session.commit()
+        add_journey_form.price.raw_data = None
+        add_journey_form.price.data = None
         flash(_('Journal entry added.'))
 
     if delete_journeys_form.delete.data and delete_journeys_form.validate():
