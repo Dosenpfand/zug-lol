@@ -19,7 +19,7 @@
     <meta property="twitter:url" content="{{ config['SITE_BASE_URI'] }}">
     <meta property="twitter:title" content="{{ title }} - {{ config['SITE_TITLE'] }}">
     <meta property="twitter:description" content="{{ config['SITE_DESCRIPTION'] }}">
-    <meta property="twitter:image" content="{{ url_for('static', filename='logo_w_name.png') }}">
+    <meta property="twitter:image" content="{{ config['SITE_BASE_URI'] }}/{{ url_for('static', filename='logo_w_name.png') }}">
 
     {{ bootstrap.load_css() }}
     <style>
