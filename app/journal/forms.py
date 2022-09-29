@@ -1,5 +1,6 @@
 from flask_babel import lazy_gettext as _
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField
 from wtforms import StringField, DateField, validators, SubmitField
 from wtforms.validators import InputRequired
 
@@ -21,3 +22,8 @@ class JourneyForm(FlaskForm):
 
 class DeleteJournalForm(FlaskForm):
     delete = SubmitField(label=_('Delete'), render_kw={'class': 'btn btn-danger'})
+
+
+class ImportJournalForm(FlaskForm):
+    file = FileField(label=_('CSV File'))
+    upload = SubmitField(label=('Import'), validators=[InputRequired()])

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-30 00:21+0200\n"
+"POT-Creation-Date: 2022-09-29 18:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,64 +31,84 @@ msgstr ""
 msgid "Prove that you are human"
 msgstr ""
 
-#: app/journal/forms.py:10 app/journal/views.py:43 app/ticket_price/forms.py:8
+#: app/journal/forms.py:11 app/journal/views.py:67 app/ticket_price/forms.py:8
 msgid "Origin"
 msgstr ""
 
-#: app/journal/forms.py:12
+#: app/journal/forms.py:13
 msgid "e.g. Wien"
 msgstr ""
 
-#: app/journal/forms.py:13 app/journal/views.py:43 app/ticket_price/forms.py:11
+#: app/journal/forms.py:14 app/journal/views.py:67 app/ticket_price/forms.py:11
 msgid "Destination"
 msgstr ""
 
-#: app/journal/forms.py:15
+#: app/journal/forms.py:16
 msgid "e.g. Innsbruck"
 msgstr ""
 
-#: app/journal/forms.py:17 app/journal/views.py:43
+#: app/journal/forms.py:18 app/journal/views.py:67
 msgid "Price in €"
 msgstr ""
 
-#: app/journal/forms.py:17
+#: app/journal/forms.py:18
 msgid "e.g. 10.5"
 msgstr ""
 
-#: app/journal/forms.py:18 app/journal/views.py:44
+#: app/journal/forms.py:19 app/journal/views.py:68
 msgid "Date"
 msgstr ""
 
-#: app/journal/forms.py:19 app/templates/journeys.html:24
+#: app/journal/forms.py:20 app/templates/journeys.html:24
 msgid "Add Journey"
 msgstr ""
 
-#: app/journal/forms.py:23
+#: app/journal/forms.py:24
 msgid "Delete"
 msgstr ""
 
-#: app/journal/views.py:28
+#: app/journal/forms.py:28
+msgid "CSV File"
+msgstr ""
+
+#: app/journal/views.py:32
 msgid "Journal entry added."
 msgstr ""
 
-#: app/journal/views.py:33
+#: app/journal/views.py:37
 msgid "All journal entries deleted."
 msgstr ""
 
-#: app/journal/views.py:45
+#: app/journal/views.py:51
+msgid "Could not decode the file. Are you sure you uploaded a CSV file?"
+msgstr ""
+
+#: app/journal/views.py:53
+msgid "Could not find the expected column {} in the uploaded CSV file."
+msgstr ""
+
+#: app/journal/views.py:55
+msgid "Could not process the uploaded CSV file."
+msgstr ""
+
+#: app/journal/views.py:57
+msgid "All journal entries imported."
+msgstr ""
+
+#: app/journal/views.py:69
 msgid "Actions"
 msgstr ""
 
-#: app/journal/views.py:51 app/templates/base.html:59
+#: app/journal/views.py:75 app/templates/base.html:62
 #: app/templates/journeys.html:68
 msgid "Travel Journal"
 msgstr ""
 
-#: app/journal/views.py:69
+#: app/journal/views.py:94
 msgid "Journal entry deleted."
 msgstr ""
 
-#: app/journal/views.py:71
+#: app/journal/views.py:96
 msgid "Failed to delete journal entry."
 msgstr ""
 
@@ -120,19 +140,19 @@ msgstr ""
 msgid "Delete account"
 msgstr ""
 
-#: app/main/views.py:20 app/templates/base.html:57
+#: app/main/views.py:20 app/templates/base.html:60
 msgid "Home"
 msgstr ""
 
-#: app/main/views.py:25 app/templates/base.html:93
+#: app/main/views.py:25 app/templates/base.html:96
 msgid "Data Protection"
 msgstr ""
 
-#: app/main/views.py:29 app/templates/base.html:94
+#: app/main/views.py:29 app/templates/base.html:97
 msgid "Imprint"
 msgstr ""
 
-#: app/main/views.py:46 app/templates/base.html:61
+#: app/main/views.py:46 app/templates/base.html:64
 msgid "Profile"
 msgstr ""
 
@@ -144,42 +164,42 @@ msgstr ""
 msgid "Delete Account"
 msgstr ""
 
-#: app/templates/base.html:48
+#: app/templates/base.html:51
 msgid "Logo: A happy Train"
 msgstr ""
 
-#: app/templates/base.html:58 app/ticket_price/views.py:12
+#: app/templates/base.html:61 app/ticket_price/views.py:12
 #: app/ticket_price/views.py:13
 msgid "Ticket Price"
 msgstr ""
 
-#: app/templates/base.html:62
+#: app/templates/base.html:65
 msgid "Logout"
 msgstr ""
 
-#: app/templates/base.html:64 app/templates/login.html:1
+#: app/templates/base.html:67 app/templates/login.html:1
 #: app/templates/login.html:20
 msgid "Login"
 msgstr ""
 
-#: app/templates/base.html:65 app/templates/register.html:1
+#: app/templates/base.html:68 app/templates/register.html:1
 #: app/templates/register.html:8
 msgid "Register"
 msgstr ""
 
-#: app/templates/base.html:88
+#: app/templates/base.html:91
 msgid "A"
 msgstr ""
 
-#: app/templates/base.html:88
+#: app/templates/base.html:91
 msgid "production"
 msgstr ""
 
-#: app/templates/base.html:99 app/templates/home.html:17
+#: app/templates/base.html:102 app/templates/home.html:17
 msgid "Contact"
 msgstr ""
 
-#: app/templates/base.html:100
+#: app/templates/base.html:103
 msgid "Source Code"
 msgstr ""
 
@@ -280,7 +300,7 @@ msgstr ""
 msgid "Export"
 msgstr ""
 
-#: app/templates/journeys.html:72
+#: app/templates/journeys.html:72 app/templates/journeys.html:109
 msgid "Import"
 msgstr ""
 
@@ -296,8 +316,12 @@ msgstr ""
 msgid "Are you sure you want to delete <strong>ALL</strong> your journal entries?"
 msgstr ""
 
-#: app/templates/journeys.html:96
+#: app/templates/journeys.html:96 app/templates/journeys.html:120
 msgid "Close"
+msgstr ""
+
+#: app/templates/journeys.html:116
+msgid "Using the form below, you can import a previously exported journal."
 msgstr ""
 
 #: app/templates/price_form.html:7

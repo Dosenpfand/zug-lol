@@ -6,7 +6,6 @@
 ## Prio 2
 - [ ] Add better explanation/introduction text
 - [ ] Grey out button while determining price
-- [ ] Import
 - [ ] Edit journey
 - [ ] Pagination
 - [ ] Cache invalidation

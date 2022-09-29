@@ -1,4 +1,5 @@
 import csv
+import io
 from io import StringIO
 
 from flask import flash, render_template, redirect, url_for, Response, stream_with_context
@@ -8,7 +9,7 @@ from flask_security import auth_required
 
 from app import db
 from app.ticket_price.forms import PriceForm
-from app.journal.forms import JourneyForm, DeleteJournalForm
+from app.journal.forms import JourneyForm, DeleteJournalForm, ImportJournalForm
 from app.models import Journey
 from app.journal import bp
 
@@ -18,6 +19,7 @@ from app.journal import bp
 def journeys():
     add_journey_form = JourneyForm()
     delete_journeys_form = DeleteJournalForm()
+    import_journeys_form = ImportJournalForm()
 
     if add_journey_form.submit.data and add_journey_form.validate():
         journey = Journey(user_id=current_user.id, origin=add_journey_form.origin.data,
@@ -33,6 +35,26 @@ def journeys():
         Journey.query.filter_by(user_id=current_user.id).delete()
         db.session.commit()
         flash(_('All journal entries deleted.'))
+
+    if import_journeys_form.upload.data and import_journeys_form.validate():
+        wrapper = io.TextIOWrapper(import_journeys_form.file.data, encoding='utf-8')
+        csv_reader = csv.DictReader(wrapper)
+
+        try:
+            for row in csv_reader:
+                journey = Journey(user_id=current_user.id, origin=row['Origin'],
+                                  destination=row['Destination'],
+                                  price=row['Price in €'], date=row['Date'])
+                db.session.add(journey)
+            db.session.commit()
+        except UnicodeDecodeError:
+            flash(_('Could not decode the file. Are you sure you uploaded a CSV file?'), category='danger')
+        except KeyError as e:
+            flash(_('Could not find the expected column {} in the uploaded CSV file.'.format(e)), category='danger')
+        except Exception:
+            flash(_('Could not process the uploaded CSV file.'), category='danger')
+        else:
+            flash(_('All journal entries imported.'))
 
     journeys_objs = Journey.query.filter_by(user_id=current_user.id).order_by(Journey.date.desc()).all()
 
@@ -53,6 +75,7 @@ def journeys():
                            title=_('Travel Journal'),
                            add_journey_form=add_journey_form,
                            delete_journeys_form=delete_journeys_form,
+                           import_journeys_form=import_journeys_form,
                            table=journey_dicts,
                            titles=titles,
                            actions_title=actions_title,
