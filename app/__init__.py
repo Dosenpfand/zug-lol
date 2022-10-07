@@ -11,6 +11,7 @@ from flask_migrate import Migrate
 from flask_babel import Babel, format_number
 from flask_babel import lazy_gettext as _
 from flask_wtf.csrf import CSRFProtect
+from flask_talisman import Talisman
 
 from app.extended_security.forms import ExtendedRegisterForm
 
@@ -20,6 +21,7 @@ security = Security()
 migrate = Migrate()
 babel = Babel()
 csrf = CSRFProtect()
+talisman = Talisman()
 
 
 def create_app(config='config'):
@@ -37,6 +39,7 @@ def create_app(config='config'):
         migrate.init_app(app, db)
         babel.init_app(app)
         csrf.init_app(app)
+        talisman.init_app(app, content_security_policy=current_app.config['CONTENT_SECURITY_POLICY'])
 
         app.jinja_env.add_extension('jinja2.ext.i18n')
         app.jinja_env.filters['format_number'] = format_number

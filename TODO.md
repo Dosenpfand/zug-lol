@@ -2,6 +2,7 @@
 
 ## Prio 1
 - [ ] Vorteilscard: Statistics, paid off with VC, ... paid off without VC
+- [ ] Strict-CSP: Merge branch when https://github.com/helloflask/bootstrap-flask/pull/252 is merged and released (update requirements)
 
 ## Prio 2
 - [ ] Add better explanation/introduction text
