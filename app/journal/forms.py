@@ -26,4 +26,4 @@ class DeleteJournalForm(FlaskForm):
 
 class ImportJournalForm(FlaskForm):
     file = FileField(label=_('CSV File'))
-    upload = SubmitField(label=('Import'), validators=[InputRequired()])
+    upload = SubmitField(label=_('Import'), validators=[InputRequired()])

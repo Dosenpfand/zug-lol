@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-09-29 18:38+0200\n"
+"POT-Creation-Date: 2022-10-10 16:14+0200\n"
 "PO-Revision-Date: 2022-06-13 13:50+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.10.1\n"
+"Generated-By: Babel 2.10.3\n"
 
 #: config.py:19
 msgid ""
@@ -74,6 +74,11 @@ msgstr "Löschen"
 msgid "CSV File"
 msgstr "CSV-Datei"
 
+#: app/journal/forms.py:29 app/templates/journeys.html:72
+#: app/templates/journeys.html:109
+msgid "Import"
+msgstr "Import"
+
 #: app/journal/views.py:32
 msgid "Journal entry added."
 msgstr "Eintrag hinzugefügt"
@@ -90,7 +95,9 @@ msgstr ""
 
 #: app/journal/views.py:53
 msgid "Could not find the expected column {} in the uploaded CSV file."
-msgstr "Konnte die erwartete Spalte {} in der hochgeladenen CSV-Datei nicht finden."
+msgstr ""
+"Konnte die erwartete Spalte {} in der hochgeladenen CSV-Datei nicht "
+"finden."
 
 #: app/journal/views.py:55
 msgid "Could not process the uploaded CSV file."
@@ -313,10 +320,6 @@ msgstr "NEGATIV"
 #: app/templates/journeys.html:71
 msgid "Export"
 msgstr "Export"
-
-#: app/templates/journeys.html:72 app/templates/journeys.html:109
-msgid "Import"
-msgstr "Import"
 
 #: app/templates/journeys.html:73
 msgid "Delete all"
