@@ -1,4 +1,5 @@
 # zug.lol
+
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 A web application that can retrieves prices for train journeys within Austria (via [oebb.at](https://www.oebb.at))
@@ -26,8 +27,16 @@ To run the application locally follow these steps.
     ```
     pip install -r requirements.txt
     ```
-3. Setup a PostgreSQL database and configure it via
-4. Adapt the config, either by changing the contents in ```config.py``` or by pointing the environment
+3. For local development install additional dependencies
+   ```
+   pip install -r requirements-dev.txt
+   ```
+   and install the pre-commit hooks
+   ```
+   pre-commit install
+   ```
+4. Setup a PostgreSQL database and configure it via
+5. Adapt the config, either by changing the contents in ```config.py``` or by pointing the environment
    variable ```APPLICATION_SETTINGS``` to an alternative file.
    At least the following variables need to be changed:
    ```
@@ -38,32 +47,28 @@ To run the application locally follow these steps.
    RECAPTCHA_PRIVATE_KEY
    ```
 
-5. Initialize the database
+6. Initialize the database
    ```
    flask init-db
    ```
-6. Adapt the translation
+7. Adapt the translation
    ```bash
    pybabel extract -F babel.cfg -k lazy_gettext -o messages.pot .
    pybabel update -i messages.pot -d app/translations
    # Adapt app/translations/de/LC_MESSAGES/messages.po
    pybabel compile -d app/translations
    ```
-7. Upgrade the database schema:
+8. Upgrade the database schema:
    ```bash
    flask db upgrade
    ```
-8. Run the app
+9. Run the app
     ```
     export FLASK_DEBUG=True
     export FLASK_APP=app
     flask run
     ```
-9. Open in your browser: http://localhost:5000
-10. Install pre-commit checks before committing
-    ```
-    pre-commit install
-    ```
+10. Open in your browser: http://localhost:5000
 
 ## Live Demo
 
