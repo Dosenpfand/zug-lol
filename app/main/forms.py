@@ -13,13 +13,21 @@ class FlexibleFloatField(FloatField):
 
 
 class ProfileForm(FlaskForm):
-    has_vorteilscard = BooleanField(label=_('Vorteilscard'))
-    klimaticket_price = FlexibleFloatField(label=_('Klimaticket price in €'), render_kw={
-        'placeholder': '{} {}'.format(_('e.g.'), current_app.config['KLIMATICKET_DEFAULT_PRICE'])})
-    submit = SubmitField(label=_('Save'))
+    has_vorteilscard = BooleanField(label=_("Vorteilscard"))
+    klimaticket_price = FlexibleFloatField(
+        label=_("Klimaticket price in €"),
+        render_kw={
+            "placeholder": "{} {}".format(
+                _("e.g."), current_app.config["KLIMATICKET_DEFAULT_PRICE"]
+            )
+        },
+    )
+    submit = SubmitField(label=_("Save"))
 
 
 class DeleteAccountForm(FlaskForm):
-    is_sure = BooleanField(label=_('Do you really want to delete your account?'),
-                           validators=[NoneOf([False], message=_('Needs to be selected'))])
-    submit = SubmitField(label=_('Delete account'))
+    is_sure = BooleanField(
+        label=_("Do you really want to delete your account?"),
+        validators=[NoneOf([False], message=_("Needs to be selected"))],
+    )
+    submit = SubmitField(label=_("Delete account"))

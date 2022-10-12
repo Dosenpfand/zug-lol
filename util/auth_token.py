@@ -13,7 +13,7 @@ def get_valid_access_token():
 
     access_token = get_access_token()
     decoded_token = jwt.decode(access_token, options={"verify_signature": False})
-    expires_at = decoded_token['exp']
+    expires_at = decoded_token["exp"]
 
     if current_token:
         db.session.delete(current_token)
