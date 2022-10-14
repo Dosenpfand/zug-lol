@@ -48,7 +48,9 @@
         <div class="container">
               <div class="row">
                   <div class="col-auto my-auto">
-                      <img src="{{ url_for('static', filename='logo.png') }}" alt="{{ _('Logo: A happy Train') }}">
+                      <a class="text-reset text-decoration-none" href="{{ url_for('main.home') }}">
+                          <img src="{{ url_for('static', filename='logo.png') }}" alt="{{ _('Logo: A happy Train') }}">
+                      </a>
                   </div>
                   <div class="col-auto my-auto display-4">
                     <a class="text-reset text-decoration-none" href="{{ url_for('main.home') }}">zug.lol</a>
