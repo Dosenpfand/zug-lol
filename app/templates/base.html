@@ -51,27 +51,29 @@
                       <img src="{{ url_for('static', filename='logo.png') }}" alt="{{ _('Logo: A happy Train') }}">
                   </div>
                   <div class="col my-auto display-4">
-                    zug.lol
+                    <a class="text-reset text-decoration-none" href="{{ url_for('main.home') }}">zug.lol</a>
                   </div>
               </div>
         </div>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="navbar-nav mr-auto">
-                {{ render_nav_item('main.home', _('Home')) }}
-                {{ render_nav_item('ticket_price.price_form', _('Ticket Price')) }}
-                {{ render_nav_item('journal.journeys', _('Travel Journal')) }}
-                {% if current_user and current_user.is_authenticated %}
-                {{ render_nav_item('main.profile', _('Profile')) }}
-                {{ render_nav_item('security.logout', _('Logout')) }}
-                {% else %}
-                {{ render_nav_item('security.login', _('Login')) }}
-                {{ render_nav_item('security.register', _('Register')) }}
-                {% endif %}
-                {% for code, lang in config['LANGUAGES'].items() %}
-                {% if not code == session['lang'] %}
-                {{ render_nav_item(request.url_rule.endpoint, lang, lang=code) }}
-                {% endif %}
-                {% endfor %}
+            <div class="container">
+                <div class="navbar-nav mr-auto">
+                    {{ render_nav_item('main.home', _('Home')) }}
+                    {{ render_nav_item('ticket_price.price_form', _('Ticket Price')) }}
+                    {{ render_nav_item('journal.journeys', _('Travel Journal')) }}
+                    {% if current_user and current_user.is_authenticated %}
+                    {{ render_nav_item('main.profile', _('Profile')) }}
+                    {{ render_nav_item('security.logout', _('Logout')) }}
+                    {% else %}
+                    {{ render_nav_item('security.login', _('Login')) }}
+                    {{ render_nav_item('security.register', _('Register')) }}
+                    {% endif %}
+                    {% for code, lang in config['LANGUAGES'].items() %}
+                    {% if not code == session['lang'] %}
+                    {{ render_nav_item(request.url_rule.endpoint, lang, lang=code) }}
+                    {% endif %}
+                    {% endfor %}
+                </div>
             </div>
         </nav>
     </div>
