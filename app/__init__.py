@@ -22,11 +22,13 @@ babel = Babel()
 csrf = CSRFProtect()
 
 
-def create_app(config="config"):
+def create_app(import_name=None, config="config"):
     logging.basicConfig(format="%(asctime)s:%(levelname)s:%(name)s:%(message)s")
     logging.getLogger().setLevel(logging.WARNING)
 
-    app = Flask(__name__)
+    import_name = import_name if import_name else __name__
+
+    app = Flask(import_name)
 
     with app.app_context():
         app.config.from_object(config)
@@ -34,6 +36,9 @@ def create_app(config="config"):
         app.config.from_prefixed_env(loads=str)
         bootstrap.init_app(app)
         db.init_app(app)
+        # TODO: check for alternative
+        #  https://stackoverflow.com/questions/37908767/table-roles-users-is-already-defined-for-this-metadata-instance
+        db.metadata.clear()
         migrate.init_app(app, db)
         babel.init_app(app)
         csrf.init_app(app)
