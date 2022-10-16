@@ -7,7 +7,9 @@ class AuthActions(object):
         self._client = client
 
     def login(self, email="test@example1.com", password="test1234"):
-        return self._client.post("/login", data={"email": email, "password": password})
+        return self._client.post(
+            "/login", data={"email": email, "password": password, "submit": "Login"}
+        )
 
     def logout(self):
         return self._client.get("/logout")
@@ -40,11 +42,11 @@ def client(app):
 
 def test_request_price_form(client):
     response = client.get("/price_form")
-    assert b"Ticket Price Search" in response.data
+    assert b"<form" in response.data
 
 
-def test_request_login(auth, client):
+def test_login_wrong_credentials(auth, client):
     assert client.get("/login").status_code == 200
     response = auth.login()
-    print(response.text)
-    assert response.headers["Location"] == "/"
+    assert response.status_code == 200
+    assert "Ungültiges Passwort" in response.text
