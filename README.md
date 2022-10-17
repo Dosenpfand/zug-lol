@@ -2,6 +2,8 @@
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![CI](https://github.com/Dosenpfand/zug-lol/actions/workflows/ci.yml/badge.svg)](https://github.com/Dosenpfand/zug-lol/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 
 A web application that can retrieves prices for train journeys within Austria (via [oebb.at](https://www.oebb.at))
 and allows you to create a travel journal to determine if a [Klimaticket](https://www.klimaticket.at/) pays off.
