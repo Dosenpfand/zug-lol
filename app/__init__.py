@@ -89,8 +89,9 @@ def create_app(import_name=None, config="config"):
     return app
 
 
-def init_db():
-    db.drop_all()
+def init_db(drop=True):
+    if drop:
+        db.drop_all()
     db.create_all()
 
 

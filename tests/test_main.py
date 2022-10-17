@@ -1,5 +1,7 @@
 import pytest
-from app import create_app
+from flask_security import hash_password
+
+from app import create_app, init_db, security
 
 
 class AuthActions(object):
@@ -23,8 +25,18 @@ def app():
             "TESTING": True,
             "WTF_CSRF_ENABLED": False,
             "SECURITY_PASSWORD_HASH": "plaintext",
+            "SQLALCHEMY_DATABASE_URI": "sqlite:///app.db",
         }
     )
+
+    with app.app_context():
+        init_db(drop=False)
+
+        if not security.datastore.find_user(email="test@example1.com"):
+            security.datastore.create_user(
+                email="test@example1.com", password=hash_password("password"), roles=[]
+            )
+        security.datastore.db.session.commit()
 
     yield app
     # TODO: clean up
