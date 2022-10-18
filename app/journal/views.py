@@ -1,5 +1,6 @@
 import csv
 import io
+from datetime import datetime
 from io import StringIO
 
 from flask import (
@@ -58,7 +59,7 @@ def journeys():
                     origin=row["Origin"],
                     destination=row["Destination"],
                     price=row["Price in €"],
-                    date=row["Date"],
+                    date=datetime.strptime(row["Date"], "%Y-%m-%d").date(),
                 )
                 db.session.add(journey)
             db.session.commit()
