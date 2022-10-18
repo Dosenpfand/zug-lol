@@ -1,5 +1,3 @@
-import os
-
 from conftest import TEST_EMAIL, TEST_PASSWORD
 
 
@@ -27,8 +25,3 @@ class TestJourneys:
         )
         assert response.status_code == 200
         assert response.request.path == "/login"
-
-    # TODO: Teardown (and whole class) should not be necessary, but in memory db results in error
-    @staticmethod
-    def teardown_class():
-        os.remove("app/app.db")
