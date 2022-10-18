@@ -4,7 +4,18 @@ import requests
 from datetime import datetime
 import time
 
-from flask import current_app
+try:
+    from flask import current_app
+
+    CONFIG = dict(
+        user_agent=current_app.config["API_USER_AGENT"],
+        host=current_app.config["API_HOST"],
+    )
+except (ModuleNotFoundError, RuntimeError):
+    CONFIG = dict(
+        user_agent="Mozilla/5.0 (X11; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/104.0",
+        host="https://shop.oebbtickets.at",
+    )
 
 API_PATHS = {
     "access_token": "/api/domain/v4/init",
@@ -16,10 +27,8 @@ API_PATHS = {
 
 
 def get_access_token():
-    headers = {"User-Agent": current_app.config["API_USER_AGENT"]}
-    r = requests.get(
-        current_app.config["API_HOST"] + API_PATHS["access_token"], headers=headers
-    )
+    headers = {"User-Agent": CONFIG["user_agent"]}
+    r = requests.get(CONFIG["host"] + API_PATHS["access_token"], headers=headers)
     access_token = r.json().get("accessToken")
     return access_token
 
@@ -33,7 +42,7 @@ def get_request_headers(access_token=None):
 
     headers = {
         "AccessToken": access_token,
-        "User-Agent": current_app.config["API_USER_AGENT"],
+        "User-Agent": CONFIG["user_agent"],
     }
     return headers
 
@@ -41,9 +50,7 @@ def get_request_headers(access_token=None):
 def get_station_id(name, access_token=None):
     headers = get_request_headers(access_token)
     params = {"name": name, "count": 1}
-    r = requests.get(
-        current_app.config["API_HOST"] + API_PATHS["stations"], params, headers=headers
-    )
+    r = requests.get(CONFIG["host"] + API_PATHS["stations"], params, headers=headers)
     if not type(r.json()) is list or not len(r.json()):
         return None
     return r.json()[0]["number"]
@@ -58,7 +65,7 @@ def get_station_names(name, access_token=None):
     #     'Accept': 'application/json, text/plain, */*',
     #     'Accept-Language': 'en-US,en;q=0.7,de;q=0.3',
     #     'Accept-Encoding': 'gzip, deflate, br',
-    #     'Referer': current_app.config['API_HOST'] + API_PATHS['']/de/ticket',
+    #     'Referer': CONFIG['API_HOST'] + API_PATHS['']/de/ticket',
     #     'Channel': 'inet',
     #     'Lang': 'de',
     #     'Cache-Control': 'no-cache',
@@ -72,9 +79,7 @@ def get_station_names(name, access_token=None):
     #     'Sec-Fetch-Mode': 'cors',
     #     'Sec-Fetch-Site': 'same-origin'}
     params = {"name": name, "count": 10}
-    r = requests.get(
-        current_app.config["API_HOST"] + API_PATHS["stations"], params, headers=headers
-    )
+    r = requests.get(CONFIG["host"] + API_PATHS["stations"], params, headers=headers)
     if not type(r.json()) is list or not len(r.json()):
         return []
     return [
@@ -88,7 +93,7 @@ def get_travel_action_id(origin_id, destination_id, date=None, access_token=None
         date = datetime.utcnow()
     headers = get_request_headers(access_token)
 
-    url = current_app.config["API_HOST"] + API_PATHS["travel_actions"]
+    url = CONFIG["host"] + API_PATHS["travel_actions"]
     # TODO: lat,long not needed, name not relevant
     data = {
         "from": {
@@ -134,7 +139,7 @@ def get_travel_action_id(origin_id, destination_id, date=None, access_token=None
 def get_connection_id(
     travel_action_id, date=None, has_vc66=False, get_only_first=True, access_token=None
 ):
-    url = current_app.config["API_HOST"] + API_PATHS["timetable"]
+    url = CONFIG["host"] + API_PATHS["timetable"]
     if not date:
         date = datetime.utcnow()
 
@@ -225,7 +230,7 @@ def get_connection_id(
 
 
 def get_price_for_connection(connection_id, access_token=None):
-    url = current_app.config["API_HOST"] + API_PATHS["prices"]
+    url = CONFIG["host"] + API_PATHS["prices"]
     if type(connection_id) is not list:
         connection_id = [connection_id]
 

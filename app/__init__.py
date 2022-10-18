@@ -68,6 +68,8 @@ def create_app(import_name=None, config="config"):
 
         @babel.localeselector
         def get_locale():
+            if current_app.config["TESTING"]:
+                return "en"
             lang = request.args.get("lang", None)
             if lang in current_app.config["LANGUAGES"]:
                 if current_user.is_authenticated:
