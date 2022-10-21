@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from typing import Optional, Iterator
 
 from flask import render_template
 from flask_babel import lazy_gettext as _, format_decimal
@@ -9,19 +10,19 @@ from util.auth_token import get_valid_access_token
 from util.oebb import (
     get_station_id,
     get_travel_action_id,
-    get_connection_id,
+    get_connection_ids,
     get_price_for_connection,
 )
 
 
 def get_price_generator(
-    origin,
-    destination,
-    date=None,
-    has_vc66=False,
-    output_only_price=False,
-    access_token=None,
-):
+    origin: str,
+    destination: str,
+    date: Optional[datetime] = None,
+    has_vc66: bool = False,
+    output_only_price: bool = False,
+    access_token: Optional[str] = None,
+) -> Iterator[str]:
     if not date:
         date = (datetime.utcnow() + timedelta(days=1)).replace(
             hour=8, minute=0, second=0, microsecond=0
@@ -103,7 +104,7 @@ def get_price_generator(
     current_step += 1
     current_message = _("Processing connections")
     yield render(current_message, current_step)
-    connection_ids = get_connection_id(
+    connection_ids = get_connection_ids(
         travel_action_id,
         date=date,
         has_vc66=has_vc66,

@@ -1,4 +1,5 @@
 from statistics import median
+from typing import Optional, Dict, List, Union
 
 import requests
 from datetime import datetime
@@ -26,17 +27,16 @@ API_PATHS = {
 }
 
 
-def get_access_token():
+def get_access_token() -> Optional[str]:
     headers = {"User-Agent": CONFIG["user_agent"]}
     r = requests.get(CONFIG["host"] + API_PATHS["access_token"], headers=headers)
     access_token = r.json().get("accessToken")
     return access_token
 
 
-def get_request_headers(access_token=None):
+def get_request_headers(access_token: Optional[str] = None) -> Optional[Dict[str, str]]:
     if not access_token:
         access_token = get_access_token()
-
         if not access_token:
             return None
 
@@ -47,16 +47,16 @@ def get_request_headers(access_token=None):
     return headers
 
 
-def get_station_id(name, access_token=None):
+def get_station_id(name: str, access_token: Optional[str] = None) -> Optional[str]:
     headers = get_request_headers(access_token)
-    params = {"name": name, "count": 1}
+    params = {"name": name, "count": "1"}
     r = requests.get(CONFIG["host"] + API_PATHS["stations"], params, headers=headers)
     if not type(r.json()) is list or not len(r.json()):
         return None
     return r.json()[0]["number"]
 
 
-def get_station_names(name, access_token=None):
+def get_station_names(name: str, access_token: Optional[str] = None) -> List[str]:
     headers = get_request_headers(access_token)
     # TODO: Add more?
     # add_headers = {
@@ -78,7 +78,7 @@ def get_station_names(name, access_token=None):
     #     'Sec-Fetch-Dest': 'empty',
     #     'Sec-Fetch-Mode': 'cors',
     #     'Sec-Fetch-Site': 'same-origin'}
-    params = {"name": name, "count": 10}
+    params = {"name": name, "count": "10"}
     r = requests.get(CONFIG["host"] + API_PATHS["stations"], params, headers=headers)
     if not type(r.json()) is list or not len(r.json()):
         return []
@@ -88,7 +88,12 @@ def get_station_names(name, access_token=None):
     ]
 
 
-def get_travel_action_id(origin_id, destination_id, date=None, access_token=None):
+def get_travel_action_id(
+    origin_id: str,
+    destination_id: str,
+    date: Optional[datetime] = None,
+    access_token: Optional[str] = None,
+) -> Optional[str]:
     if not date:
         date = datetime.utcnow()
     headers = get_request_headers(access_token)
@@ -136,9 +141,13 @@ def get_travel_action_id(origin_id, destination_id, date=None, access_token=None
     return travel_action_id
 
 
-def get_connection_id(
-    travel_action_id, date=None, has_vc66=False, get_only_first=True, access_token=None
-):
+def get_connection_ids(
+    travel_action_id: str,
+    date: Optional[datetime] = None,
+    has_vc66: bool = False,
+    get_only_first: bool = True,
+    access_token: Optional[str] = None,
+) -> Optional[List[str]]:
     url = CONFIG["host"] + API_PATHS["timetable"]
     if not date:
         date = datetime.utcnow()
@@ -229,9 +238,11 @@ def get_connection_id(
     return connection_ids
 
 
-def get_price_for_connection(connection_id, access_token=None):
+def get_price_for_connection(
+    connection_id: Union[str, list[str]], access_token: Optional[str] = None
+) -> Optional[float]:
     url = CONFIG["host"] + API_PATHS["prices"]
-    if type(connection_id) is not list:
+    if type(connection_id) is str:
         connection_id = [connection_id]
 
     connection_id_params = [
@@ -248,7 +259,7 @@ def get_price_for_connection(connection_id, access_token=None):
         offer.get("price") if not offer.get("reducedScope") else None
         for offer in r.json()["offers"]
     ]
-    prices_cleaned = list(filter(None, prices))
+    prices_cleaned: List[float] = list(filter(None, prices))
 
     if prices_cleaned:
         price = median(prices_cleaned)
@@ -258,7 +269,13 @@ def get_price_for_connection(connection_id, access_token=None):
     return price
 
 
-def get_price(origin, destination, date=None, has_vc66=False, access_token=None):
+def get_price(
+    origin: str,
+    destination: str,
+    date: Optional[datetime] = None,
+    has_vc66: bool = False,
+    access_token: Optional[str] = None,
+) -> Optional[float]:
     if not access_token:
         access_token = get_access_token()
     if not access_token:
@@ -272,11 +289,14 @@ def get_price(origin, destination, date=None, has_vc66=False, access_token=None)
     travel_action_id = get_travel_action_id(
         origin_id, destination_id, date=date, access_token=access_token
     )
-    connection_id = get_connection_id(
-        travel_action_id, date=date, has_vc66=has_vc66, access_token=access_token
-    )
-    if not connection_id:
+    if not travel_action_id:
         return None
 
-    price = get_price_for_connection(connection_id, access_token=access_token)
+    connection_ids = get_connection_ids(
+        travel_action_id, date=date, has_vc66=has_vc66, access_token=access_token
+    )
+    if not connection_ids:
+        return None
+
+    price = get_price_for_connection(connection_ids, access_token=access_token)
     return price

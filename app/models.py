@@ -6,8 +6,13 @@ from app import db
 from time import time
 from flask_security.models import fsqla_v2 as fsqla
 
+from sqlalchemy.ext.declarative import DeclarativeMeta
 
-class Price(db.Model):
+# NOTE: Needed for mypy
+BaseModel: DeclarativeMeta = db.Model
+
+
+class Price(BaseModel):
     origin = db.Column(db.Text, primary_key=True)
     destination = db.Column(db.Text, primary_key=True)
     is_vorteilscard = db.Column(db.Boolean, primary_key=True)
@@ -18,7 +23,7 @@ class Price(db.Model):
         return f"<Price {self.price}>"
 
 
-class StationAutocomplete(db.Model):
+class StationAutocomplete(BaseModel):
     input = db.Column(db.Text, primary_key=True)
     result = db.Column(db.Text)
 
@@ -26,7 +31,7 @@ class StationAutocomplete(db.Model):
         return f"<StationAutocomplete {self.input}>"
 
 
-class AuthToken(db.Model):
+class AuthToken(BaseModel):
     # Tokens are usually valid for 300 seconds
     expires_at = db.Column(db.Integer, primary_key=True)
     token = db.Column(db.Text)
@@ -38,12 +43,12 @@ class AuthToken(db.Model):
         return f"<AuthToken {self.expires_at}>"
 
 
-class Role(db.Model, fsqla.FsRoleMixin):
+class Role(BaseModel, fsqla.FsRoleMixin):
     def __repr__(self):
         return f"<Role {self.name}>"
 
 
-class User(db.Model, fsqla.FsUserMixin):
+class User(BaseModel, fsqla.FsUserMixin):
     has_vorteilscard = db.Column(db.Boolean, default=True)
     klimaticket_price = db.Column(
         db.Float, default=current_app.config["KLIMATICKET_DEFAULT_PRICE"]
@@ -56,7 +61,7 @@ class User(db.Model, fsqla.FsUserMixin):
     )
 
 
-class Journey(db.Model):
+class Journey(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     # TODO: when moved to postgres
     # id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

@@ -2,7 +2,10 @@ import csv
 import io
 from datetime import datetime
 from io import StringIO
+from typing import TYPE_CHECKING
 
+if TYPE_CHECKING:
+    import werkzeug
 from flask import (
     flash,
     render_template,
@@ -24,7 +27,7 @@ from app.journal import bp
 
 @bp.route("/journeys", methods=["GET", "POST"])
 @auth_required()
-def journeys():
+def journeys() -> str:
     add_journey_form = JourneyForm()
     delete_journeys_form = DeleteJournalForm()
     import_journeys_form = ImportJournalForm()
@@ -128,7 +131,7 @@ def journeys():
 
 @bp.route("/delete_journey/<int:journey_id>", methods=["GET", "POST"])
 @auth_required()
-def delete_journey(journey_id):
+def delete_journey(journey_id: int) -> werkzeug.wrappers.response.Response:
     journey_result = Journey.query.filter_by(id=journey_id).first()
     if journey_result and journey_result.user_id == current_user.id:
         Journey.query.filter_by(id=journey_id).delete()
@@ -141,7 +144,7 @@ def delete_journey(journey_id):
 
 @bp.route("/export_journeys")
 @auth_required()
-def export_journeys():
+def export_journeys() -> Response:
     def generate():
         data = StringIO()
         w = csv.writer(data)
@@ -168,7 +171,7 @@ def export_journeys():
 
 @bp.route("/sse_container", methods=["POST"])
 @auth_required()
-def sse_container():
+def sse_container() -> str:
     form = PriceForm()
     form.vorteilscard.data = current_user.has_vorteilscard
 
