@@ -1,3 +1,5 @@
+from typing import List, Optional
+
 from flask import current_app
 from flask_babel import lazy_gettext as _
 from flask_wtf import FlaskForm
@@ -6,7 +8,7 @@ from wtforms.validators import NoneOf
 
 
 class FlexibleFloatField(FloatField):
-    def process_formdata(self, valuelist):
+    def process_formdata(self, valuelist: List[str]) -> Optional[float]:
         if valuelist:
             valuelist[0] = valuelist[0].replace(",", ".")
         return super(FlexibleFloatField, self).process_formdata(valuelist)

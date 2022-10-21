@@ -38,7 +38,7 @@ jobs:
       uses: psf/black@stable
     - name: Type checks with mypy
       run: |
-        mypy app/ util/
+        mypy app/ util/ tests/
     - name: Test with pytest
       run: |
         pytest --cov=./ --cov-report=xml

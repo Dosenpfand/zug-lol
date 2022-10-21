@@ -1,4 +1,5 @@
 import logging
+from typing import Optional, Union
 
 import click
 from flask import Flask, current_app, request, session, flash
@@ -22,7 +23,9 @@ babel = Babel()
 csrf = CSRFProtect()
 
 
-def create_app(import_name=None, config="config"):
+def create_app(
+    import_name: Optional[str] = None, config: Union[object, str] = "config"
+) -> Flask:
     logging.basicConfig(format="%(asctime)s:%(levelname)s:%(name)s:%(message)s")
     logging.getLogger().setLevel(logging.WARNING)
 
@@ -91,7 +94,7 @@ def create_app(import_name=None, config="config"):
     return app
 
 
-def init_db(drop=True):
+def init_db(drop: bool = True) -> None:
     if drop:
         db.drop_all()
     db.create_all()
@@ -99,7 +102,7 @@ def init_db(drop=True):
 
 @click.command("init-db")
 @with_appcontext
-def init_db_command():
+def init_db_command() -> None:
     """Clear existing data and create new tables."""
     init_db()
     click.echo("Initialized the database.")

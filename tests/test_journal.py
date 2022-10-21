@@ -11,14 +11,14 @@ import pytest
 
 class TestJourneys:
     @staticmethod
-    def row_html_pattern(origin, destination, price):
+    def row_html_pattern(origin: str, destination: str, price: str) -> str:
         return (
             rf"<td>{origin}</td>(\s*)<td>{destination}</td>(\s*)<td>{price}</td>(\s*)"
             r'<td>(.*?)</td>(\s*)<td>(\s*)<form(.*?)action="/delete_journey/(?P<id>\d+)"'
         )
 
     @staticmethod
-    def row_csv_pattern(origin, destination, price):
+    def row_csv_pattern(origin: str, destination: str, price: str) -> str:
         return f"{origin},{destination},{price}"
 
     journeys = [

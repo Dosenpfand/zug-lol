@@ -4,8 +4,6 @@ from datetime import datetime
 from io import StringIO
 from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:
-    import werkzeug
 from flask import (
     flash,
     render_template,
@@ -23,6 +21,9 @@ from app.ticket_price.forms import PriceForm
 from app.journal.forms import JourneyForm, DeleteJournalForm, ImportJournalForm
 from app.models import Journey
 from app.journal import bp
+
+if TYPE_CHECKING:
+    from werkzeug.wrappers import Response as BaseResponse
 
 
 @bp.route("/journeys", methods=["GET", "POST"])
@@ -131,7 +132,7 @@ def journeys() -> str:
 
 @bp.route("/delete_journey/<int:journey_id>", methods=["GET", "POST"])
 @auth_required()
-def delete_journey(journey_id: int) -> werkzeug.wrappers.response.Response:
+def delete_journey(journey_id: int) -> "BaseResponse":
     journey_result = Journey.query.filter_by(id=journey_id).first()
     if journey_result and journey_result.user_id == current_user.id:
         Journey.query.filter_by(id=journey_id).delete()

@@ -1,4 +1,5 @@
 from json import dumps
+from typing import TYPE_CHECKING, Union
 
 from flask import (
     render_template,
@@ -8,6 +9,7 @@ from flask import (
     redirect,
     url_for,
     flash,
+    abort,
 )
 from flask_babel import gettext as _
 from flask_login import current_user
@@ -22,25 +24,28 @@ from util.auth_token import get_valid_access_token
 from util.oebb import get_station_names
 from util.sse import get_price_generator
 
+if TYPE_CHECKING:
+    from werkzeug.wrappers import Response as BaseResponse
+
 
 @bp.route("/")
-def home():
+def home() -> str:
     return render_template("home.html", title=_("Home"))
 
 
 @bp.route("/data_protection")
-def data_protection():
+def data_protection() -> str:
     return render_template("data_protection.html", title=_("Data Protection"))
 
 
 @bp.route("/imprint")
-def imprint():
+def imprint() -> str:
     return render_template("imprint.html", title=_("Imprint"))
 
 
 @bp.route("/profile", methods=["GET", "POST"])
 @auth_required()
-def profile():
+def profile() -> str:
     form = ProfileForm()
 
     if form.validate_on_submit():
@@ -59,7 +64,7 @@ def profile():
 
 @bp.route("/delete_account", methods=["GET", "POST"])
 @auth_required()
-def delete_account():
+def delete_account() -> Union[str, "BaseResponse"]:
     form = DeleteAccountForm()
 
     if form.validate_on_submit():
@@ -74,7 +79,7 @@ def delete_account():
 
 
 @bp.route("/station_autocomplete")
-def station_autocomplete():
+def station_autocomplete() -> Union[str, "BaseResponse"]:
     name = request.args.get("q")
 
     if not name:
@@ -98,15 +103,17 @@ def station_autocomplete():
 
 
 @bp.route("/get_price")
-def get_price():
+def get_price() -> "BaseResponse":
     origin = request.args.get("origin", type=str)
     destination = request.args.get("destination", type=str)
+
+    if not origin or not destination:
+        abort(400)
+
     has_vorteilscard = (
         request.args.get("vorteilscard", type=str, default="False") == "True"
     )
-    output_only_price = request.args.get(
-        "output_only_price", type=bool, default="False"
-    )
+    output_only_price = request.args.get("output_only_price", type=bool, default=False)
 
     return Response(
         stream_with_context(

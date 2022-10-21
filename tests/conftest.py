@@ -1,17 +1,26 @@
+from typing import TYPE_CHECKING, Iterator
+
 import pytest
 from flask_security import hash_password
 
-from app import create_app, init_db, security
+from app import create_app, init_db, security, db
+
+if TYPE_CHECKING:
+    from flask.testing import FlaskClient
+    from flask import Flask
+    from werkzeug.test import TestResponse
 
 TEST_EMAIL = "test@example1.com"
 TEST_PASSWORD = "password"
 
 
 class AuthActions(object):
-    def __init__(self, client):
+    def __init__(self, client: "FlaskClient"):
         self._client = client
 
-    def login(self, email=TEST_EMAIL, password=TEST_PASSWORD):
+    def login(
+        self, email: str = TEST_EMAIL, password: str = TEST_PASSWORD
+    ) -> "TestResponse":
         response = self._client.post(
             "/login",
             data=dict(email=email, password=password, submit="Login"),
@@ -21,12 +30,12 @@ class AuthActions(object):
         assert response.request.path == "/"
         return response
 
-    def logout(self):
+    def logout(self) -> "TestResponse":
         return self._client.get("/logout")
 
 
 @pytest.fixture()
-def app():
+def app() -> Iterator["Flask"]:
     app = create_app()
     app.config.update(
         {
@@ -44,16 +53,16 @@ def app():
             security.datastore.create_user(
                 email=TEST_EMAIL, password=hash_password(TEST_PASSWORD), roles=[]
             )
-        security.datastore.db.session.commit()
+        db.session.commit()
 
     yield app
 
 
 @pytest.fixture()
-def auth(client):
+def auth(client: "FlaskClient") -> AuthActions:
     return AuthActions(client)
 
 
 @pytest.fixture()
-def client(app):
+def client(app: "Flask") -> "FlaskClient":
     return app.test_client()
