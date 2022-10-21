@@ -239,7 +239,7 @@ def get_connection_ids(
 
 
 def get_price_for_connection(
-    connection_id: Union[str, list[str]], access_token: Optional[str] = None
+    connection_id: Union[str, List[str]], access_token: Optional[str] = None
 ) -> Optional[float]:
     url = CONFIG["host"] + API_PATHS["prices"]
     if type(connection_id) is str:
