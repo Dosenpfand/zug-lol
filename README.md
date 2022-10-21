@@ -1,3 +1,5 @@
+<img src="assets/logo.svg" alt="mypy logo" height="150"/>
+
 # zug.lol
 
 [![CI](https://github.com/Dosenpfand/zug-lol/actions/workflows/ci.yml/badge.svg)](https://github.com/Dosenpfand/zug-lol/actions/workflows/ci.yml)
