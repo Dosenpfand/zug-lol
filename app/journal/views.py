@@ -56,6 +56,7 @@ def journeys() -> str:
         wrapper = io.TextIOWrapper(import_journeys_form.file.data, encoding="utf-8")
         csv_reader = csv.DictReader(wrapper)
 
+        # noinspection PyBroadException
         try:
             for row in csv_reader:
                 journey = Journey(

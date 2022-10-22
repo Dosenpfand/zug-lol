@@ -1,7 +1,7 @@
 import os
 import re
 
-from typing import TYPE_CHECKING, Iterator
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from flask import Flask

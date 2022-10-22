@@ -15,6 +15,17 @@ from util.oebb import (
 )
 
 
+def render(
+    message: str, step: Optional[int] = None, total_steps: Optional[int] = None
+) -> str:
+    if step and total_steps:
+        progress = int(step / total_steps * 100)
+    else:
+        progress = None
+    output = {"progress": progress, "message": message}
+    return render_template("sse_message.txt", **output)
+
+
 def get_price_generator(
     origin: str,
     destination: str,
@@ -42,16 +53,8 @@ def get_price_generator(
     total_steps = 8
     current_step = 0
 
-    def render(message: str, step: Optional[int] = None) -> str:
-        if step:
-            progress = int(step / total_steps * 100)
-        else:
-            progress = None
-        output = {"progress": progress, "message": message}
-        return render_template("sse_message.txt", **output)
-
     current_step += 1
-    yield render(_("Checking local cache"), current_step)
+    yield render(_("Checking local cache"), current_step, total_steps)
 
     if price_exists:
         price = price_query.first().price
@@ -64,9 +67,8 @@ def get_price_generator(
     current_step += 1
     if not access_token:
         current_message = _("Generating access token")
-        render(current_message, current_step)
+        yield render(current_message, current_step, total_steps)
         access_token = get_valid_access_token()
-
         if not access_token:
             current_message = _("Failed to generate access token")
             yield render(current_message)
@@ -74,7 +76,7 @@ def get_price_generator(
 
     current_step += 1
     current_message = _("Processing origin")
-    yield render(current_message, current_step)
+    yield render(current_message, current_step, total_steps)
     origin_id = get_station_id(origin, access_token=access_token)
     if not origin_id:
         current_message = _("Failed to process origin")
@@ -83,7 +85,7 @@ def get_price_generator(
 
     current_step += 1
     current_message = _("Processing destination")
-    yield render(current_message, current_step)
+    yield render(current_message, current_step, total_steps)
     destination_id = get_station_id(destination, access_token=access_token)
     if not destination_id:
         current_message = _("Failed to process destination")
@@ -92,7 +94,7 @@ def get_price_generator(
 
     current_step += 1
     current_message = _("Processing travel action")
-    yield render(current_message, current_step)
+    yield render(current_message, current_step, total_steps)
     travel_action_id = get_travel_action_id(
         origin_id, destination_id, date=date, access_token=access_token
     )
@@ -103,7 +105,7 @@ def get_price_generator(
 
     current_step += 1
     current_message = _("Processing connections")
-    yield render(current_message, current_step)
+    yield render(current_message, current_step, total_steps)
     connection_ids = get_connection_ids(
         travel_action_id,
         date=date,
@@ -118,7 +120,7 @@ def get_price_generator(
 
     current_step += 1
     current_message = _("Retrieving price")
-    yield render(current_message, current_step)
+    yield render(current_message, current_step, total_steps)
     price = get_price_for_connection(connection_ids, access_token=access_token)
     if not price:
         current_message = _("Failed to retrieve price")

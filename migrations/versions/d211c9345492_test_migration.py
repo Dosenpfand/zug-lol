@@ -1,13 +1,12 @@
 """Test migration
 
 Revision ID: d211c9345492
-Revises: 
+Revises:
 Create Date: 2022-06-23 15:39:46.447630
 
 """
 from alembic import op
 import sqlalchemy as sa
-
 
 # revision identifiers, used by Alembic.
 revision = "d211c9345492"
