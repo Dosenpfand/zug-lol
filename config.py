@@ -15,6 +15,7 @@ SECURITY_LOGIN_USER_TEMPLATE = "login.html"
 KLIMATICKET_DEFAULT_PRICE = 1095
 BABEL_DEFAULT_LOCALE = "de"
 LANGUAGES = {"en": "English", "de": "Deutsch"}
+DEFAULT_LANGUAGE = "en"
 SITE_TITLE = "zug.lol"
 SITE_DESCRIPTION = _(
     "Search for train ticket prices in Austria and create a travel journal, to find out if your Klimaticket pays off."

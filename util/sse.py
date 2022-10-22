@@ -42,7 +42,7 @@ def get_price_generator(
     total_steps = 8
     current_step = 0
 
-    def render(message, step=None):
+    def render(message: str, step: Optional[int] = None) -> str:
         if step:
             progress = int(step / total_steps * 100)
         else:

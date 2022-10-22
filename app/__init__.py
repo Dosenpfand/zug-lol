@@ -70,7 +70,7 @@ def create_app(
         app.register_blueprint(ticket_price_bp)
 
         @babel.localeselector
-        def get_locale():
+        def get_locale() -> str:
             if current_app.config["TESTING"]:
                 return "en"
             lang = request.args.get("lang", None)
@@ -89,7 +89,7 @@ def create_app(
                 )
                 if lang:
                     session["lang"] = lang
-            return session.get("lang")
+            return session.get("lang", default=current_app.config["DEFAULT_LANGUAGE"])
 
     return app
 

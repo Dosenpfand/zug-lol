@@ -1,5 +1,10 @@
 import io
 import re
+from typing import TYPE_CHECKING, Tuple, Dict, Union
+
+if TYPE_CHECKING:
+    from conftest import AuthActions
+    from flask.testing import FlaskClient
 
 import pytest
 
@@ -29,7 +34,14 @@ class TestJourneys:
     ]
 
     @pytest.mark.parametrize("origin,destination,price", journeys)
-    def test_add_journey(self, auth, client, origin, destination, price):
+    def test_add_journey(
+        self,
+        auth: "AuthActions",
+        client: "FlaskClient",
+        origin: str,
+        destination: str,
+        price: str,
+    ) -> None:
         auth.login()
         response = client.get("/journeys")
         assert not re.search(
@@ -57,7 +69,7 @@ class TestJourneys:
             flags=re.MULTILINE | re.DOTALL,
         )
 
-    def test_export_journeys(self, auth, client):
+    def test_export_journeys(self, auth: "AuthActions", client: "FlaskClient") -> bytes:
         auth.login()
         response = client.get("/export_journeys")
 
@@ -68,7 +80,14 @@ class TestJourneys:
         return response.data
 
     @pytest.mark.parametrize("origin,destination,price", journeys)
-    def test_delete_journey(self, auth, client, origin, destination, price):
+    def test_delete_journey(
+        self,
+        auth: "AuthActions",
+        client: "FlaskClient",
+        origin: str,
+        destination: str,
+        price: str,
+    ) -> None:
         auth.login()
         response = client.get("/journeys")
         assert response.status_code == 200
@@ -77,6 +96,7 @@ class TestJourneys:
             response.text,
             flags=re.MULTILINE | re.DOTALL,
         )
+        assert match
         journey_id = match.group("id")
 
         response = client.post(
@@ -90,7 +110,9 @@ class TestJourneys:
             flags=re.MULTILINE | re.DOTALL,
         )
 
-    def test_delete_all_journeys(self, auth, client):
+    def test_delete_all_journeys(
+        self, auth: "AuthActions", client: "FlaskClient"
+    ) -> None:
         auth.login()
         for journey in self.journeys:
             self.test_add_journey(auth, client, journey[0], journey[1], journey[2])
@@ -108,7 +130,7 @@ class TestJourneys:
                 flags=re.MULTILINE | re.DOTALL,
             )
 
-    def test_import_journeys(self, auth, client):
+    def test_import_journeys(self, auth: "AuthActions", client: "FlaskClient") -> None:
         auth.login()
         for journey in self.journeys:
             self.test_add_journey(auth, client, journey[0], journey[1], journey[2])
@@ -121,7 +143,7 @@ class TestJourneys:
         )
         assert response.status_code == 200
 
-        data = dict(upload="Import")
+        data: Dict[str, Union[str, Tuple[io.BytesIO, str]]] = dict(upload="Import")
         data["file"] = (io.BytesIO(csv_data), "exported_journeys.csv")
         response = client.post(
             "/journeys",

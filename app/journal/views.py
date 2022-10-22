@@ -2,7 +2,7 @@ import csv
 import io
 from datetime import datetime
 from io import StringIO
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Iterator
 
 from flask import (
     flash,
@@ -146,7 +146,7 @@ def delete_journey(journey_id: int) -> "BaseResponse":
 @bp.route("/export_journeys")
 @auth_required()
 def export_journeys() -> Response:
-    def generate():
+    def generate() -> Iterator[str]:
         data = StringIO()
         w = csv.writer(data)
         w.writerow(("Origin", "Destination", "Price in €", "Date"))
