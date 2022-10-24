@@ -9,11 +9,6 @@ if TYPE_CHECKING:
 import pytest
 
 
-# TODO
-# ticket price search
-# determining price for journey
-
-
 class TestJourneys:
     @staticmethod
     def row_html_pattern(origin: str, destination: str, price: str) -> str:

@@ -58,26 +58,6 @@ def get_station_id(name: str, access_token: Optional[str] = None) -> Optional[st
 
 def get_station_names(name: str, access_token: Optional[str] = None) -> List[str]:
     headers = get_request_headers(access_token)
-    # TODO: Add more?
-    # add_headers = {
-    #     'Host': 'shop.oebbtickets.at',
-    #     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/104.0',
-    #     'Accept': 'application/json, text/plain, */*',
-    #     'Accept-Language': 'en-US,en;q=0.7,de;q=0.3',
-    #     'Accept-Encoding': 'gzip, deflate, br',
-    #     'Referer': CONFIG['API_HOST'] + API_PATHS['']/de/ticket',
-    #     'Channel': 'inet',
-    #     'Lang': 'de',
-    #     'Cache-Control': 'no-cache',
-    #     'Pragma': 'no-cache',
-    #     'x-ts-supportid': 'WEB_kp0jm46z',
-    #     'ClientId': '4',
-    #     'clientversion': '2.4.8148 - TSPNEU - 102662 - b1 - cd83796',
-    #     'DNT': '1',
-    #     'Connection': 'keep-alive',
-    #     'Sec-Fetch-Dest': 'empty',
-    #     'Sec-Fetch-Mode': 'cors',
-    #     'Sec-Fetch-Site': 'same-origin'}
     params = {"name": name, "count": "10"}
     r = requests.get(CONFIG["host"] + API_PATHS["stations"], params, headers=headers)
     if not type(r.json()) is list or not len(r.json()):
