@@ -5,18 +5,10 @@ import requests
 from datetime import datetime
 import time
 
-try:
-    from flask import current_app
-
-    CONFIG = dict(
-        user_agent=current_app.config["API_USER_AGENT"],
-        host=current_app.config["API_HOST"],
-    )
-except (ModuleNotFoundError, RuntimeError):
-    CONFIG = dict(
-        user_agent="Mozilla/5.0 (X11; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/104.0",
-        host="https://shop.oebbtickets.at",
-    )
+CONFIG = dict(
+    user_agent="Mozilla/5.0 (X11; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/104.0",
+    host="https://shop.oebbtickets.at",
+)
 
 API_PATHS = {
     "access_token": "/api/domain/v4/init",
@@ -27,14 +19,18 @@ API_PATHS = {
 }
 
 
-def get_access_token() -> Optional[str]:
-    headers = {"User-Agent": CONFIG["user_agent"]}
-    r = requests.get(CONFIG["host"] + API_PATHS["access_token"], headers=headers)
+def get_access_token(
+    host: str = CONFIG["host"], user_agent: str = CONFIG["user_agent"]
+) -> Optional[str]:
+    headers = {"User-Agent": user_agent}
+    r = requests.get(host + API_PATHS["access_token"], headers=headers)
     access_token = r.json().get("accessToken")
     return access_token
 
 
-def get_request_headers(access_token: Optional[str] = None) -> Optional[Dict[str, str]]:
+def get_request_headers(
+    access_token: Optional[str] = None, user_agent: str = CONFIG["user_agent"]
+) -> Optional[Dict[str, str]]:
     if not access_token:
         access_token = get_access_token()
         if not access_token:
@@ -42,24 +38,32 @@ def get_request_headers(access_token: Optional[str] = None) -> Optional[Dict[str
 
     headers = {
         "AccessToken": access_token,
-        "User-Agent": CONFIG["user_agent"],
+        "User-Agent": user_agent,
     }
     return headers
 
 
-def get_station_id(name: str, access_token: Optional[str] = None) -> Optional[str]:
+def get_station_id(
+    name: str,
+    access_token: Optional[str] = None,
+    host: str = CONFIG["host"],
+) -> Optional[str]:
     headers = get_request_headers(access_token)
     params = {"name": name, "count": "1"}
-    r = requests.get(CONFIG["host"] + API_PATHS["stations"], params, headers=headers)
+    r = requests.get(host + API_PATHS["stations"], params, headers=headers)
     if not type(r.json()) is list or not len(r.json()):
         return None
     return r.json()[0]["number"]
 
 
-def get_station_names(name: str, access_token: Optional[str] = None) -> List[str]:
+def get_station_names(
+    name: str,
+    access_token: Optional[str] = None,
+    host: str = CONFIG["host"],
+) -> List[str]:
     headers = get_request_headers(access_token)
     params = {"name": name, "count": "10"}
-    r = requests.get(CONFIG["host"] + API_PATHS["stations"], params, headers=headers)
+    r = requests.get(host + API_PATHS["stations"], params, headers=headers)
     if not type(r.json()) is list or not len(r.json()):
         return []
     return [
@@ -73,12 +77,13 @@ def get_travel_action_id(
     destination_id: str,
     date: Optional[datetime] = None,
     access_token: Optional[str] = None,
+    host: str = CONFIG["host"],
 ) -> Optional[str]:
     if not date:
         date = datetime.utcnow()
     headers = get_request_headers(access_token)
 
-    url = CONFIG["host"] + API_PATHS["travel_actions"]
+    url = host + API_PATHS["travel_actions"]
     # TODO: lat,long not needed, name not relevant
     data = {
         "from": {
@@ -127,8 +132,9 @@ def get_connection_ids(
     has_vc66: bool = False,
     get_only_first: bool = True,
     access_token: Optional[str] = None,
+    host: str = CONFIG["host"],
 ) -> Optional[List[str]]:
-    url = CONFIG["host"] + API_PATHS["timetable"]
+    url = host + API_PATHS["timetable"]
     if not date:
         date = datetime.utcnow()
 
@@ -219,9 +225,11 @@ def get_connection_ids(
 
 
 def get_price_for_connection(
-    connection_id: Union[str, List[str]], access_token: Optional[str] = None
+    connection_id: Union[str, List[str]],
+    access_token: Optional[str] = None,
+    host: str = CONFIG["host"],
 ) -> Optional[float]:
-    url = CONFIG["host"] + API_PATHS["prices"]
+    url = host + API_PATHS["prices"]
     if type(connection_id) is str:
         connection_id = [connection_id]
 
