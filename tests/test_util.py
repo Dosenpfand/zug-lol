@@ -19,7 +19,7 @@ class TestUtil:
         origin = "Wien"
         destination = "St. Pölten"
         with app.app_context():
-            from util.sse import get_price_generator  # noqa
+            from app.util import get_price_generator
 
             output = [
                 x for x in get_price_generator(origin, destination, has_vc66=False)

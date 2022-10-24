@@ -20,9 +20,8 @@ from app.main.forms import ProfileForm, DeleteAccountForm
 
 from app.models import User, StationAutocomplete
 from app.main import bp
-from util.auth_token import get_valid_access_token
+from app.util import get_valid_access_token, get_price_generator
 from util.oebb import get_station_names
-from util.sse import get_price_generator
 
 if TYPE_CHECKING:
     from werkzeug.wrappers import Response as BaseResponse

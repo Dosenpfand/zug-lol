@@ -8,203 +8,262 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-10-10 16:14+0200\n"
+"POT-Creation-Date: 2022-10-24 19:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.10.3\n"
+"Generated-By: Babel 2.10.1\n"
 
-#: config.py:19
+#: config.py:20
 msgid ""
 "Search for train ticket prices in Austria and create a travel journal, to"
 " find out if your Klimaticket pays off."
 msgstr ""
 
-#: app/__init__.py:68
+#: app/__init__.py:82
 msgid "Language changed"
+msgstr ""
+
+#: app/util.py:69
+msgid ""
+"<p>Price for a ticket from {origin} to {destination}:</p><p><mark "
+"class=\"display-4\">{price} €</mark></p>"
+msgstr ""
+
+#: app/util.py:81
+msgid "Checking local cache"
+msgstr ""
+
+#: app/util.py:93
+msgid "Generating access token"
+msgstr ""
+
+#: app/util.py:97
+msgid "Failed to generate access token"
+msgstr ""
+
+#: app/util.py:102
+msgid "Processing origin"
+msgstr ""
+
+#: app/util.py:106
+msgid "Failed to process origin"
+msgstr ""
+
+#: app/util.py:111
+msgid "Processing destination"
+msgstr ""
+
+#: app/util.py:115
+msgid "Failed to process destination"
+msgstr ""
+
+#: app/util.py:120
+msgid "Processing travel action"
+msgstr ""
+
+#: app/util.py:126
+msgid "Failed to process travel action"
+msgstr ""
+
+#: app/util.py:131
+msgid "Processing connections"
+msgstr ""
+
+#: app/util.py:141
+msgid "Failed to process connections"
+msgstr ""
+
+#: app/util.py:146
+msgid "Retrieving price"
+msgstr ""
+
+#: app/util.py:150
+msgid "Failed to retrieve price"
 msgstr ""
 
 #: app/extended_security/forms.py:7
 msgid "Prove that you are human"
 msgstr ""
 
-#: app/journal/forms.py:11 app/journal/views.py:67 app/ticket_price/forms.py:8
+#: app/journal/forms.py:12 app/journal/views.py:108 app/ticket_price/forms.py:9
 msgid "Origin"
 msgstr ""
 
-#: app/journal/forms.py:13
+#: app/journal/forms.py:17
 msgid "e.g. Wien"
 msgstr ""
 
-#: app/journal/forms.py:14 app/journal/views.py:67 app/ticket_price/forms.py:11
+#: app/journal/forms.py:21 app/journal/views.py:109
+#: app/ticket_price/forms.py:18
 msgid "Destination"
 msgstr ""
 
-#: app/journal/forms.py:16
+#: app/journal/forms.py:25
 msgid "e.g. Innsbruck"
 msgstr ""
 
-#: app/journal/forms.py:18 app/journal/views.py:67
+#: app/journal/forms.py:30 app/journal/views.py:110
 msgid "Price in €"
 msgstr ""
 
-#: app/journal/forms.py:18
+#: app/journal/forms.py:30
 msgid "e.g. 10.5"
 msgstr ""
 
-#: app/journal/forms.py:19 app/journal/views.py:68
+#: app/journal/forms.py:33 app/journal/forms.py:35 app/journal/views.py:111
 msgid "Date"
 msgstr ""
 
-#: app/journal/forms.py:20 app/templates/journeys.html:24
+#: app/journal/forms.py:37 app/templates/journeys.html:24
 msgid "Add Journey"
 msgstr ""
 
-#: app/journal/forms.py:24
+#: app/journal/forms.py:41
 msgid "Delete"
 msgstr ""
 
-#: app/journal/forms.py:28
+#: app/journal/forms.py:45
 msgid "CSV File"
 msgstr ""
 
-#: app/journal/forms.py:29 app/templates/journeys.html:72
+#: app/journal/forms.py:46 app/templates/journeys.html:72
 #: app/templates/journeys.html:109
 msgid "Import"
 msgstr ""
 
-#: app/journal/views.py:32
+#: app/journal/views.py:48
 msgid "Journal entry added."
 msgstr ""
 
-#: app/journal/views.py:37
+#: app/journal/views.py:53
 msgid "All journal entries deleted."
 msgstr ""
 
-#: app/journal/views.py:51
+#: app/journal/views.py:73
 msgid "Could not decode the file. Are you sure you uploaded a CSV file?"
 msgstr ""
 
-#: app/journal/views.py:53
+#: app/journal/views.py:79
 msgid "Could not find the expected column {} in the uploaded CSV file."
 msgstr ""
 
-#: app/journal/views.py:55
+#: app/journal/views.py:86
 msgid "Could not process the uploaded CSV file."
 msgstr ""
 
-#: app/journal/views.py:57
+#: app/journal/views.py:88
 msgid "All journal entries imported."
 msgstr ""
 
-#: app/journal/views.py:69
+#: app/journal/views.py:113
 msgid "Actions"
 msgstr ""
 
-#: app/journal/views.py:75 app/templates/base.html:62
+#: app/journal/views.py:120 app/templates/base.html:65
 #: app/templates/journeys.html:68
 msgid "Travel Journal"
 msgstr ""
 
-#: app/journal/views.py:94
+#: app/journal/views.py:141
 msgid "Journal entry deleted."
 msgstr ""
 
-#: app/journal/views.py:96
+#: app/journal/views.py:143
 msgid "Failed to delete journal entry."
 msgstr ""
 
-#: app/main/forms.py:16 app/ticket_price/forms.py:15
+#: app/main/forms.py:18 app/ticket_price/forms.py:26
 msgid "Vorteilscard"
 msgstr ""
 
-#: app/main/forms.py:17
+#: app/main/forms.py:20
 msgid "Klimaticket price in €"
 msgstr ""
 
-#: app/main/forms.py:18
+#: app/main/forms.py:23
 msgid "e.g."
 msgstr ""
 
-#: app/main/forms.py:19
+#: app/main/forms.py:27
 msgid "Save"
 msgstr ""
 
-#: app/main/forms.py:23
+#: app/main/forms.py:32
 msgid "Do you really want to delete your account?"
 msgstr ""
 
-#: app/main/forms.py:24
+#: app/main/forms.py:33
 msgid "Needs to be selected"
 msgstr ""
 
-#: app/main/forms.py:25
+#: app/main/forms.py:35
 msgid "Delete account"
 msgstr ""
 
-#: app/main/views.py:20 app/templates/base.html:60
+#: app/main/views.py:32 app/templates/base.html:63
 msgid "Home"
 msgstr ""
 
-#: app/main/views.py:25 app/templates/base.html:96
+#: app/main/views.py:37 app/templates/base.html:100
 msgid "Data Protection"
 msgstr ""
 
-#: app/main/views.py:29 app/templates/base.html:97
+#: app/main/views.py:42 app/templates/base.html:101
 msgid "Imprint"
 msgstr ""
 
-#: app/main/views.py:46 app/templates/base.html:64
+#: app/main/views.py:60 app/templates/base.html:67
 msgid "Profile"
 msgstr ""
 
-#: app/main/views.py:59
+#: app/main/views.py:74
 msgid "Your account has been deleted."
 msgstr ""
 
-#: app/main/views.py:62 app/templates/delete_account.html:7
+#: app/main/views.py:77 app/templates/delete_account.html:7
 msgid "Delete Account"
 msgstr ""
 
-#: app/templates/base.html:51
+#: app/templates/base.html:52
 msgid "Logo: A happy Train"
 msgstr ""
 
-#: app/templates/base.html:61 app/ticket_price/views.py:12
+#: app/templates/base.html:64 app/ticket_price/views.py:12
 #: app/ticket_price/views.py:13
 msgid "Ticket Price"
 msgstr ""
 
-#: app/templates/base.html:65
+#: app/templates/base.html:68
 msgid "Logout"
 msgstr ""
 
-#: app/templates/base.html:67 app/templates/login.html:1
+#: app/templates/base.html:70 app/templates/login.html:2
 #: app/templates/login.html:20
 msgid "Login"
 msgstr ""
 
-#: app/templates/base.html:68 app/templates/register.html:1
+#: app/templates/base.html:71 app/templates/register.html:2
 #: app/templates/register.html:8
 msgid "Register"
 msgstr ""
 
-#: app/templates/base.html:91
+#: app/templates/base.html:95
 msgid "A"
 msgstr ""
 
-#: app/templates/base.html:91
+#: app/templates/base.html:95
 msgid "production"
 msgstr ""
 
-#: app/templates/base.html:102 app/templates/home.html:17
+#: app/templates/base.html:106 app/templates/home.html:17
 msgid "Contact"
 msgstr ""
 
-#: app/templates/base.html:103
+#: app/templates/base.html:107
 msgid "Source Code"
 msgstr ""
 
@@ -353,73 +412,15 @@ msgstr ""
 msgid "Waiting for connection"
 msgstr ""
 
-#: app/ticket_price/forms.py:10
+#: app/ticket_price/forms.py:14
 msgid "Origin (e.g. Wien)"
 msgstr ""
 
-#: app/ticket_price/forms.py:13
+#: app/ticket_price/forms.py:22
 msgid "Destination (e.g. Innsbruck)"
 msgstr ""
 
-#: app/ticket_price/forms.py:16
+#: app/ticket_price/forms.py:27
 msgid "Search Price"
-msgstr ""
-
-#: util/sse.py:17
-msgid ""
-"<p>Price for a ticket from {origin} to {destination}:</p><p><mark "
-"class=\"display-4\">{price} €</mark></p>"
-msgstr ""
-
-#: util/sse.py:32
-msgid "Checking local cache"
-msgstr ""
-
-#: util/sse.py:43
-msgid "Generating access token"
-msgstr ""
-
-#: util/sse.py:48
-msgid "Failed to generate access token"
-msgstr ""
-
-#: util/sse.py:53
-msgid "Processing origin"
-msgstr ""
-
-#: util/sse.py:57
-msgid "Failed to process origin"
-msgstr ""
-
-#: util/sse.py:62
-msgid "Processing destination"
-msgstr ""
-
-#: util/sse.py:66
-msgid "Failed to process destination"
-msgstr ""
-
-#: util/sse.py:71
-msgid "Processing travel action"
-msgstr ""
-
-#: util/sse.py:75
-msgid "Failed to process travel action"
-msgstr ""
-
-#: util/sse.py:80
-msgid "Processing connections"
-msgstr ""
-
-#: util/sse.py:85
-msgid "Failed to process connections"
-msgstr ""
-
-#: util/sse.py:90
-msgid "Retrieving price"
-msgstr ""
-
-#: util/sse.py:94
-msgid "Failed to retrieve price"
 msgstr ""
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-10-10 16:14+0200\n"
+"POT-Creation-Date: 2022-10-24 19:39+0200\n"
 "PO-Revision-Date: 2022-06-13 13:50+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -16,9 +16,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.10.3\n"
+"Generated-By: Babel 2.10.1\n"
 
-#: config.py:19
+#: config.py:20
 msgid ""
 "Search for train ticket prices in Austria and create a travel journal, to"
 " find out if your Klimaticket pays off."
@@ -26,193 +26,254 @@ msgstr ""
 "Suche nach Zugticket-Preisen in Österreich und erstelle ein "
 "Reisetagebuch, um herauszufinden ob sich das Klimaticket auszahlt."
 
-#: app/__init__.py:68
+#: app/__init__.py:82
 msgid "Language changed"
 msgstr "Sprache geändert"
+
+#: app/util.py:69
+msgid ""
+"<p>Price for a ticket from {origin} to {destination}:</p><p><mark "
+"class=\"display-4\">{price} €</mark></p>"
+msgstr ""
+"<p>Preis für ein Ticket von {origin} nach {destination}:</p><p><mark "
+"class=\"display-4\">{price} €</mark></p>"
+
+#: app/util.py:81
+msgid "Checking local cache"
+msgstr "Lokaler Cache wird überprüft"
+
+#: app/util.py:93
+msgid "Generating access token"
+msgstr "Generiere Zugangscode"
+
+#: app/util.py:97
+msgid "Failed to generate access token"
+msgstr "Zugangscode generieren fehlgeschlagen"
+
+#: app/util.py:102
+msgid "Processing origin"
+msgstr "Verarbeite Start"
+
+#: app/util.py:106
+msgid "Failed to process origin"
+msgstr "Verarbeitung von Start fehlgeschlagen"
+
+#: app/util.py:111
+msgid "Processing destination"
+msgstr "Verarbeite Ziel"
+
+#: app/util.py:115
+msgid "Failed to process destination"
+msgstr "Verarbeitung von Ziel fehlgeschlagen"
+
+#: app/util.py:120
+msgid "Processing travel action"
+msgstr "Verarbeite Reise-Aktion"
+
+#: app/util.py:126
+msgid "Failed to process travel action"
+msgstr "Verarbeitung von Reise-Aktion fehlgeschlagen"
+
+#: app/util.py:131
+msgid "Processing connections"
+msgstr "Verarbeite Verbindungen"
+
+#: app/util.py:141
+msgid "Failed to process connections"
+msgstr "Verarbeitung von Verbindungen fehlgeschlagen"
+
+#: app/util.py:146
+msgid "Retrieving price"
+msgstr "Preis wird ermittelt"
+
+#: app/util.py:150
+msgid "Failed to retrieve price"
+msgstr "Preisermittlung fehlgeschlagen"
 
 #: app/extended_security/forms.py:7
 msgid "Prove that you are human"
 msgstr "Mensch oder Maschine?"
 
-#: app/journal/forms.py:11 app/journal/views.py:67 app/ticket_price/forms.py:8
+#: app/journal/forms.py:12 app/journal/views.py:108 app/ticket_price/forms.py:9
 msgid "Origin"
 msgstr "Von"
 
-#: app/journal/forms.py:13
+#: app/journal/forms.py:17
 msgid "e.g. Wien"
 msgstr "z.B. Wien"
 
-#: app/journal/forms.py:14 app/journal/views.py:67 app/ticket_price/forms.py:11
+#: app/journal/forms.py:21 app/journal/views.py:109
+#: app/ticket_price/forms.py:18
 msgid "Destination"
 msgstr "Nach"
 
-#: app/journal/forms.py:16
+#: app/journal/forms.py:25
 msgid "e.g. Innsbruck"
 msgstr "z.B. Innsbruck"
 
-#: app/journal/forms.py:18 app/journal/views.py:67
+#: app/journal/forms.py:30 app/journal/views.py:110
 msgid "Price in €"
 msgstr "Preis in €"
 
-#: app/journal/forms.py:18
+#: app/journal/forms.py:30
 msgid "e.g. 10.5"
 msgstr "z.B. 10,5"
 
-#: app/journal/forms.py:19 app/journal/views.py:68
+#: app/journal/forms.py:33 app/journal/forms.py:35 app/journal/views.py:111
 msgid "Date"
 msgstr "Datum"
 
-#: app/journal/forms.py:20 app/templates/journeys.html:24
+#: app/journal/forms.py:37 app/templates/journeys.html:24
 msgid "Add Journey"
 msgstr "Fahrt hinzufügen"
 
-#: app/journal/forms.py:24
+#: app/journal/forms.py:41
 msgid "Delete"
 msgstr "Löschen"
 
-#: app/journal/forms.py:28
+#: app/journal/forms.py:45
 msgid "CSV File"
 msgstr "CSV-Datei"
 
-#: app/journal/forms.py:29 app/templates/journeys.html:72
+#: app/journal/forms.py:46 app/templates/journeys.html:72
 #: app/templates/journeys.html:109
 msgid "Import"
 msgstr "Import"
 
-#: app/journal/views.py:32
+#: app/journal/views.py:48
 msgid "Journal entry added."
 msgstr "Eintrag hinzugefügt"
 
-#: app/journal/views.py:37
+#: app/journal/views.py:53
 msgid "All journal entries deleted."
 msgstr "Alle Einträge wurden gelöscht."
 
-#: app/journal/views.py:51
+#: app/journal/views.py:73
 msgid "Could not decode the file. Are you sure you uploaded a CSV file?"
 msgstr ""
 "Konnte die Datei nicht dekodieren. Bist du sicher, dass eine CSV-Datei "
 "ausgewählt war?"
 
-#: app/journal/views.py:53
+#: app/journal/views.py:79
 msgid "Could not find the expected column {} in the uploaded CSV file."
 msgstr ""
 "Konnte die erwartete Spalte {} in der hochgeladenen CSV-Datei nicht "
 "finden."
 
-#: app/journal/views.py:55
+#: app/journal/views.py:86
 msgid "Could not process the uploaded CSV file."
 msgstr "Konnte die hochgeladene CSV-Datei nicht verarbeiten."
 
-#: app/journal/views.py:57
+#: app/journal/views.py:88
 msgid "All journal entries imported."
 msgstr "Alle Einträge wurden importiert."
 
-#: app/journal/views.py:69
+#: app/journal/views.py:113
 msgid "Actions"
 msgstr "Aktionen"
 
-#: app/journal/views.py:75 app/templates/base.html:62
+#: app/journal/views.py:120 app/templates/base.html:65
 #: app/templates/journeys.html:68
 msgid "Travel Journal"
 msgstr "Reisetagebuch"
 
-#: app/journal/views.py:94
+#: app/journal/views.py:141
 msgid "Journal entry deleted."
 msgstr "Eintrag gelöscht."
 
-#: app/journal/views.py:96
+#: app/journal/views.py:143
 msgid "Failed to delete journal entry."
 msgstr "Eintrag löschen fehlgeschlagen"
 
-#: app/main/forms.py:16 app/ticket_price/forms.py:15
+#: app/main/forms.py:18 app/ticket_price/forms.py:26
 msgid "Vorteilscard"
 msgstr "Vorteilscard"
 
-#: app/main/forms.py:17
+#: app/main/forms.py:20
 msgid "Klimaticket price in €"
 msgstr "Klimaticket-Preis in €"
 
-#: app/main/forms.py:18
+#: app/main/forms.py:23
 msgid "e.g."
 msgstr "z.B."
 
-#: app/main/forms.py:19
+#: app/main/forms.py:27
 msgid "Save"
 msgstr "Speichern"
 
-#: app/main/forms.py:23
+#: app/main/forms.py:32
 msgid "Do you really want to delete your account?"
 msgstr "Willst du dein Konto wirklich löschen?"
 
-#: app/main/forms.py:24
+#: app/main/forms.py:33
 msgid "Needs to be selected"
 msgstr "Muss ausgewählt sein"
 
-#: app/main/forms.py:25
+#: app/main/forms.py:35
 msgid "Delete account"
 msgstr "Konto löschen"
 
-#: app/main/views.py:20 app/templates/base.html:60
+#: app/main/views.py:32 app/templates/base.html:63
 msgid "Home"
 msgstr "Start"
 
-#: app/main/views.py:25 app/templates/base.html:96
+#: app/main/views.py:37 app/templates/base.html:100
 msgid "Data Protection"
 msgstr "Datenschutz"
 
-#: app/main/views.py:29 app/templates/base.html:97
+#: app/main/views.py:42 app/templates/base.html:101
 msgid "Imprint"
 msgstr "Impressum"
 
-#: app/main/views.py:46 app/templates/base.html:64
+#: app/main/views.py:60 app/templates/base.html:67
 msgid "Profile"
 msgstr "Profil"
 
-#: app/main/views.py:59
+#: app/main/views.py:74
 msgid "Your account has been deleted."
 msgstr "Dein Konto wurde gelöscht."
 
-#: app/main/views.py:62 app/templates/delete_account.html:7
+#: app/main/views.py:77 app/templates/delete_account.html:7
 msgid "Delete Account"
 msgstr "Konto löschen"
 
-#: app/templates/base.html:51
+#: app/templates/base.html:52
 #, fuzzy
 msgid "Logo: A happy Train"
 msgstr "Logo: Ein Zug"
 
-#: app/templates/base.html:61 app/ticket_price/views.py:12
+#: app/templates/base.html:64 app/ticket_price/views.py:12
 #: app/ticket_price/views.py:13
 msgid "Ticket Price"
 msgstr "Ticketpreis"
 
-#: app/templates/base.html:65
+#: app/templates/base.html:68
 msgid "Logout"
 msgstr "Abmelden"
 
-#: app/templates/base.html:67 app/templates/login.html:1
+#: app/templates/base.html:70 app/templates/login.html:2
 #: app/templates/login.html:20
 msgid "Login"
 msgstr "Anmelden"
 
-#: app/templates/base.html:68 app/templates/register.html:1
+#: app/templates/base.html:71 app/templates/register.html:2
 #: app/templates/register.html:8
 msgid "Register"
 msgstr "Registrieren"
 
-#: app/templates/base.html:91
+#: app/templates/base.html:95
 msgid "A"
 msgstr "Eine"
 
-#: app/templates/base.html:91
+#: app/templates/base.html:95
 msgid "production"
 msgstr "Produktion"
 
-#: app/templates/base.html:102 app/templates/home.html:17
+#: app/templates/base.html:106 app/templates/home.html:17
 msgid "Contact"
 msgstr "Kontakt"
 
-#: app/templates/base.html:103
+#: app/templates/base.html:107
 msgid "Source Code"
 msgstr "Quellcode"
 
@@ -371,77 +432,17 @@ msgstr "Ergebnis"
 msgid "Waiting for connection"
 msgstr "Warte auf Verbindung"
 
-#: app/ticket_price/forms.py:10
+#: app/ticket_price/forms.py:14
 msgid "Origin (e.g. Wien)"
 msgstr "Von (z.B. Wien)"
 
-#: app/ticket_price/forms.py:13
+#: app/ticket_price/forms.py:22
 msgid "Destination (e.g. Innsbruck)"
 msgstr "Nach (z.B. Innsbruck)"
 
-#: app/ticket_price/forms.py:16
+#: app/ticket_price/forms.py:27
 msgid "Search Price"
 msgstr "Suche Preis"
-
-#: util/sse.py:17
-msgid ""
-"<p>Price for a ticket from {origin} to {destination}:</p><p><mark "
-"class=\"display-4\">{price} €</mark></p>"
-msgstr ""
-"<p>Preis für ein Ticket von {origin} nach {destination}:</p><p><mark "
-"class=\"display-4\">{price} €</mark></p>"
-
-#: util/sse.py:32
-msgid "Checking local cache"
-msgstr "Lokaler Cache wird überprüft"
-
-#: util/sse.py:43
-msgid "Generating access token"
-msgstr "Generiere Zugangscode"
-
-#: util/sse.py:48
-msgid "Failed to generate access token"
-msgstr "Zugangscode generieren fehlgeschlagen"
-
-#: util/sse.py:53
-msgid "Processing origin"
-msgstr "Verarbeite Start"
-
-#: util/sse.py:57
-msgid "Failed to process origin"
-msgstr "Verarbeitung von Start fehlgeschlagen"
-
-#: util/sse.py:62
-msgid "Processing destination"
-msgstr "Verarbeite Ziel"
-
-#: util/sse.py:66
-msgid "Failed to process destination"
-msgstr "Verarbeitung von Ziel fehlgeschlagen"
-
-#: util/sse.py:71
-msgid "Processing travel action"
-msgstr "Verarbeite Reise-Aktion"
-
-#: util/sse.py:75
-msgid "Failed to process travel action"
-msgstr "Verarbeitung von Reise-Aktion fehlgeschlagen"
-
-#: util/sse.py:80
-msgid "Processing connections"
-msgstr "Verarbeite Verbindungen"
-
-#: util/sse.py:85
-msgid "Failed to process connections"
-msgstr "Verarbeitung von Verbindungen fehlgeschlagen"
-
-#: util/sse.py:90
-msgid "Retrieving price"
-msgstr "Preis wird ermittelt"
-
-#: util/sse.py:94
-msgid "Failed to retrieve price"
-msgstr "Preisermittlung fehlgeschlagen"
 
 #~ msgid "issue"
 #~ msgstr "Ticket erstellen"
