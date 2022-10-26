@@ -12,6 +12,7 @@ from flask_migrate import Migrate
 from flask_babel import Babel, format_number
 from flask_babel import lazy_gettext as _
 from flask_wtf.csrf import CSRFProtect
+from flask_debugtoolbar import DebugToolbarExtension
 
 from app.extended_security.forms import ExtendedRegisterForm
 
@@ -21,6 +22,7 @@ security = Security()
 migrate = Migrate()
 babel = Babel()
 csrf = CSRFProtect()
+debug_toolbar = DebugToolbarExtension()
 
 
 def create_app(
@@ -45,6 +47,7 @@ def create_app(
         migrate.init_app(app, db)
         babel.init_app(app)
         csrf.init_app(app)
+        debug_toolbar.init_app(app)
 
         app.jinja_env.add_extension("jinja2.ext.i18n")
         app.jinja_env.filters["format_number"] = format_number
