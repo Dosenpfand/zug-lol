@@ -67,6 +67,7 @@ To run the application locally follow these steps.
    ```
 8. Upgrade the database schema:
    ```bash
+   flask db migrate
    flask db upgrade
    ```
 9. Run the app
