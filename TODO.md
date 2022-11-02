@@ -10,7 +10,6 @@
 - [ ] Pagination
 - [ ] Cache invalidation
 - [ ] admin interface using flask-admin
-- [ ] Add unit tests
 - [ ] Add password reset functionality
 
 ## Prio 100
