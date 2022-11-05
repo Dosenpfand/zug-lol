@@ -12,7 +12,7 @@ from flask import (
     Response,
     stream_with_context,
 )
-from flask_babel import gettext as _, format_decimal, format_date
+from flask_babel import gettext as _
 from flask_login import current_user
 from flask_security import auth_required
 
@@ -87,32 +87,35 @@ def journeys() -> str:
         else:
             flash(_("All journal entries imported."))
 
-    journeys_objs = (
+    journeys_list = (
         Journey.query.filter_by(user_id=current_user.id)
         .order_by(Journey.date.desc())
         .all()
     )
 
-    journey_dicts = []
-    for journey_obj in journeys_objs:
-        journey_dict = {
-            "id": journey_obj.id,
-            "origin": journey_obj.origin,
-            "destination": journey_obj.destination,
-            "price": format_decimal(journey_obj.price),
-            "date": format_date(journey_obj.date),
-        }
-        journey_dicts.append(journey_dict)
+    if current_user.klimaticket_start_date:
+        current_journeys = list(
+            filter(
+                lambda j: j.date >= current_user.klimaticket_start_date, journeys_list
+            )
+        )
+        archived_journeys = list(
+            filter(lambda j: j not in current_journeys, journeys_list)
+        )
+    else:
+        current_journeys = journeys_list
+        archived_journeys = []
 
     titles = [
         ("origin", _("Origin")),
         ("destination", _("Destination")),
-        ("price", _("Price in €")),
-        ("date", _("Date")),
+        ("price_formatted", _("Price in €")),
+        ("date_formatted", _("Date")),
     ]
+
     actions_title = _("Actions")
-    journey_count = len(journeys_objs)
-    price_sum = round(sum(journey.price for journey in journeys_objs), 2)
+    journey_count = len(current_journeys)
+    price_sum = round(sum(journey.price for journey in current_journeys), 2)
     klimaticket_gains = round(price_sum - current_user.klimaticket_price, 2)
 
     return render_template(
@@ -121,7 +124,8 @@ def journeys() -> str:
         add_journey_form=add_journey_form,
         delete_journeys_form=delete_journeys_form,
         import_journeys_form=import_journeys_form,
-        table=journey_dicts,
+        table=current_journeys,
+        archive_table=archived_journeys,
         titles=titles,
         actions_title=actions_title,
         journey_model=Journey,

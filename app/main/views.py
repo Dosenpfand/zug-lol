@@ -51,10 +51,12 @@ def profile() -> str:
         user = User.query.filter_by(id=current_user.id).one()
         user.has_vorteilscard = form.has_vorteilscard.data
         user.klimaticket_price = form.klimaticket_price.data
+        user.klimaticket_start_date = form.klimaticket_start_date.data
         db.session.commit()
     else:
         form.has_vorteilscard.data = current_user.has_vorteilscard
         form.klimaticket_price.data = current_user.klimaticket_price
+        form.klimaticket_start_date.data = current_user.klimaticket_start_date
 
     return render_template(
         "profile.html", title=_("Profile"), form=form, name=current_user.email

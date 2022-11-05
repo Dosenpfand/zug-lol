@@ -4,25 +4,25 @@
 
 {% block content %}
     {% if journey_count == 0 %}
-    <div class="card bg-light mb-3">
-      <div class="card-body">
-        <h5 class="card-title">{{ _('Note') }}</h5>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-            {{ _('Here you can add journeys to your journal, see your current entries and if your Klimaticket already paid off.') }}
-        </li>
-        <li class="list-group-item">
-            {{ _('In your <a href="{}">profile</a> you can set the price that you paid for the Klimaticket and whether prices should be based on Vorteilscard prices.').format(url_for('main.profile')) }}
-        </li>
-      </ul>
-    </div>
+        <div class="card bg-light mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ _('Note') }}</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    {{ _('Here you can add journeys to your journal, see your current entries and if your Klimaticket already paid off.') }}
+                </li>
+                <li class="list-group-item">
+                    {{ _('In your <a href="{}">profile</a> you can set the price that you paid for the Klimaticket and whether prices should be based on Vorteilscard prices.').format(url_for('main.profile')) }}
+                </li>
+            </ul>
+        </div>
     {% endif %}
 
     <div class="card bg-light mb-3">
-      <div class="card-body">
-        <h5 class="card-title">{{ _('Add Journey') }}</h5>
-        <p class="card-text">
+        <div class="card-body">
+            <h5 class="card-title">{{ _('Add Journey') }}</h5>
+            <p class="card-text">
             <form action="{{ url_for('journal.journeys') }}" method="post" class="form" role="form">
                 {{ add_journey_form.hidden_tag() }}
                 {{ render_field(add_journey_form.origin) }}
@@ -30,100 +30,143 @@
                 {{ render_field(add_journey_form.price) }}
                 {{ render_field(add_journey_form.date) }}
                 {{ render_field(add_journey_form.submit) }}
-                <a class="btn btn-outline-primary btn-md" id="determine-price" hx-post="{{ url_for('journal.sse_container') }}" hx-target="#output">
-                    <svg class="bi" width="1em" height="1em" fill="currentColor"><use xlink:href="/bootstrap/static/icons/bootstrap-icons.svg#cash-stack"/></svg> {{ _('Determine Price') }}
+                <a class="btn btn-outline-primary btn-md" id="determine-price"
+                   hx-post="{{ url_for('journal.sse_container') }}" hx-target="#output">
+                    <svg class="bi" width="1em" height="1em" fill="currentColor">
+                        <use xlink:href="/bootstrap/static/icons/bootstrap-icons.svg#cash-stack"/>
+                    </svg>
+                    {{ _('Determine Price') }}
                 </a>
                 <a class="btn btn-outline-primary btn-md" id="reverse-direction" onclick="swapValues()">
-                    <svg class="bi" width="1em" height="1em" fill="currentColor"><use xlink:href="/bootstrap/static/icons/bootstrap-icons.svg#arrow-left-right"/></svg> {{ _('Reverse Direction') }}
+                    <svg class="bi" width="1em" height="1em" fill="currentColor">
+                        <use xlink:href="/bootstrap/static/icons/bootstrap-icons.svg#arrow-left-right"/>
+                    </svg>
+                    {{ _('Reverse Direction') }}
                 </a>
 
             </form>
-        </p>
-      </div>
+            </p>
+        </div>
     </div>
 
     <div id="output"></div>
 
     <div class="card bg-light mb-3">
-      <div class="card-body">
-        <h5 class="card-title">{{ _('Travel Statistics') }}</h5>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">{{ _('Journeys') }}: <mark class="font-weight-bold">{{ journey_count }}</mark></li>
-        <li class="list-group-item">{{ _('Sum ticket prices') }}: <mark class="font-weight-bold">{{ price_sum|format_number }}</mark> €</li>
-        <li class="list-group-item">
-            {{ _('Klimaticket gains') }}:
-            <mark class="font-weight-bold">{{ klimaticket_gains|format_number }}</mark> €
-            {% if klimaticket_gains > 0 %}
-                <span class="badge rounded-pill bg-success">{{ _('POSITIVE') }}</span>
-            {% else %}
-                <span class="badge rounded-pill bg-warning text-dark">{{ _('NEGATIVE') }}</span>
-            {% endif %}
-        </li>
-      </ul>
+        <div class="card-body">
+            <h5 class="card-title">{{ _('Travel Statistics') }}</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{ _('Journeys') }}:
+                <mark class="font-weight-bold">{{ journey_count }}</mark>
+            </li>
+            <li class="list-group-item">{{ _('Sum ticket prices') }}:
+                <mark class="font-weight-bold">{{ price_sum|format_number }}</mark>
+                €
+            </li>
+            <li class="list-group-item">
+                {{ _('Klimaticket gains') }}:
+                <mark class="font-weight-bold">{{ klimaticket_gains|format_number }}</mark>
+                €
+                {% if klimaticket_gains > 0 %}
+                    <span class="badge rounded-pill bg-success">{{ _('POSITIVE') }}</span>
+                {% else %}
+                    <span class="badge rounded-pill bg-warning text-dark">{{ _('NEGATIVE') }}</span>
+                {% endif %}
+            </li>
+        </ul>
     </div>
 
     <div class="card bg-light mb-3">
-      <div class="card-body">
-        <h5 class="card-title">{{ _('Travel Journal') }}</h5>
-        <p class="card-text">
-          <div class="mb-3">
-            <a class="btn btn-primary" href="{{ url_for('journal.export_journeys') }}">{{ _('Export') }}</a>
-            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#import-journal-modal">{{ _('Import') }}</button>
-            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#delete-journal-modal">{{ _('Delete all') }}</button>
-          </div>
-          <div class="table-responsive">
-            {{ render_table(table, titles=titles, actions_title=actions_title, show_actions=True, model=journey_model, delete_url=('journal.delete_journey', [('journey_id', ':id')])) }}
-          </div>
-        </p>
-      </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ _('Travel Journal') }}</h5>
+            <p class="card-text">
+            <div class="mb-3">
+                <a class="btn btn-primary" href="{{ url_for('journal.export_journeys') }}">{{ _('Export') }}</a>
+                <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                        data-target="#import-journal-modal">{{ _('Import') }}</button>
+                <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                        data-target="#delete-journal-modal">{{ _('Delete all') }}</button>
+            </div>
+            {% if archive_table %}
+                <ul class="nav nav-tabs" id="tab-journal" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="current-tab" data-toggle="tab" href="#current-tab-content"
+                           role="tab"
+                           aria-controls="home" aria-selected="true">{{ _('Current') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="archive-tab" data-toggle="tab" href="#archive-tab-content" role="tab"
+                           aria-controls="profile" aria-selected="false">{{ _('Archive') }}</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="journal-tabs-content">
+                    <div class="tab-pane fade show active" id="current-tab-content" role="tabpanel"
+                         aria-labelledby="current-tab">
+                        <div class="table-responsive">
+                            {{ render_table(table, titles=titles, actions_title=actions_title, show_actions=True, model=journey_model, delete_url=('journal.delete_journey', [('journey_id', ':id')])) }}
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="archive-tab-content" role="tabpanel" aria-labelledby="archive-tab">
+                        <div class="table-responsive">
+                            {{ render_table(archive_table, titles=titles, actions_title=actions_title, show_actions=True, model=journey_model, delete_url=('journal.delete_journey', [('journey_id', ':id')])) }}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                {{ render_table(table, titles=titles, actions_title=actions_title, show_actions=True, model=journey_model, delete_url=('journal.delete_journey', [('journey_id', ':id')])) }}
+            {% endif %}
+            </p>
+        </div>
     </div>
 
-    <div class="modal fade" id="delete-journal-modal" tabindex="-1" role="dialog" aria-labelledby="delete-journal-modal-label" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="delete-journal-modal-label">{{ _('Danger Zone') }}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            {{ _('Are you sure you want to delete <strong>ALL</strong> your journal entries?') }}
-          </div>
-          <div class="modal-footer">
-            <form action="{{ url_for('journal.journeys') }}" method="post" class="form" role="form">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ _('Close') }}</button>
-                {{ delete_journeys_form.hidden_tag() }}
-                {{ render_field(delete_journeys_form.delete) }}
-            </form>
-          </div>
+    <div class="modal fade" id="delete-journal-modal" tabindex="-1" role="dialog"
+         aria-labelledby="delete-journal-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="delete-journal-modal-label">{{ _('Danger Zone') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ _('Are you sure you want to delete <strong>ALL</strong> your journal entries?') }}
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ url_for('journal.journeys') }}" method="post" class="form" role="form">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ _('Close') }}</button>
+                        {{ delete_journeys_form.hidden_tag() }}
+                        {{ render_field(delete_journeys_form.delete) }}
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
-    <div class="modal fade" id="import-journal-modal" tabindex="-1" role="dialog" aria-labelledby="delete-journal-modal-label" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="import-journal-modal-label">{{ _('Import') }}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form action="{{ url_for('journal.journeys') }}" method="post" enctype="multipart/form-data" class="form" role="form">
-          <div class="modal-body">
-            {{ _('Using the form below, you can import a previously exported journal.') }}
-            {{ render_field(import_journeys_form.file) }}
-          </div>
-          <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ _('Close') }}</button>
-                {{ import_journeys_form.hidden_tag() }}
-                {{ render_field(import_journeys_form.upload) }}
-          </div>
-          </form>
+    <div class="modal fade" id="import-journal-modal" tabindex="-1" role="dialog"
+         aria-labelledby="delete-journal-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="import-journal-modal-label">{{ _('Import') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ url_for('journal.journeys') }}" method="post" enctype="multipart/form-data"
+                      class="form" role="form">
+                    <div class="modal-body">
+                        {{ _('Using the form below, you can import a previously exported journal.') }}
+                        {{ render_field(import_journeys_form.file) }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ _('Close') }}</button>
+                        {{ import_journeys_form.hidden_tag() }}
+                        {{ render_field(import_journeys_form.upload) }}
+                    </div>
+                </form>
+            </div>
         </div>
-      </div>
     </div>
 
 {% endblock %}

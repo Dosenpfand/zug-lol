@@ -1,6 +1,7 @@
 from datetime import datetime, date
 
 from flask import current_app
+from flask_babel import format_decimal, format_date
 
 from app import db
 from time import time
@@ -53,6 +54,7 @@ class User(BaseModel, fsqla.FsUserMixin):
     klimaticket_price = db.Column(
         db.Float, default=current_app.config["KLIMATICKET_DEFAULT_PRICE"]
     )
+    klimaticket_start_date = db.Column(db.Date, default=date.today, nullable=True)
     journeys = db.relationship(
         "Journey", back_populates="user", cascade="all, delete-orphan", lazy=True
     )
@@ -68,4 +70,12 @@ class Journey(BaseModel):
     origin = db.Column(db.Text)
     destination = db.Column(db.Text)
     price = db.Column(db.Float, nullable=False)
-    date = db.Column(db.Date(), default=date.today)
+    date = db.Column(db.Date(), default=date.today, nullable=False)
+
+    @property
+    def price_formatted(self):
+        return format_decimal(self.price)
+
+    @property
+    def date_formatted(self):
+        return format_date(self.date)

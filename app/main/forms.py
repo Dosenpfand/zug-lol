@@ -3,7 +3,7 @@ from typing import List, Optional
 from flask import current_app
 from flask_babel import lazy_gettext as _
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, SubmitField, FloatField
+from wtforms import BooleanField, SubmitField, FloatField, DateField, validators
 from wtforms.validators import NoneOf
 
 
@@ -23,6 +23,9 @@ class ProfileForm(FlaskForm):
                 _("e.g."), current_app.config["KLIMATICKET_DEFAULT_PRICE"]
             )
         },
+    )
+    klimaticket_start_date = DateField(
+        label=_("Klimaticket start date"), validators=[validators.Optional()]
     )
     submit = SubmitField(label=_("Save"))
 
