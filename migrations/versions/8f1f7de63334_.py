@@ -21,6 +21,7 @@ def upgrade():
     op.alter_column(
         "user", "klimaticket_start_date", existing_type=sa.DATE(), nullable=True
     )
+    op.execute('UPDATE "user" SET klimaticket_start_date = NULL')
     # ### end Alembic commands ###
 
 
