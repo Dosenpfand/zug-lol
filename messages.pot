@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-10-24 19:39+0200\n"
+"POT-Creation-Date: 2022-11-05 12:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,7 +23,7 @@ msgid ""
 " find out if your Klimaticket pays off."
 msgstr ""
 
-#: app/__init__.py:82
+#: app/__init__.py:85
 msgid "Language changed"
 msgstr ""
 
@@ -89,7 +89,7 @@ msgstr ""
 msgid "Prove that you are human"
 msgstr ""
 
-#: app/journal/forms.py:12 app/journal/views.py:108 app/ticket_price/forms.py:9
+#: app/journal/forms.py:12 app/journal/views.py:110 app/ticket_price/forms.py:9
 msgid "Origin"
 msgstr ""
 
@@ -97,7 +97,7 @@ msgstr ""
 msgid "e.g. Wien"
 msgstr ""
 
-#: app/journal/forms.py:21 app/journal/views.py:109
+#: app/journal/forms.py:21 app/journal/views.py:111
 #: app/ticket_price/forms.py:18
 msgid "Destination"
 msgstr ""
@@ -106,7 +106,7 @@ msgstr ""
 msgid "e.g. Innsbruck"
 msgstr ""
 
-#: app/journal/forms.py:30 app/journal/views.py:110
+#: app/journal/forms.py:30 app/journal/views.py:112
 msgid "Price in €"
 msgstr ""
 
@@ -114,7 +114,7 @@ msgstr ""
 msgid "e.g. 10.5"
 msgstr ""
 
-#: app/journal/forms.py:33 app/journal/forms.py:35 app/journal/views.py:111
+#: app/journal/forms.py:33 app/journal/forms.py:35 app/journal/views.py:113
 msgid "Date"
 msgstr ""
 
@@ -130,8 +130,8 @@ msgstr ""
 msgid "CSV File"
 msgstr ""
 
-#: app/journal/forms.py:46 app/templates/journeys.html:72
-#: app/templates/journeys.html:109
+#: app/journal/forms.py:46 app/templates/journeys.html:86
+#: app/templates/journeys.html:151
 msgid "Import"
 msgstr ""
 
@@ -159,20 +159,20 @@ msgstr ""
 msgid "All journal entries imported."
 msgstr ""
 
-#: app/journal/views.py:113
+#: app/journal/views.py:116
 msgid "Actions"
 msgstr ""
 
-#: app/journal/views.py:120 app/templates/base.html:65
-#: app/templates/journeys.html:68
+#: app/journal/views.py:123 app/templates/base.html:65
+#: app/templates/journeys.html:81
 msgid "Travel Journal"
 msgstr ""
 
-#: app/journal/views.py:141
+#: app/journal/views.py:145
 msgid "Journal entry deleted."
 msgstr ""
 
-#: app/journal/views.py:143
+#: app/journal/views.py:147
 msgid "Failed to delete journal entry."
 msgstr ""
 
@@ -188,19 +188,23 @@ msgstr ""
 msgid "e.g."
 msgstr ""
 
-#: app/main/forms.py:27
+#: app/main/forms.py:28
+msgid "Klimaticket start date"
+msgstr ""
+
+#: app/main/forms.py:30
 msgid "Save"
 msgstr ""
 
-#: app/main/forms.py:32
+#: app/main/forms.py:35
 msgid "Do you really want to delete your account?"
 msgstr ""
 
-#: app/main/forms.py:33
+#: app/main/forms.py:36
 msgid "Needs to be selected"
 msgstr ""
 
-#: app/main/forms.py:35
+#: app/main/forms.py:38
 msgid "Delete account"
 msgstr ""
 
@@ -216,15 +220,15 @@ msgstr ""
 msgid "Imprint"
 msgstr ""
 
-#: app/main/views.py:60 app/templates/base.html:67
+#: app/main/views.py:62 app/templates/base.html:67
 msgid "Profile"
 msgstr ""
 
-#: app/main/views.py:74
+#: app/main/views.py:76
 msgid "Your account has been deleted."
 msgstr ""
 
-#: app/main/views.py:77 app/templates/delete_account.html:7
+#: app/main/views.py:79 app/templates/delete_account.html:7
 msgid "Delete Account"
 msgstr ""
 
@@ -328,59 +332,67 @@ msgid ""
 "prices."
 msgstr ""
 
-#: app/templates/journeys.html:34
+#: app/templates/journeys.html:38
 msgid "Determine Price"
 msgstr ""
 
-#: app/templates/journeys.html:37
+#: app/templates/journeys.html:44
 msgid "Reverse Direction"
 msgstr ""
 
-#: app/templates/journeys.html:49
+#: app/templates/journeys.html:56
 msgid "Travel Statistics"
 msgstr ""
 
-#: app/templates/journeys.html:52
+#: app/templates/journeys.html:59
 msgid "Journeys"
 msgstr ""
 
-#: app/templates/journeys.html:53
+#: app/templates/journeys.html:62
 msgid "Sum ticket prices"
 msgstr ""
 
-#: app/templates/journeys.html:55
+#: app/templates/journeys.html:67
 msgid "Klimaticket gains"
 msgstr ""
 
-#: app/templates/journeys.html:58
+#: app/templates/journeys.html:71
 msgid "POSITIVE"
 msgstr ""
 
-#: app/templates/journeys.html:60
+#: app/templates/journeys.html:73
 msgid "NEGATIVE"
 msgstr ""
 
-#: app/templates/journeys.html:71
+#: app/templates/journeys.html:84
 msgid "Export"
 msgstr ""
 
-#: app/templates/journeys.html:73
+#: app/templates/journeys.html:88
 msgid "Delete all"
 msgstr ""
 
-#: app/templates/journeys.html:86 app/templates/profile.html:25
+#: app/templates/journeys.html:95
+msgid "Current"
+msgstr ""
+
+#: app/templates/journeys.html:99
+msgid "Archive"
+msgstr ""
+
+#: app/templates/journeys.html:127 app/templates/profile.html:25
 msgid "Danger Zone"
 msgstr ""
 
-#: app/templates/journeys.html:92
+#: app/templates/journeys.html:133
 msgid "Are you sure you want to delete <strong>ALL</strong> your journal entries?"
 msgstr ""
 
-#: app/templates/journeys.html:96 app/templates/journeys.html:120
+#: app/templates/journeys.html:137 app/templates/journeys.html:163
 msgid "Close"
 msgstr ""
 
-#: app/templates/journeys.html:116
+#: app/templates/journeys.html:159
 msgid "Using the form below, you can import a previously exported journal."
 msgstr ""
 
