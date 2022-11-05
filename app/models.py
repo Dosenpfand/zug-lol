@@ -73,9 +73,9 @@ class Journey(BaseModel):
     date = db.Column(db.Date(), default=date.today, nullable=False)
 
     @property
-    def price_formatted(self):
+    def price_formatted(self) -> str:
         return format_decimal(self.price)
 
     @property
-    def date_formatted(self):
+    def date_formatted(self) -> str:
         return format_date(self.date)
