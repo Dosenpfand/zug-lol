@@ -18,3 +18,4 @@
 - [ ] Sort by selectable
 - [ ] Pre-commit checks
 - [ ] Add test if all strings translated
+- [ ] Don't tell user whether username or password was wrong
