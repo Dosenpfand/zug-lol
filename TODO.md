@@ -1,9 +1,6 @@
 # TODO
 
-## Prio 1
-- [ ] Vorteilscard: Statistics, paid off with VC, ... paid off without VC
-
-## Prio 2
+## Prio 1 
 - [ ] Add better explanation/introduction text
 - [ ] Grey out button while determining price
 - [ ] Edit journey
