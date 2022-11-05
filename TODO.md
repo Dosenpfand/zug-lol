@@ -17,3 +17,4 @@
 - [ ] Add recurring?
 - [ ] Sort by selectable
 - [ ] Pre-commit checks
+- [ ] Add test if all strings translated
