@@ -84,8 +84,59 @@
                 <a class="btn btn-primary" href="{{ url_for('journal.export_journeys') }}">{{ _('Export') }}</a>
                 <button type="button" class="btn btn-outline-primary" data-toggle="modal"
                         data-target="#import-journal-modal">{{ _('Import') }}</button>
+                <div class="modal fade" id="import-journal-modal" tabindex="-1" role="dialog"
+                     aria-labelledby="delete-journal-modal-label" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="import-journal-modal-label">{{ _('Import') }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form action="{{ url_for('journal.journeys') }}" method="post" enctype="multipart/form-data"
+                                  class="form" role="form">
+                                <div class="modal-body">
+                                    {{ _('Using the form below, you can import a previously exported journal.') }}
+                                    {{ render_field(import_journeys_form.file) }}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">{{ _('Close') }}</button>
+                                    {{ import_journeys_form.hidden_tag() }}
+                                    {{ render_field(import_journeys_form.upload) }}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
                 <button type="button" class="btn btn-outline-primary" data-toggle="modal"
                         data-target="#delete-journal-modal">{{ _('Delete all') }}</button>
+                <div class="modal fade" id="delete-journal-modal" tabindex="-1" role="dialog"
+                     aria-labelledby="delete-journal-modal-label" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="delete-journal-modal-label">{{ _('Danger Zone') }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {{ _('Are you sure you want to delete <strong>ALL</strong> your journal entries?') }}
+                            </div>
+                            <div class="modal-footer">
+                                <form action="{{ url_for('journal.journeys') }}" method="post" class="form" role="form">
+                                    <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">{{ _('Close') }}</button>
+                                    {{ delete_journeys_form.hidden_tag() }}
+                                    {{ render_field(delete_journeys_form.delete) }}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             {% if archive_table %}
                 <ul class="nav nav-tabs" id="tab-journal" role="tablist">
@@ -118,55 +169,4 @@
             </p>
         </div>
     </div>
-
-    <div class="modal fade" id="delete-journal-modal" tabindex="-1" role="dialog"
-         aria-labelledby="delete-journal-modal-label" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="delete-journal-modal-label">{{ _('Danger Zone') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    {{ _('Are you sure you want to delete <strong>ALL</strong> your journal entries?') }}
-                </div>
-                <div class="modal-footer">
-                    <form action="{{ url_for('journal.journeys') }}" method="post" class="form" role="form">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ _('Close') }}</button>
-                        {{ delete_journeys_form.hidden_tag() }}
-                        {{ render_field(delete_journeys_form.delete) }}
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="import-journal-modal" tabindex="-1" role="dialog"
-         aria-labelledby="delete-journal-modal-label" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="import-journal-modal-label">{{ _('Import') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="{{ url_for('journal.journeys') }}" method="post" enctype="multipart/form-data"
-                      class="form" role="form">
-                    <div class="modal-body">
-                        {{ _('Using the form below, you can import a previously exported journal.') }}
-                        {{ render_field(import_journeys_form.file) }}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ _('Close') }}</button>
-                        {{ import_journeys_form.hidden_tag() }}
-                        {{ render_field(import_journeys_form.upload) }}
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
 {% endblock %}
