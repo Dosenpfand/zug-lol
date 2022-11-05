@@ -24,6 +24,9 @@ def get_access_token(
 ) -> Optional[str]:
     headers = {"User-Agent": user_agent}
     r = requests.get(host + API_PATHS["access_token"], headers=headers)
+    if not r:
+        return None
+
     access_token = r.json().get("accessToken")
     return access_token
 
@@ -51,8 +54,9 @@ def get_station_id(
     headers = get_request_headers(access_token)
     params = {"name": name, "count": "1"}
     r = requests.get(host + API_PATHS["stations"], params, headers=headers)
-    if not type(r.json()) is list or not len(r.json()):
+    if not r or not type(r.json()) is list or not len(r.json()):
         return None
+
     return r.json()[0]["number"]
 
 
@@ -64,8 +68,9 @@ def get_station_names(
     headers = get_request_headers(access_token)
     params = {"name": name, "count": "10"}
     r = requests.get(host + API_PATHS["stations"], params, headers=headers)
-    if not type(r.json()) is list or not len(r.json()):
+    if not r or not type(r.json()) is list or not len(r.json()):
         return []
+
     return [
         station["name"] if station["name"] != "" else station["meta"]
         for station in r.json()
@@ -110,7 +115,8 @@ def get_travel_action_id(
     }
 
     r = requests.post(url, json=data, headers=headers)
-    # TODO: here and for all requests handle responses != OK
+    if not r:
+        return None
 
     travel_actions = r.json().get("travelActions")
     if not travel_actions:
