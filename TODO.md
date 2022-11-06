@@ -9,7 +9,7 @@
 - [ ] admin interface using flask-admin
 - [ ] Add password reset functionality
 
-## Prio 100
+## Prio 10
 - [ ] Better caching
 - [ ] Add recurring?
 - [ ] Sort by selectable
