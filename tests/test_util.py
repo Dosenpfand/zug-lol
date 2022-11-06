@@ -43,6 +43,7 @@ class TestUtil:
         destination = "St. Pölten"
         price = get_price(origin, destination, has_vc66=True, take_median=True)
 
+        assert price
         assert price > 5
         assert price < 50
 
