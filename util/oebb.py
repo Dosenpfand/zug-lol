@@ -2,7 +2,7 @@ from statistics import median
 from typing import Optional, Dict, List, Union
 
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
 import time
 
 CONFIG = dict(
@@ -268,8 +268,14 @@ def get_price(
     destination: str,
     date: Optional[datetime] = None,
     has_vc66: bool = False,
+    take_median: bool = False,
     access_token: Optional[str] = None,
 ) -> Optional[float]:
+    if not date:
+        date = (datetime.utcnow() + timedelta(days=1)).replace(
+            hour=8, minute=0, second=0, microsecond=0
+        )
+
     if not access_token:
         access_token = get_access_token()
     if not access_token:
@@ -287,7 +293,11 @@ def get_price(
         return None
 
     connection_ids = get_connection_ids(
-        travel_action_id, date=date, has_vc66=has_vc66, access_token=access_token
+        travel_action_id,
+        date=date,
+        has_vc66=has_vc66,
+        get_only_first=(not take_median),
+        access_token=access_token,
     )
     if not connection_ids:
         return None

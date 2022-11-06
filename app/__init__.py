@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 from typing import Optional, Union
 
 import click
@@ -53,6 +54,7 @@ def create_app(
         app.jinja_env.filters["format_number"] = format_number
 
         app.cli.add_command(init_db_command)
+        app.cli.add_command(update_oldest_price_command)
 
         fsqla.FsModels.set_db_info(db)
         from app.models import User, Role  # noqa
@@ -109,3 +111,30 @@ def init_db_command() -> None:
     """Clear existing data and create new tables."""
     init_db()
     click.echo("Initialized the database.")
+
+
+@click.command("update-oldest-price")
+@with_appcontext
+def update_oldest_price_command() -> None:
+    """Update the oldest cached price in the database."""
+    from app.models import Price
+    from util.oebb import get_price
+    from app.util import get_valid_access_token
+
+    price_obj = db.session.query(Price).order_by(Price.updated.asc()).first()
+    print(price_obj)
+
+    access_token = get_valid_access_token()
+    price = get_price(
+        price_obj.origin,
+        price_obj.destination,
+        has_vc66=price_obj.is_vorteilscard,
+        take_median=True,
+        access_token=access_token,
+    )
+
+    if price:
+        price_obj.price = price
+        price_obj.updated = datetime.utcnow()
+        db.session.commit()
+        print(price_obj)

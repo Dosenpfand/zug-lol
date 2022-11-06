@@ -21,7 +21,7 @@ class Price(BaseModel):
     updated = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self) -> str:
-        return f"<Price {self.price}>"
+        return f"Price({self.origin}, {self.destination}, {self.is_vorteilscard}, {self.price}, {self.updated})"
 
 
 class StationAutocomplete(BaseModel):

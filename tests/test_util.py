@@ -3,6 +3,8 @@ import re
 
 from typing import TYPE_CHECKING
 
+from util.oebb import get_price
+
 if TYPE_CHECKING:
     from flask import Flask
 
@@ -33,6 +35,14 @@ class TestUtil:
         print(output)
         assert match
         price = float(match.group("price").replace(",", "."))
+        assert price > 5
+        assert price < 50
+
+    def test_get_price(self) -> None:
+        origin = "Wien"
+        destination = "St. Pölten"
+        price = get_price(origin, destination, has_vc66=True, take_median=True)
+
         assert price > 5
         assert price < 50
 
