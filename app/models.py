@@ -1,5 +1,5 @@
 from datetime import datetime, date
-from typing import Optional
+from typing import Optional, List
 
 import jwt
 from flask import current_app
@@ -30,7 +30,7 @@ class Price(BaseModel):
     @classmethod
     def get_oldest(
         cls, count: int = 1, min_update_time: Optional[datetime] = None
-    ) -> Optional[list["Price"]]:
+    ) -> Optional[List["Price"]]:
         current_query = cls.query
         current_query = (
             current_query.filter(cls.updated < min_update_time)
@@ -43,7 +43,7 @@ class Price(BaseModel):
     @classmethod
     def update_oldest(
         cls, count: int = 1, min_update_time: Optional[datetime] = None
-    ) -> Optional[list["Price"]]:
+    ) -> Optional[List["Price"]]:
         price_objs = cls.get_oldest(count, min_update_time)
         if not price_objs:
             return None
