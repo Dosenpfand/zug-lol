@@ -13,7 +13,6 @@ class TestUtil:
     @staticmethod
     def result_html_pattern(origin: str, destination: str) -> str:
         return (
-            rf" {origin} to {destination}:"
             rf"<p>((Price for a ticket from)|(Preis für ein Ticket von)) {origin} ((nach)|(to)) {destination}:</p>"
             rf'<p><mark class="display-4">(?P<price>(\d+([\.,]))?\d+) €</mark></p>'
         )
