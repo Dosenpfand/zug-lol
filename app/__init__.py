@@ -1,19 +1,18 @@
 import logging
-from datetime import datetime
 from typing import Optional, Union
 
 import click
 from flask import Flask, current_app, request, session, flash
 from flask.cli import with_appcontext
+from flask_babel import Babel, format_number
+from flask_babel import lazy_gettext as _
 from flask_bootstrap import Bootstrap4
+from flask_debugtoolbar import DebugToolbarExtension
+from flask_migrate import Migrate
 from flask_security import SQLAlchemyUserDatastore, Security, current_user
 from flask_security.models import fsqla_v2 as fsqla
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from flask_babel import Babel, format_number
-from flask_babel import lazy_gettext as _
 from flask_wtf.csrf import CSRFProtect
-from flask_debugtoolbar import DebugToolbarExtension
 
 from app.extended_security.forms import ExtendedRegisterForm
 
@@ -114,27 +113,10 @@ def init_db_command() -> None:
 
 
 @click.command("update-oldest-price")
+@click.argument("count", default=1)
 @with_appcontext
-def update_oldest_price_command() -> None:
-    """Update the oldest cached price in the database."""
-    from app.models import Price
-    from util.oebb import get_price
-    from app.util import get_valid_access_token
+def update_oldest_price_command(count: int = 1) -> None:
+    """Update the COUNT oldest prices in the database."""
+    from app.models import Price  # noqa
 
-    price_obj = db.session.query(Price).order_by(Price.updated.asc()).first()
-    print(price_obj)
-
-    access_token = get_valid_access_token()
-    price = get_price(
-        price_obj.origin,
-        price_obj.destination,
-        has_vc66=price_obj.is_vorteilscard,
-        take_median=True,
-        access_token=access_token,
-    )
-
-    if price:
-        price_obj.price = price
-        price_obj.updated = datetime.utcnow()
-        db.session.commit()
-        print(price_obj)
+    print(Price.update_oldest(count))

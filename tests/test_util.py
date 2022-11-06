@@ -13,7 +13,7 @@ class TestUtil:
     @staticmethod
     def result_html_pattern(origin: str, destination: str) -> str:
         return (
-            rf"<p>Price for a ticket from {origin} to {destination}:</p>"
+            rf"<p>Preis für ein Ticket von {origin} nach {destination}:</p>"
             rf'<p><mark class="display-4">(?P<price>(\d+([\.,]))?\d+) €</mark></p>'
         )
 
@@ -32,7 +32,6 @@ class TestUtil:
             output[-1],
             flags=re.MULTILINE | re.DOTALL,
         )
-        print(output)
         assert match
         price = float(match.group("price").replace(",", "."))
         assert price > 5
@@ -46,8 +45,3 @@ class TestUtil:
         assert price
         assert price > 5
         assert price < 50
-
-    # TODO: Teardown (and whole class) should not be necessary, but in memory db results in error
-    @staticmethod
-    def teardown_class() -> None:
-        os.remove("app/app.db")

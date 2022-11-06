@@ -1,42 +1,17 @@
 from datetime import datetime, timedelta
 from typing import Optional, Iterator
 
-import jwt
 from flask import render_template
 from flask_babel import lazy_gettext as _, format_decimal
 
 from app import db
-from app.models import AuthToken, Price
+from app.models import Price, AuthToken
 from util.oebb import (
-    get_access_token,
     get_station_id,
     get_travel_action_id,
     get_connection_ids,
     get_price_for_connection,
 )
-
-
-def get_valid_access_token() -> Optional[str]:
-    current_token: AuthToken = AuthToken.query.first()
-
-    if current_token and current_token.is_valid():
-        return current_token.token
-
-    access_token = get_access_token()
-
-    if not access_token:
-        return None
-
-    decoded_token = jwt.decode(access_token, options={"verify_signature": False})
-    expires_at = decoded_token["exp"]
-
-    if current_token:
-        db.session.delete(current_token)
-
-    new_token = AuthToken(token=access_token, expires_at=expires_at)
-    db.session.add(new_token)
-    db.session.commit()
-    return access_token
 
 
 def render(
@@ -92,7 +67,7 @@ def get_price_generator(
     if not access_token:
         current_message = _("Generating access token")
         yield render(current_message, current_step, total_steps)
-        access_token = get_valid_access_token()
+        access_token = AuthToken.get_valid_one()
         if not access_token:
             current_message = _("Failed to generate access token")
             yield render(current_message)

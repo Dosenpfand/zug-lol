@@ -18,9 +18,9 @@ from flask_security import auth_required
 from app import db
 from app.main.forms import ProfileForm, DeleteAccountForm
 
-from app.models import User, StationAutocomplete
+from app.models import User, StationAutocomplete, AuthToken
 from app.main import bp
-from app.util import get_valid_access_token, get_price_generator
+from app.util import get_price_generator
 from util.oebb import get_station_names
 
 if TYPE_CHECKING:
@@ -92,7 +92,7 @@ def station_autocomplete() -> Union[str, "BaseResponse"]:
         if station_exists:
             result = station_query.first().result
         else:
-            access_token = get_valid_access_token()
+            access_token = AuthToken.get_valid_one()
             if not access_token:
                 result = dumps([])
             else:

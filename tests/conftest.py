@@ -1,3 +1,4 @@
+import os
 from typing import TYPE_CHECKING, Iterator
 
 import pytest
@@ -34,7 +35,7 @@ class AuthActions(object):
         return self._client.get("/logout")
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def app() -> Iterator["Flask"]:
     app = create_app()
     app.config.update(
@@ -56,6 +57,9 @@ def app() -> Iterator["Flask"]:
         db.session.commit()
 
     yield app
+
+    # TODO: Teardown (and session scope) should not be necessary, but in memory db results in error
+    os.remove("app/app.db")
 
 
 @pytest.fixture()
