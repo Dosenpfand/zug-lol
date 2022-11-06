@@ -29,7 +29,7 @@ class StationAutocomplete(BaseModel):
     result = db.Column(db.Text)
 
     def __repr__(self) -> str:
-        return f"<StationAutocomplete {self.input}>"
+        return f"StationAutocomplete({self.input}, {self.result})"
 
 
 class AuthToken(BaseModel):
@@ -41,12 +41,12 @@ class AuthToken(BaseModel):
         return self.expires_at > (int(time()) + safety_margin_sec)
 
     def __repr__(self) -> str:
-        return f"<AuthToken {self.expires_at}>"
+        return f"AuthToken({self.expires_at}, {self.token})>"
 
 
 class Role(BaseModel, fsqla.FsRoleMixin):
     def __repr__(self) -> str:
-        return f"<Role {self.name}>"
+        return f"Role({self.name}, {self.description}, {self.permissions}, {self.update_datetime})"
 
 
 class User(BaseModel, fsqla.FsUserMixin):
@@ -62,6 +62,9 @@ class User(BaseModel, fsqla.FsUserMixin):
         db.String(length=255), default=current_app.config["BABEL_DEFAULT_LOCALE"]
     )
 
+    def __repr__(self):
+        return f"User({self.email}, {self.username}, {self.active}, {self.fs_uniquifier}, {self.confirmed_at})"
+
 
 class Journey(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
@@ -71,6 +74,9 @@ class Journey(BaseModel):
     destination = db.Column(db.Text)
     price = db.Column(db.Float, nullable=False)
     date = db.Column(db.Date(), default=date.today, nullable=False)
+
+    def __repr__(self):
+        return f"Journey({self.user}, {self.origin}, {self.destination}, {self.price}, {self.price})"
 
     @property
     def price_formatted(self) -> str:
