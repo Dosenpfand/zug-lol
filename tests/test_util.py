@@ -33,6 +33,8 @@ class TestUtil:
             output[-1],
             flags=re.MULTILINE | re.DOTALL,
         )
+        # TODO: remove
+        print(output)
         assert match
         price = float(match.group("price").replace(",", "."))
         assert price > 5
