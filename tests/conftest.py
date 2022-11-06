@@ -44,6 +44,7 @@ def app() -> Iterator["Flask"]:
             "WTF_CSRF_ENABLED": False,
             "SECURITY_PASSWORD_HASH": "plaintext",
             "SQLALCHEMY_DATABASE_URI": "sqlite:///app.db",
+            "BABEL_DEFAULT_LOCALE": "de",
         }
     )
 
