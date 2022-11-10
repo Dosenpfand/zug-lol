@@ -7,6 +7,7 @@ from flask.cli import with_appcontext
 from flask_babel import Babel, format_number
 from flask_babel import lazy_gettext as _
 from flask_bootstrap import Bootstrap4
+from flask_crontab import Crontab
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_migrate import Migrate
 from flask_security import SQLAlchemyUserDatastore, Security, current_user
@@ -23,6 +24,7 @@ migrate = Migrate()
 babel = Babel()
 csrf = CSRFProtect()
 debug_toolbar = DebugToolbarExtension()
+crontab = Crontab()
 
 
 def create_app(
@@ -48,6 +50,7 @@ def create_app(
         babel.init_app(app)
         csrf.init_app(app)
         debug_toolbar.init_app(app)
+        crontab.init_app(app)
 
         app.jinja_env.add_extension("jinja2.ext.i18n")
         app.jinja_env.filters["format_number"] = format_number
