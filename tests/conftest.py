@@ -37,16 +37,19 @@ class AuthActions(object):
 
 @pytest.fixture(scope="session")
 def app() -> Iterator["Flask"]:
-    app = create_app()
-    app.config.update(
-        {
-            "TESTING": True,
-            "WTF_CSRF_ENABLED": False,
-            "SECURITY_PASSWORD_HASH": "plaintext",
-            "SQLALCHEMY_DATABASE_URI": "sqlite:///app.db",
-            "BABEL_DEFAULT_LOCALE": "de",
-        }
-    )
+    import config as app_config
+
+    test_config = {
+        "TESTING": True,
+        "WTF_CSRF_ENABLED": False,
+        "SECURITY_PASSWORD_HASH": "plaintext",
+        "SQLALCHEMY_DATABASE_URI": "sqlite:///app.db",
+        "BABEL_DEFAULT_LOCALE": "de",
+        "FORCE_HTTPS": False,
+    }
+    for key, value in test_config.items():
+        setattr(app_config, key, value)
+    app = create_app(config=app_config)
 
     with app.app_context():
         init_db(drop=False)

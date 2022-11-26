@@ -52,6 +52,7 @@ def create_app(
         debug_toolbar.init_app(app)
         talisman.init_app(
             app,
+            force_https=current_app.config["FORCE_HTTPS"],
             content_security_policy=current_app.config["CONTENT_SECURITY_POLICY"],
             content_security_policy_nonce_in=current_app.config[
                 "CONTENT_SECURITY_POLICY_NONCE_IN"
