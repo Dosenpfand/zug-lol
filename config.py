@@ -30,7 +30,7 @@ DEBUG_TB_INTERCEPT_REDIRECTS = False
 DEBUG_TB_ENABLED = False
 CONTENT_SECURITY_POLICY = {
     "object-src": "'none'",
-    "img-src": "*",
+    "base-uri": "'none'",
     "script-src": [
         "'self'",
         "https://hcaptcha.com",
