@@ -27,3 +27,28 @@ RECAPTCHA_VERIFY_SERVER = "https://hcaptcha.com/siteverify"
 RECAPTCHA_PUBLIC_KEY = "10000000-ffff-ffff-ffff-000000000001"
 RECAPTCHA_PRIVATE_KEY = "0x0000000000000000000000000000000000000000"
 DEBUG_TB_INTERCEPT_REDIRECTS = False
+CONTENT_SECURITY_POLICY = {
+    "default-src": "'self'",
+    "object-src": "'none'",
+    "img-src": "*",
+    "script-src": [
+        "'self'",
+        "https://hcaptcha.com",
+        "https://*.hcaptcha.com",
+    ],
+    "frame-src": [
+        "'self'",
+        "https://hcaptcha.com",
+        "https://*.hcaptcha.com",
+    ],
+    "style-src": [
+        "'self'",
+        "https://hcaptcha.com",
+        "https://*.hcaptcha.com",
+    ],
+    "connect-src": [
+        "'self'",
+        "https://hcaptcha.com",
+        "https://*.hcaptcha.com",
+    ],
+}

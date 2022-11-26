@@ -1,0 +1,16 @@
+pre {
+    background: #ddd;
+    padding: 10px;
+}
+
+h2 {
+    margin-top: 20px;
+}
+
+footer {
+    margin: 20px;
+}
+
+form > .btn {
+    margin: .25rem 0;
+}

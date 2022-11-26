@@ -14,29 +14,17 @@
     <meta property="og:title" content="{{ title }} - {{ config['SITE_TITLE'] }}">
     <meta property="og:site_name" content="{{ config['SITE_TITLE'] }}" />
     <meta property="og:description" content="{{ config['SITE_DESCRIPTION'] }}">
-    <meta property="og:image" content="{{ url_for('static', filename='logo_w_name.png') }}">
+    <meta property="og:image" content="{{ config['SITE_BASE_URI'] }}{{ url_for('static', filename='logo_w_name.png') }}">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ config['SITE_BASE_URI'] }}">
     <meta property="twitter:title" content="{{ title }} - {{ config['SITE_TITLE'] }}">
     <meta property="twitter:description" content="{{ config['SITE_DESCRIPTION'] }}">
-    <meta property="twitter:image" content="{{ config['SITE_BASE_URI'] }}/{{ url_for('static', filename='logo_w_name.png') }}">
+    <meta property="twitter:image" content="{{ config['SITE_BASE_URI'] }}{{ url_for('static', filename='logo_w_name.png') }}">
+
+    <meta name="htmx-config" content='{"includeIndicatorStyles": false}'>
 
     {{ bootstrap.load_css() }}
-    <style>
-        pre {
-            background: #ddd;
-            padding: 10px;
-        }
-        h2 {
-            margin-top: 20px;
-        }
-        footer {
-            margin: 20px;
-        }
-        form > .btn {
-	        margin: .25rem 0;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" sizes="any">
     <link rel="icon" href="{{ url_for('static', filename='icon.svg') }}" type="image/svg+xml">
@@ -115,40 +103,6 @@
     <script id="htmx-script" src="{{ url_for('static', filename='htmx.min.js') }}" defer></script>
     <script src="{{ url_for('static', filename='sse.js') }}" defer></script>
     <script src="{{ url_for('static', filename='bootstrap-autocomplete.min.js') }}"></script>
-
-    <script>
-        // HTMX and SSE
-        function onHtmxLoaded() {
-            htmx.on('htmx:sseError', function(evt) {
-                if(htmx.find("#price")) {
-                    htmx.find("#price").value = htmx.find("#price-log").innerHTML
-                    htmx.remove(htmx.find("#sse-container-outer"));
-                } else {
-                    htmx.find("#price-output").innerHTML = htmx.find("#price-log").innerHTML
-                    htmx.remove(htmx.find("#sse-container"));
-                }
-            });
-        }
-        if ('htmx' in window) {
-            onHtmxLoaded();
-        } else {
-            const script = document.getElementById('htmx-script');
-            script.addEventListener('load', onHtmxLoaded);
-        }
-
-        // Auto-Complete
-        $('.basicAutoComplete').autoComplete({
-            resolverSettings: {
-                url: '/station_autocomplete'
-            }
-        })
-
-        // Swap origin and destination
-        function swapValues() {
-            const origin_temp = document.getElementById("origin").value;
-            document.getElementById("origin").value = document.getElementById("destination").value;
-            document.getElementById("destination").value = origin_temp;
-        }
-    </script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

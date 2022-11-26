@@ -13,6 +13,7 @@ from flask_security import SQLAlchemyUserDatastore, Security, current_user
 from flask_security.models import fsqla_v2 as fsqla
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
+from flask_talisman import Talisman
 
 from app.extended_security.forms import ExtendedRegisterForm
 
@@ -23,6 +24,7 @@ migrate = Migrate()
 babel = Babel()
 csrf = CSRFProtect()
 debug_toolbar = DebugToolbarExtension()
+talisman = Talisman()
 
 
 def create_app(
@@ -48,6 +50,9 @@ def create_app(
         babel.init_app(app)
         csrf.init_app(app)
         debug_toolbar.init_app(app)
+        talisman.init_app(
+            app, content_security_policy=current_app.config["CONTENT_SECURITY_POLICY"]
+        )
 
         app.jinja_env.add_extension("jinja2.ext.i18n")
         app.jinja_env.filters["format_number"] = format_number

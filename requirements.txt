@@ -16,3 +16,4 @@ psycopg2~=2.9
 python-dotenv~=0.20
 pytest~=7.1
 Flask-DebugToolbar~=0.13
+flask-talisman~=1.0
