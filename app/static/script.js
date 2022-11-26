@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById("destination").value = origin_temp;
         });
     }
-
 });
 
 // Select the node that will be observed for mutations
@@ -51,12 +50,14 @@ const callback = (mutationList, observer) => {
             if (mutation.target.id === 'progress-output') {
                 mutation.target.style.width = mutation.target.attributes['aria-valuenow'].nodeValue + '%';
             }
+            console.log("a")
         } else if (mutation.type === 'childList') {
             if (mutation.addedNodes.length > 0) {
                 if (mutation.addedNodes[0].id == 'progress') {
                     mutation.addedNodes[0].childNodes[0].style.width = mutation.addedNodes[0].childNodes[0].attributes['aria-valuenow'].nodeValue + '%';
                 }
             }
+            console.log("b")
         }
         console.log(mutation)
     }
