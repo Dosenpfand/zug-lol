@@ -36,35 +36,3 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
-
-// Select the node that will be observed for mutations
-const targetNode = document.getElementById('output');
-
-// Options for the observer (which mutations to observe)
-const config = {attributes: true, childList: true};
-
-// Callback function to execute when mutations are observed
-const callback = (mutationList, observer) => {
-    for (const mutation of mutationList) {
-        if (mutation.type === 'attributes') {
-            if (mutation.target.id === 'progress-output') {
-                mutation.target.style.width = mutation.target.attributes['aria-valuenow'].nodeValue + '%';
-            }
-            console.log("a")
-        } else if (mutation.type === 'childList') {
-            if (mutation.addedNodes.length > 0) {
-                if (mutation.addedNodes[0].id == 'progress') {
-                    mutation.addedNodes[0].childNodes[0].style.width = mutation.addedNodes[0].childNodes[0].attributes['aria-valuenow'].nodeValue + '%';
-                }
-            }
-            console.log("b")
-        }
-        console.log(mutation)
-    }
-};
-
-// Create an observer instance linked to the callback function
-const observer = new MutationObserver(callback);
-
-// Start observing the target node for configured mutations
-observer.observe(targetNode, config);
