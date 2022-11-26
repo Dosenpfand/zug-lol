@@ -32,7 +32,6 @@ CONTENT_SECURITY_POLICY = {
     "object-src": "'none'",
     "base-uri": "'none'",
     "script-src": [
-        "'self'",
         "https://hcaptcha.com",
         "https://*.hcaptcha.com",
     ],
