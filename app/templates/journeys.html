@@ -22,30 +22,29 @@
     <div class="card bg-light mb-3">
         <div class="card-body">
             <h5 class="card-title">{{ _('Add Journey') }}</h5>
-            <p class="card-text">
-            <form action="{{ url_for('journal.journeys') }}" method="post" class="form" role="form">
-                {{ add_journey_form.hidden_tag() }}
-                {{ render_field(add_journey_form.origin) }}
-                {{ render_field(add_journey_form.destination) }}
-                {{ render_field(add_journey_form.price) }}
-                {{ render_field(add_journey_form.date) }}
-                {{ render_field(add_journey_form.submit) }}
-                <a class="btn btn-outline-primary btn-md" id="determine-price"
-                   hx-post="{{ url_for('journal.sse_container') }}" hx-target="#output">
-                    <svg class="bi" width="1em" height="1em" fill="currentColor">
-                        <use xlink:href="/bootstrap/static/icons/bootstrap-icons.svg#cash-stack"/>
-                    </svg>
-                    {{ _('Determine Price') }}
-                </a>
-                <a class="btn btn-outline-primary btn-md" id="reverse-direction" onclick="swapValues()">
-                    <svg class="bi" width="1em" height="1em" fill="currentColor">
-                        <use xlink:href="/bootstrap/static/icons/bootstrap-icons.svg#arrow-left-right"/>
-                    </svg>
-                    {{ _('Reverse Direction') }}
-                </a>
-
-            </form>
-            </p>
+            <div class="card-text">
+                <form action="{{ url_for('journal.journeys') }}" method="post" class="form" role="form">
+                    {{ add_journey_form.hidden_tag() }}
+                    {{ render_field(add_journey_form.origin) }}
+                    {{ render_field(add_journey_form.destination) }}
+                    {{ render_field(add_journey_form.price) }}
+                    {{ render_field(add_journey_form.date) }}
+                    {{ render_field(add_journey_form.submit) }}
+                    <a class="btn btn-outline-primary btn-md" id="determine-price"
+                       hx-post="{{ url_for('journal.sse_container') }}" hx-target="#output">
+                        <svg class="bi" width="1em" height="1em" fill="currentColor">
+                            <use xlink:href="/bootstrap/static/icons/bootstrap-icons.svg#cash-stack"/>
+                        </svg>
+                        {{ _('Determine Price') }}
+                    </a>
+                    <a class="btn btn-outline-primary btn-md" id="reverse-direction">
+                        <svg class="bi" width="1em" height="1em" fill="currentColor">
+                            <use xlink:href="/bootstrap/static/icons/bootstrap-icons.svg#arrow-left-right"/>
+                        </svg>
+                        {{ _('Reverse Direction') }}
+                    </a>
+                </form>
+            </div>
         </div>
     </div>
 

@@ -26,12 +26,17 @@ $('.basicAutoComplete').autoComplete({
 })
 
 // Swap origin and destination
-function swapValues() {
-    const origin_temp = document.getElementById("origin").value;
-    document.getElementById("origin").value = document.getElementById("destination").value;
-    document.getElementById("destination").value = origin_temp;
-}
+document.addEventListener('DOMContentLoaded', function () {
+    let reverseDirection = document.getElementById('reverse-direction');
+    if (reverseDirection) {
+        reverseDirection.addEventListener('click', function swapValues() {
+            const origin_temp = document.getElementById("origin").value;
+            document.getElementById("origin").value = document.getElementById("destination").value;
+            document.getElementById("destination").value = origin_temp;
+        });
+    }
 
+});
 
 // Select the node that will be observed for mutations
 const targetNode = document.getElementById('output');
