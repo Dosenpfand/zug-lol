@@ -47,3 +47,4 @@ CONTENT_SECURITY_POLICY = {
         "https://*.hcaptcha.com",
     ],
 }
+CONTENT_SECURITY_POLICY_NONCE_IN = ["script-src"]

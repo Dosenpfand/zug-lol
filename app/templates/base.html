@@ -99,10 +99,10 @@
         </div>
     </footer>
 
-    {{ bootstrap.load_js() }}
-    <script id="htmx-script" src="{{ url_for('static', filename='htmx.min.js') }}" defer></script>
-    <script src="{{ url_for('static', filename='sse.js') }}" defer></script>
-    <script src="{{ url_for('static', filename='bootstrap-autocomplete.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    {{ bootstrap.load_js(nonce=csp_nonce()) }}
+    <script nonce="{{ csp_nonce() }}" id="htmx-script" src="{{ url_for('static', filename='htmx.min.js') }}" defer></script>
+    <script nonce="{{ csp_nonce() }}" src="{{ url_for('static', filename='sse.js') }}" defer></script>
+    <script nonce="{{ csp_nonce() }}" src="{{ url_for('static', filename='bootstrap-autocomplete.min.js') }}"></script>
+    <script nonce="{{ csp_nonce() }}" src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
