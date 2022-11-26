@@ -4,4 +4,4 @@ from flask_wtf import RecaptchaField
 
 
 class ExtendedRegisterForm(RegisterForm):
-    captcha = RecaptchaField(label=_('Prove that you are human'))
+    captcha = RecaptchaField(label=_("Prove that you are human"))

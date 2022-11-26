@@ -1,6 +1,14 @@
 from json import dumps
 
-from flask import render_template, request, Response, stream_with_context, redirect, url_for, flash
+from flask import (
+    render_template,
+    request,
+    Response,
+    stream_with_context,
+    redirect,
+    url_for,
+    flash,
+)
 from flask_babel import gettext as _
 from flask_login import current_user
 from flask_security import auth_required
@@ -15,21 +23,22 @@ from util.oebb import get_station_names
 from util.sse import get_price_generator
 
 
-@bp.route('/')
+@bp.route("/")
 def home():
-    return render_template('home.html', title=_('Home'))
+    return render_template("home.html", title=_("Home"))
 
 
-@bp.route('/data_protection')
+@bp.route("/data_protection")
 def data_protection():
-    return render_template('data_protection.html', title=_('Data Protection'))
+    return render_template("data_protection.html", title=_("Data Protection"))
 
-@bp.route('/imprint')
+
+@bp.route("/imprint")
 def imprint():
-    return render_template('imprint.html', title=_('Imprint'))
+    return render_template("imprint.html", title=_("Imprint"))
 
 
-@bp.route("/profile", methods=['GET', 'POST'])
+@bp.route("/profile", methods=["GET", "POST"])
 @auth_required()
 def profile():
     form = ProfileForm()
@@ -43,10 +52,12 @@ def profile():
         form.has_vorteilscard.data = current_user.has_vorteilscard
         form.klimaticket_price.data = current_user.klimaticket_price
 
-    return render_template('profile.html', title=_('Profile'), form=form, name=current_user.email)
+    return render_template(
+        "profile.html", title=_("Profile"), form=form, name=current_user.email
+    )
 
 
-@bp.route("/delete_account", methods=['GET', 'POST'])
+@bp.route("/delete_account", methods=["GET", "POST"])
 @auth_required()
 def delete_account():
     form = DeleteAccountForm()
@@ -56,15 +67,15 @@ def delete_account():
             user = User.query.filter_by(id=current_user.id).first()
             db.session.delete(user)
             db.session.commit()
-            flash(_('Your account has been deleted.'))
-            return redirect(url_for('main.home'))
+            flash(_("Your account has been deleted."))
+            return redirect(url_for("main.home"))
 
-    return render_template('delete_account.html', title=_('Delete Account'), form=form)
+    return render_template("delete_account.html", title=_("Delete Account"), form=form)
 
 
-@bp.route('/station_autocomplete')
+@bp.route("/station_autocomplete")
 def station_autocomplete():
-    name = request.args.get('q')
+    name = request.args.get("q")
 
     if not name:
         result = dumps([])
@@ -83,16 +94,28 @@ def station_autocomplete():
                 db.session.add(StationAutocomplete(input=name, result=result))
                 db.session.commit()
 
-    return Response(result, mimetype='application/json')
+    return Response(result, mimetype="application/json")
 
 
-@bp.route('/get_price')
+@bp.route("/get_price")
 def get_price():
-    origin = request.args.get('origin', type=str)
-    destination = request.args.get('destination', type=str)
-    has_vorteilscard = request.args.get('vorteilscard', type=str, default='False') == 'True'
-    output_only_price = request.args.get('output_only_price', type=bool, default='False')
+    origin = request.args.get("origin", type=str)
+    destination = request.args.get("destination", type=str)
+    has_vorteilscard = (
+        request.args.get("vorteilscard", type=str, default="False") == "True"
+    )
+    output_only_price = request.args.get(
+        "output_only_price", type=bool, default="False"
+    )
 
-    return Response(stream_with_context(
-        get_price_generator(origin, destination, has_vc66=has_vorteilscard, output_only_price=output_only_price)),
-        mimetype='text/event-stream')
+    return Response(
+        stream_with_context(
+            get_price_generator(
+                origin,
+                destination,
+                has_vc66=has_vorteilscard,
+                output_only_price=output_only_price,
+            )
+        ),
+        mimetype="text/event-stream",
+    )

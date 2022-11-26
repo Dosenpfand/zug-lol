@@ -1,5 +1,5 @@
 from flask import Blueprint
 
-bp = Blueprint('main', __name__, template_folder='templates')
+bp = Blueprint("main", __name__, template_folder="templates")
 
-from app.main import views # noqa
+from app.main import views  # noqa
