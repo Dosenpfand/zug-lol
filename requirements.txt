@@ -17,3 +17,4 @@ python-dotenv~=0.20
 pytest~=7.1
 Flask-DebugToolbar~=0.13
 flask-talisman~=1.0
+sentry-sdk[flask]~=1.16.0

@@ -2,6 +2,7 @@ import logging
 from typing import Optional, Union
 
 import click
+import sentry_sdk
 from flask import Flask, current_app, request, session, flash
 from flask.cli import with_appcontext
 from flask_babel import Babel, format_number
@@ -12,8 +13,9 @@ from flask_migrate import Migrate
 from flask_security import SQLAlchemyUserDatastore, Security, current_user
 from flask_security.models import fsqla_v2 as fsqla
 from flask_sqlalchemy import SQLAlchemy
-from flask_wtf.csrf import CSRFProtect
 from flask_talisman import Talisman
+from flask_wtf.csrf import CSRFProtect
+from sentry_sdk.integrations.flask import FlaskIntegration
 
 from app.extended_security.forms import ExtendedRegisterForm
 
@@ -34,6 +36,8 @@ def create_app(
     logging.getLogger().setLevel(logging.WARNING)
 
     import_name = import_name if import_name else __name__
+
+    sentry_sdk.init(integrations=[FlaskIntegration()])
 
     app = Flask(import_name)
 
