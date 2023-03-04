@@ -5,6 +5,7 @@ After=network.target
 [Service]
 User=m
 Group=m
+Restart=on-failure
 WorkingDirectory=/var/www/zug-lol/
 EnvironmentFile=/var/www/zug-lol/.env
 ExecStart=/var/www/zug-lol/venv/bin/gunicorn --workers 5 --bind unix:/var/www/zug-lol/zug-lol.sock wsgi:app
