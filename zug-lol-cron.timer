@@ -1,0 +1,10 @@
+[Unit]
+Description=Cron tasks for zug.lol timer
+After=network.target
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=5min
+
+[Install]
+WantedBy=timers.target
