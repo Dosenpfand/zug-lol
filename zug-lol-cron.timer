@@ -5,6 +5,7 @@ After=network.target
 [Timer]
 OnBootSec=5min
 OnUnitActiveSec=5min
+RandomizedDelaySec=1min
 
 [Install]
 WantedBy=timers.target
