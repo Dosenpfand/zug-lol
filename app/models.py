@@ -42,7 +42,10 @@ class Price(BaseModel):
 
     @classmethod
     def update_oldest(
-        cls, count: int = 1, min_update_time: Optional[datetime] = None
+        cls,
+        count: int = 1,
+        min_update_time: Optional[datetime] = None,
+        delete_if_no_price: bool = False,
     ) -> Optional[List["Price"]]:
         price_objs = cls.get_oldest(count, min_update_time)
         if not price_objs:
@@ -61,6 +64,8 @@ class Price(BaseModel):
             if price:
                 price_obj.price = price
                 price_obj.updated = datetime.utcnow()
+            elif delete_if_no_price:
+                db.session.delete(price_obj)
 
         db.session.commit()
         return price_objs

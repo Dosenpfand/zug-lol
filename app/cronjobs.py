@@ -20,7 +20,7 @@ async def async_update(count: int = 10, min_age_days: int = 30) -> List["Price"]
     for i in range(count):
         wait = random.randint(1, 10)
         await asyncio.sleep(wait)
-        price = Price.update_oldest(min_update_time=min_age)
+        price = Price.update_oldest(min_update_time=min_age, delete_if_no_price=True)
         if not price:
             break
         prices.extend(price)
