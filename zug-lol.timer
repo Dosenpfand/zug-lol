@@ -1,0 +1,15 @@
+[Unit]
+Description=Timer jobs for zug.lol
+After=network.target
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=5min
+User=m
+Group=m
+WorkingDirectory=/var/www/zug-lol/
+EnvironmentFile=/var/www/zug-lol/.env
+ExecStart=/var/www/zug-lol/venv/bin/flask update-oldest-price 10 30
+
+[Install]
+WantedBy=timers.target

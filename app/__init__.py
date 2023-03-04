@@ -17,6 +17,7 @@ from flask_talisman import Talisman
 from flask_wtf.csrf import CSRFProtect
 from sentry_sdk.integrations.flask import FlaskIntegration
 
+from app.cronjobs import update_oldest_prices
 from app.extended_security.forms import ExtendedRegisterForm
 
 bootstrap = Bootstrap4()
@@ -128,9 +129,8 @@ def init_db_command() -> None:
 
 @click.command("update-oldest-price")
 @click.argument("count", default=1)
+@click.argument("min_age_days", default=30)
 @with_appcontext
-def update_oldest_price_command(count: int = 1) -> None:
-    """Update the COUNT oldest prices in the database."""
-    from app.models import Price  # noqa
-
-    print(Price.update_oldest(count))
+def update_oldest_price_command(count: int = 1, min_age_days: int = 30) -> None:
+    """Update the COUNT oldest prices in the database that are at least MIN_AGE_DAYS days old."""
+    print(update_oldest_prices(count, min_age_days))
