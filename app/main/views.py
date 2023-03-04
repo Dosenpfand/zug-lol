@@ -20,7 +20,7 @@ from app.main.forms import ProfileForm, DeleteAccountForm
 
 from app.models import User, StationAutocomplete, AuthToken
 from app.main import bp
-from app.util import get_price_generator
+from app.util import get_price_generator, post_redirect
 from util.oebb import get_station_names
 
 if TYPE_CHECKING:
@@ -44,7 +44,7 @@ def imprint() -> str:
 
 @bp.route("/profile", methods=["GET", "POST"])
 @auth_required()
-def profile() -> str:
+def profile() -> Union[str, "BaseResponse"]:
     form = ProfileForm()
 
     if form.validate_on_submit():
@@ -53,7 +53,7 @@ def profile() -> str:
         user.klimaticket_price = form.klimaticket_price.data
         user.klimaticket_start_date = form.klimaticket_start_date.data
         db.session.commit()
-        return redirect(url_for(request.endpoint), 303)
+        return post_redirect()
     else:
         form.has_vorteilscard.data = current_user.has_vorteilscard
         form.klimaticket_price.data = current_user.klimaticket_price

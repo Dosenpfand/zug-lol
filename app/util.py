@@ -1,8 +1,11 @@
 from datetime import datetime, timedelta
-from typing import Optional, Iterator
+from typing import Optional, TYPE_CHECKING, Iterator
 
-from flask import render_template
+from flask import render_template, request, redirect, url_for
 from flask_babel import lazy_gettext as _, format_decimal
+
+if TYPE_CHECKING:
+    from werkzeug import Response as BaseResponse
 
 from app import db
 from app.models import Price, AuthToken
@@ -139,3 +142,11 @@ def get_price_generator(
         origin=origin, destination=destination, price=format_decimal(price)
     )
     yield render(current_message)
+
+
+def post_redirect() -> "BaseResponse":
+    endpoint = request.endpoint
+    if not endpoint:
+        endpoint = "main.home"
+        # TODO: log error?
+    return redirect(url_for(endpoint), 303)

@@ -2,7 +2,7 @@ import csv
 import io
 from datetime import datetime
 from io import StringIO
-from typing import TYPE_CHECKING, Iterator
+from typing import TYPE_CHECKING, Iterator, Union
 
 from flask import (
     flash,
@@ -11,7 +11,6 @@ from flask import (
     url_for,
     Response,
     stream_with_context,
-    request,
 )
 from flask_babel import gettext as _
 from flask_login import current_user
@@ -22,6 +21,7 @@ from app.journal import bp
 from app.journal.forms import JourneyForm, DeleteJournalForm, ImportJournalForm
 from app.models import Journey
 from app.ticket_price.forms import PriceForm
+from app.util import post_redirect
 
 if TYPE_CHECKING:
     from werkzeug.wrappers import Response as BaseResponse
@@ -29,7 +29,7 @@ if TYPE_CHECKING:
 
 @bp.route("/journeys", methods=["GET", "POST"])
 @auth_required()
-def journeys() -> str:
+def journeys() -> Union[str, "BaseResponse"]:
     add_journey_form = JourneyForm()
     delete_journeys_form = DeleteJournalForm()
     import_journeys_form = ImportJournalForm()
@@ -47,13 +47,13 @@ def journeys() -> str:
         add_journey_form.price.raw_data = None
         add_journey_form.price.data = None
         flash(_("Journal entry added."))
-        return redirect(url_for(request.endpoint), 303)
+        return post_redirect()
 
     if delete_journeys_form.delete.data and delete_journeys_form.validate():
         Journey.query.filter_by(user_id=current_user.id).delete()
         db.session.commit()
         flash(_("All journal entries deleted."))
-        return redirect(url_for(request.endpoint), 303)
+        return post_redirect()
 
     if import_journeys_form.upload.data and import_journeys_form.validate():
         wrapper = io.TextIOWrapper(import_journeys_form.file.data, encoding="utf-8")
@@ -89,7 +89,7 @@ def journeys() -> str:
             flash(_("Could not process the uploaded CSV file."), category="danger")
         else:
             flash(_("All journal entries imported."))
-        return redirect(url_for(request.endpoint), 303)
+        return post_redirect()
 
     journeys_list = (
         Journey.query.filter_by(user_id=current_user.id)
