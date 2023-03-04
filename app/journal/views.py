@@ -10,17 +10,18 @@ from flask import (
     redirect,
     url_for,
     Response,
-    stream_with_context, request,
+    stream_with_context,
+    request,
 )
 from flask_babel import gettext as _
 from flask_login import current_user
 from flask_security import auth_required
 
 from app import db
-from app.ticket_price.forms import PriceForm
+from app.journal import bp
 from app.journal.forms import JourneyForm, DeleteJournalForm, ImportJournalForm
 from app.models import Journey
-from app.journal import bp
+from app.ticket_price.forms import PriceForm
 
 if TYPE_CHECKING:
     from werkzeug.wrappers import Response as BaseResponse
