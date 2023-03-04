@@ -87,9 +87,10 @@ A live version can be reached at https://zug.lol
 
 The following files can be helpful to deploy the application:
 
-1. `zug-lol.service` as systemd service file.
-2. `wsgi.py` to start the WSGI.
-3. `post-receive` as git post-receive hook to finish deployment. To use it the deploy user needs to have password-less
+1. `zug-lol.service` as systemd service to run the web app.
+2. `zug-lol-cron.service` and `zug-lol-cron.timer` as systemd service/timer to run the cron tasks.
+3. `wsgi.py` to start the WSGI.
+4. `post-receive` as git post-receive hook to finish deployment. To use it the deploy user needs to have password-less
    sudo access to the systemctl command to restart the service, e.g. via `sudo visudo` add
    ```
    %sudo   ALL=(ALL:ALL) NOPASSWD: /bin/systemctl restart zug-lol.service
