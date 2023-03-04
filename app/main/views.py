@@ -53,6 +53,7 @@ def profile() -> str:
         user.klimaticket_price = form.klimaticket_price.data
         user.klimaticket_start_date = form.klimaticket_start_date.data
         db.session.commit()
+        return redirect(url_for(request.endpoint), 303)
     else:
         form.has_vorteilscard.data = current_user.has_vorteilscard
         form.klimaticket_price.data = current_user.klimaticket_price
@@ -75,7 +76,6 @@ def delete_account() -> Union[str, "BaseResponse"]:
             db.session.commit()
             flash(_("Your account has been deleted."))
             return redirect(url_for("main.home"))
-
     return render_template("delete_account.html", title=_("Delete Account"), form=form)
 
 

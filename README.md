@@ -53,6 +53,7 @@ To run the application locally follow these steps.
    RECAPTCHA_PUBLIC_KEY
    RECAPTCHA_PRIVATE_KEY
    ```
+   If Sentry error reporting should be performed `SENTRY_DSN` needs to be set.
 
 6. Initialize the database
    ```
