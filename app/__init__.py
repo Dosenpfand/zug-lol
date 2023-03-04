@@ -133,4 +133,6 @@ def init_db_command() -> None:
 @with_appcontext
 def update_oldest_price_command(count: int = 1, min_age_days: int = 30) -> None:
     """Update the COUNT oldest prices in the database that are at least MIN_AGE_DAYS days old."""
-    print(update_oldest_prices(count, min_age_days))
+    prices = update_oldest_prices(count, min_age_days)
+    if prices:
+        print(prices)
