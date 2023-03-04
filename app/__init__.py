@@ -7,7 +7,6 @@ from flask.cli import with_appcontext
 from flask_babel import Babel, format_number
 from flask_babel import lazy_gettext as _
 from flask_bootstrap import Bootstrap4
-from flask_crontab import Crontab
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_migrate import Migrate
 from flask_security import SQLAlchemyUserDatastore, Security, current_user
@@ -15,6 +14,7 @@ from flask_security.models import fsqla_v2 as fsqla
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 
+from app.cronjobs import update_oldest_prices
 from app.extended_security.forms import ExtendedRegisterForm
 
 bootstrap = Bootstrap4()
@@ -24,7 +24,6 @@ migrate = Migrate()
 babel = Babel()
 csrf = CSRFProtect()
 debug_toolbar = DebugToolbarExtension()
-crontab = Crontab()
 
 
 def create_app(
@@ -50,7 +49,6 @@ def create_app(
         babel.init_app(app)
         csrf.init_app(app)
         debug_toolbar.init_app(app)
-        crontab.init_app(app)
 
         app.jinja_env.add_extension("jinja2.ext.i18n")
         app.jinja_env.filters["format_number"] = format_number
@@ -117,9 +115,8 @@ def init_db_command() -> None:
 
 @click.command("update-oldest-price")
 @click.argument("count", default=1)
+@click.argument("min_age_days", default=30)
 @with_appcontext
-def update_oldest_price_command(count: int = 1) -> None:
-    """Update the COUNT oldest prices in the database."""
-    from app.models import Price  # noqa
-
-    print(Price.update_oldest(count))
+def update_oldest_price_command(count: int = 1, min_age_days: int = 30) -> None:
+    """Update the COUNT oldest prices in the database that are at least MIN_AGE_DAYS days old."""
+    print(update_oldest_prices(count, min_age_days))
