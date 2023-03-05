@@ -1,20 +1,20 @@
 from datetime import datetime, date
+from time import time
 from typing import Optional, List
 
 import jwt
 from flask import current_app
 from flask_babel import format_decimal, format_date
-
-from app import db
-from time import time
 from flask_security.models import fsqla_v2 as fsqla
-
 from sqlalchemy.ext.declarative import DeclarativeMeta
 
+from app import db
 from util.oebb import get_price, get_access_token
 
 # NOTE: Needed for mypy
 BaseModel: DeclarativeMeta = db.Model
+
+logger = current_app.logger
 
 
 class Price(BaseModel):
@@ -49,6 +49,7 @@ class Price(BaseModel):
     ) -> Optional[List["Price"]]:
         price_objs = cls.get_oldest(count, min_update_time)
         if not price_objs:
+            logger.info("No oldest prices found.")
             return None
 
         access_token = AuthToken.get_valid_one()
@@ -65,6 +66,7 @@ class Price(BaseModel):
                 price_obj.price = price
                 price_obj.updated = datetime.utcnow()
             elif delete_if_no_price:
+                logger.warning("Deleting price that could not be updated.")
                 db.session.delete(price_obj)
 
         db.session.commit()
@@ -95,11 +97,13 @@ class AuthToken(BaseModel):
         current_token: AuthToken = cls.query.first()
 
         if current_token and current_token.is_valid():
+            logger.info("Reusing existing access token.")
             return current_token.token
 
         access_token = get_access_token()
 
         if not access_token:
+            logger.warning("Could not get new access token.")
             return None
 
         decoded_token = jwt.decode(access_token, options={"verify_signature": False})
@@ -107,6 +111,7 @@ class AuthToken(BaseModel):
 
         # TODO: Update instead of delete, create?
         if current_token:
+            logger.info("Deleting old access token.")
             db.session.delete(current_token)
 
         new_token = AuthToken(token=access_token, expires_at=expires_at)

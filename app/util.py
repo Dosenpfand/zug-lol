@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from typing import Optional, TYPE_CHECKING, Iterator
 
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, current_app
 from flask_babel import lazy_gettext as _, format_decimal
 
 if TYPE_CHECKING:
@@ -36,6 +36,8 @@ def get_price_generator(
     output_only_price: bool = False,
     access_token: Optional[str] = None,
 ) -> Iterator[str]:
+    logger = current_app.logger
+
     if not date:
         date = (datetime.utcnow() + timedelta(days=1)).replace(
             hour=8, minute=0, second=0, microsecond=0
@@ -72,6 +74,7 @@ def get_price_generator(
         yield render(current_message, current_step, total_steps)
         access_token = AuthToken.get_valid_one()
         if not access_token:
+            logger.warning("Could not get access token.")
             current_message = _("Failed to generate access token")
             yield render(current_message)
             return
@@ -81,6 +84,7 @@ def get_price_generator(
     yield render(current_message, current_step, total_steps)
     origin_id = get_station_id(origin, access_token=access_token)
     if not origin_id:
+        logger.warning("Could not process origin.")
         current_message = _("Failed to process origin")
         yield render(current_message)
         return
@@ -90,6 +94,7 @@ def get_price_generator(
     yield render(current_message, current_step, total_steps)
     destination_id = get_station_id(destination, access_token=access_token)
     if not destination_id:
+        logger.warning("Could not process destination.")
         current_message = _("Failed to process destination")
         yield render(current_message)
         return
@@ -101,6 +106,7 @@ def get_price_generator(
         origin_id, destination_id, date=date, access_token=access_token
     )
     if not travel_action_id:
+        logger.warning("Could not process travel action.")
         current_message = _("Failed to process travel action")
         yield render(current_message)
         return
@@ -116,6 +122,7 @@ def get_price_generator(
         access_token=access_token,
     )
     if not connection_ids:
+        logger.warning("Could not process connections.")
         current_message = _("Failed to process connections")
         yield render(current_message)
         return
@@ -125,6 +132,7 @@ def get_price_generator(
     yield render(current_message, current_step, total_steps)
     price = get_price_for_connection(connection_ids, access_token=access_token)
     if not price:
+        logger.warning("Could not retrieve price.")
         current_message = _("Failed to retrieve price")
         yield render(current_message)
         return
@@ -147,6 +155,6 @@ def get_price_generator(
 def post_redirect() -> "BaseResponse":
     endpoint = request.endpoint
     if not endpoint:
+        current_app.logger.error("Could not determine endpoint from request.")
         endpoint = "main.home"
-        # TODO: log error?
     return redirect(url_for(endpoint), 303)

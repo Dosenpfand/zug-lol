@@ -10,21 +10,23 @@ from flask import (
     url_for,
     flash,
     abort,
+    current_app,
 )
 from flask_babel import gettext as _
 from flask_login import current_user
 from flask_security import auth_required
 
 from app import db
-from app.main.forms import ProfileForm, DeleteAccountForm
-
-from app.models import User, StationAutocomplete, AuthToken
 from app.main import bp
+from app.main.forms import ProfileForm, DeleteAccountForm
+from app.models import User, StationAutocomplete, AuthToken
 from app.util import get_price_generator, post_redirect
 from util.oebb import get_station_names
 
 if TYPE_CHECKING:
     from werkzeug.wrappers import Response as BaseResponse
+
+logger = current_app.logger
 
 
 @bp.route("/")
@@ -74,6 +76,7 @@ def delete_account() -> Union[str, "BaseResponse"]:
             user = User.query.filter_by(id=current_user.id).first()
             db.session.delete(user)
             db.session.commit()
+            logger.warning("User was deleted.")
             flash(_("Your account has been deleted."))
             return redirect(url_for("main.home"))
     return render_template("delete_account.html", title=_("Delete Account"), form=form)
@@ -94,6 +97,7 @@ def station_autocomplete() -> Union[str, "BaseResponse"]:
         else:
             access_token = AuthToken.get_valid_one()
             if not access_token:
+                logger.warning("Could not get access token.")
                 result = dumps([])
             else:
                 result = dumps(get_station_names(name, access_token=access_token))
@@ -109,6 +113,7 @@ def get_price() -> "BaseResponse":
     destination = request.args.get("destination", type=str)
 
     if not origin or not destination:
+        logger.warning("Origin and/or destination not set.")
         abort(400)
 
     has_vorteilscard = (

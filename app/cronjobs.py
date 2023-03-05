@@ -3,6 +3,8 @@ import random
 from datetime import datetime, timedelta
 from typing import List, TYPE_CHECKING
 
+from flask import current_app
+
 if TYPE_CHECKING:
     from app.models import Price
 
@@ -22,6 +24,7 @@ async def async_update(count: int = 10, min_age_days: int = 30) -> List["Price"]
         await asyncio.sleep(wait)
         price = Price.update_oldest(min_update_time=min_age, delete_if_no_price=True)
         if not price:
+            current_app.logger.warning("Could not update any prices.")
             break
         prices.extend(price)
 

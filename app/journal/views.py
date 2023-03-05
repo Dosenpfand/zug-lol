@@ -11,6 +11,7 @@ from flask import (
     url_for,
     Response,
     stream_with_context,
+    current_app,
 )
 from flask_babel import gettext as _
 from flask_login import current_user
@@ -25,6 +26,8 @@ from app.util import post_redirect
 
 if TYPE_CHECKING:
     from werkzeug.wrappers import Response as BaseResponse
+
+logger = current_app.logger
 
 
 @bp.route("/journeys", methods=["GET", "POST"])
@@ -46,12 +49,14 @@ def journeys() -> Union[str, "BaseResponse"]:
         db.session.commit()
         add_journey_form.price.raw_data = None
         add_journey_form.price.data = None
+        logger.info("Journal entry added.")
         flash(_("Journal entry added."))
         return post_redirect()
 
     if delete_journeys_form.delete.data and delete_journeys_form.validate():
         Journey.query.filter_by(user_id=current_user.id).delete()
         db.session.commit()
+        logger.info("All journal entries deleted.")
         flash(_("All journal entries deleted."))
         return post_redirect()
 
@@ -72,11 +77,13 @@ def journeys() -> Union[str, "BaseResponse"]:
                 db.session.add(journey)
             db.session.commit()
         except UnicodeDecodeError:
+            logger.error("Decode error on journal CSV upload.")
             flash(
                 _("Could not decode the file. Are you sure you uploaded a CSV file?"),
                 category="danger",
             )
         except KeyError as e:
+            logger.error("Key error on journal CSV upload.")
             flash(
                 _(
                     "Could not find the expected column {} in the uploaded CSV file.".format(
@@ -86,8 +93,10 @@ def journeys() -> Union[str, "BaseResponse"]:
                 category="danger",
             )
         except Exception:
+            logger.error("Generic error on journal CSV upload.")
             flash(_("Could not process the uploaded CSV file."), category="danger")
         else:
+            logger.info("Journal imported.")
             flash(_("All journal entries imported."))
         return post_redirect()
 
@@ -146,8 +155,10 @@ def delete_journey(journey_id: int) -> "BaseResponse":
     if journey_result and journey_result.user_id == current_user.id:
         Journey.query.filter_by(id=journey_id).delete()
         db.session.commit()
+        logger.info("Journal entry deleted.")
         flash(_("Journal entry deleted."))
     else:
+        logger.warning("Failed to delete journal entry.")
         flash(_("Failed to delete journal entry."))
     return redirect(url_for("journal.journeys"))
 

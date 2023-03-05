@@ -1,9 +1,10 @@
+import logging
+import time
+from datetime import datetime, timedelta
 from statistics import median
 from typing import Optional, Dict, List, Union
 
 import requests
-from datetime import datetime, timedelta
-import time
 
 CONFIG = dict(
     user_agent="Mozilla/5.0 (X11; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/104.0",
@@ -18,6 +19,8 @@ API_PATHS = {
     "prices": "/api/offer/v1/prices",
 }
 
+logger = logging.getLogger(__name__)
+
 
 def get_access_token(
     host: str = CONFIG["host"], user_agent: str = CONFIG["user_agent"]
@@ -25,6 +28,7 @@ def get_access_token(
     headers = {"User-Agent": user_agent}
     r = requests.get(host + API_PATHS["access_token"], headers=headers)
     if not r:
+        logger.error("Could not get access token.")
         return None
 
     access_token = r.json().get("accessToken")
@@ -37,6 +41,7 @@ def get_request_headers(
     if not access_token:
         access_token = get_access_token()
         if not access_token:
+            logger.warning("Could not get access token.")
             return None
 
     headers = {
@@ -55,6 +60,7 @@ def get_station_id(
     params = {"name": name, "count": "1"}
     r = requests.get(host + API_PATHS["stations"], params, headers=headers)
     if not r or not type(r.json()) is list or not len(r.json()):
+        logger.error("Could not get station ID.")
         return None
 
     return r.json()[0]["number"]
@@ -69,6 +75,7 @@ def get_station_names(
     params = {"name": name, "count": "10"}
     r = requests.get(host + API_PATHS["stations"], params, headers=headers)
     if not r or not type(r.json()) is list or not len(r.json()):
+        logger.error("Could not get station names.")
         return []
 
     return [
@@ -116,19 +123,26 @@ def get_travel_action_id(
 
     r = requests.post(url, json=data, headers=headers)
     if not r:
+        logger.error("Could not get travel actions.")
         return None
 
     travel_actions = r.json().get("travelActions")
     if not travel_actions:
+        logger.error("Could not parse travel actions.")
         return None
 
     travel_action = next(
         action for action in travel_actions if action["entrypoint"]["id"] == "timetable"
     )
     if not travel_action:
+        logger.error("Could not find time table in travel actions.")
         return None
 
-    travel_action_id = travel_action["id"]
+    travel_action_id = travel_action.get("id")
+
+    if not travel_action_id:
+        logger.error("Could not find ID in travel action.")
+
     return travel_action_id
 
 
@@ -216,10 +230,12 @@ def get_connection_ids(
     headers = get_request_headers(access_token)
     r = requests.post(url, json=data, headers=headers)
     if (
-        not r.json().get("connections")
+        not r
+        or not r.json().get("connections")
         or not type(r.json()["connections"]) is list
         or not len(r.json()["connections"])
     ):
+        logger.error("Could not get connection IDs.")
         return None
 
     if get_only_first:
@@ -258,6 +274,7 @@ def get_price_for_connection(
     if prices_cleaned:
         price = median(prices_cleaned)
     else:
+        logger.error("Could not get price for connection.")
         price = None
 
     return price
@@ -279,17 +296,20 @@ def get_price(
     if not access_token:
         access_token = get_access_token()
     if not access_token:
+        logger.warning("Could not get access token.")
         return None
 
     origin_id = get_station_id(origin, access_token=access_token)
     destination_id = get_station_id(destination, access_token=access_token)
     if not origin_id or not destination_id:
+        logger.warning("Could not get origin/destination ID.")
         return None
 
     travel_action_id = get_travel_action_id(
         origin_id, destination_id, date=date, access_token=access_token
     )
     if not travel_action_id:
+        logger.warning("Could not get travel action ID.")
         return None
 
     connection_ids = get_connection_ids(
@@ -300,6 +320,7 @@ def get_price(
         access_token=access_token,
     )
     if not connection_ids:
+        logger.warning("Could not get connection ID.")
         return None
 
     price = get_price_for_connection(connection_ids, access_token=access_token)
