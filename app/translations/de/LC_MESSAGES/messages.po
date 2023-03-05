@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-11-05 12:03+0100\n"
+"POT-Creation-Date: 2023-03-05 14:20+0100\n"
 "PO-Revision-Date: 2022-06-13 13:50+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.10.1\n"
+"Generated-By: Babel 2.11.0\n"
 
 #: config.py:20
 msgid ""
@@ -26,11 +26,11 @@ msgstr ""
 "Suche nach Zugticket-Preisen in Österreich und erstelle ein "
 "Reisetagebuch, um herauszufinden ob sich das Klimaticket auszahlt."
 
-#: app/__init__.py:85
+#: app/__init__.py:110
 msgid "Language changed"
 msgstr "Sprache geändert"
 
-#: app/util.py:69
+#: app/util.py:49
 msgid ""
 "<p>Price for a ticket from {origin} to {destination}:</p><p><mark "
 "class=\"display-4\">{price} €</mark></p>"
@@ -38,63 +38,71 @@ msgstr ""
 "<p>Preis für ein Ticket von {origin} nach {destination}:</p><p><mark "
 "class=\"display-4\">{price} €</mark></p>"
 
-#: app/util.py:81
+#: app/util.py:61
 msgid "Checking local cache"
 msgstr "Lokaler Cache wird überprüft"
 
-#: app/util.py:93
+#: app/util.py:73
 msgid "Generating access token"
 msgstr "Generiere Zugangscode"
 
-#: app/util.py:97
+#: app/util.py:78
 msgid "Failed to generate access token"
 msgstr "Zugangscode generieren fehlgeschlagen"
 
-#: app/util.py:102
+#: app/util.py:83
 msgid "Processing origin"
 msgstr "Verarbeite Start"
 
-#: app/util.py:106
+#: app/util.py:88
 msgid "Failed to process origin"
 msgstr "Verarbeitung von Start fehlgeschlagen"
 
-#: app/util.py:111
+#: app/util.py:93
 msgid "Processing destination"
 msgstr "Verarbeite Ziel"
 
-#: app/util.py:115
+#: app/util.py:98
 msgid "Failed to process destination"
 msgstr "Verarbeitung von Ziel fehlgeschlagen"
 
-#: app/util.py:120
+#: app/util.py:103
 msgid "Processing travel action"
 msgstr "Verarbeite Reise-Aktion"
 
-#: app/util.py:126
+#: app/util.py:110
 msgid "Failed to process travel action"
 msgstr "Verarbeitung von Reise-Aktion fehlgeschlagen"
 
-#: app/util.py:131
+#: app/util.py:115
 msgid "Processing connections"
 msgstr "Verarbeite Verbindungen"
 
-#: app/util.py:141
+#: app/util.py:126
 msgid "Failed to process connections"
 msgstr "Verarbeitung von Verbindungen fehlgeschlagen"
 
-#: app/util.py:146
+#: app/util.py:131
 msgid "Retrieving price"
 msgstr "Preis wird ermittelt"
 
-#: app/util.py:150
+#: app/util.py:136
 msgid "Failed to retrieve price"
 msgstr "Preisermittlung fehlgeschlagen"
+
+#: app/error/views.py:6
+msgid "Page Not Found"
+msgstr "Seite nicht gefunden"
+
+#: app/error/views.py:11
+msgid "Internal Server Error"
+msgstr "Interner Server-Fehler"
 
 #: app/extended_security/forms.py:7
 msgid "Prove that you are human"
 msgstr "Mensch oder Maschine?"
 
-#: app/journal/forms.py:12 app/journal/views.py:110 app/ticket_price/forms.py:9
+#: app/journal/forms.py:12 app/journal/views.py:123 app/ticket_price/forms.py:9
 msgid "Origin"
 msgstr "Von"
 
@@ -102,7 +110,7 @@ msgstr "Von"
 msgid "e.g. Wien"
 msgstr "z.B. Wien"
 
-#: app/journal/forms.py:21 app/journal/views.py:111
+#: app/journal/forms.py:21 app/journal/views.py:124
 #: app/ticket_price/forms.py:18
 msgid "Destination"
 msgstr "Nach"
@@ -111,7 +119,7 @@ msgstr "Nach"
 msgid "e.g. Innsbruck"
 msgstr "z.B. Innsbruck"
 
-#: app/journal/forms.py:30 app/journal/views.py:112
+#: app/journal/forms.py:30 app/journal/views.py:125
 msgid "Price in €"
 msgstr "Preis in €"
 
@@ -119,7 +127,7 @@ msgstr "Preis in €"
 msgid "e.g. 10.5"
 msgstr "z.B. 10,5"
 
-#: app/journal/forms.py:33 app/journal/forms.py:35 app/journal/views.py:113
+#: app/journal/forms.py:33 app/journal/forms.py:35 app/journal/views.py:126
 msgid "Date"
 msgstr "Datum"
 
@@ -135,53 +143,53 @@ msgstr "Löschen"
 msgid "CSV File"
 msgstr "CSV-Datei"
 
-#: app/journal/forms.py:46 app/templates/journeys.html:86
-#: app/templates/journeys.html:151
+#: app/journal/forms.py:46 app/templates/journeys.html:85
+#: app/templates/journeys.html:91
 msgid "Import"
 msgstr "Import"
 
-#: app/journal/views.py:48
+#: app/journal/views.py:53
 msgid "Journal entry added."
 msgstr "Eintrag hinzugefügt"
 
-#: app/journal/views.py:53
+#: app/journal/views.py:60
 msgid "All journal entries deleted."
 msgstr "Alle Einträge wurden gelöscht."
 
-#: app/journal/views.py:73
+#: app/journal/views.py:82
 msgid "Could not decode the file. Are you sure you uploaded a CSV file?"
 msgstr ""
 "Konnte die Datei nicht dekodieren. Bist du sicher, dass eine CSV-Datei "
 "ausgewählt war?"
 
-#: app/journal/views.py:79
+#: app/journal/views.py:89
 msgid "Could not find the expected column {} in the uploaded CSV file."
 msgstr ""
 "Konnte die erwartete Spalte {} in der hochgeladenen CSV-Datei nicht "
 "finden."
 
-#: app/journal/views.py:86
+#: app/journal/views.py:97
 msgid "Could not process the uploaded CSV file."
 msgstr "Konnte die hochgeladene CSV-Datei nicht verarbeiten."
 
-#: app/journal/views.py:88
+#: app/journal/views.py:100
 msgid "All journal entries imported."
 msgstr "Alle Einträge wurden importiert."
 
-#: app/journal/views.py:116
+#: app/journal/views.py:129
 msgid "Actions"
 msgstr "Aktionen"
 
-#: app/journal/views.py:123 app/templates/base.html:65
-#: app/templates/journeys.html:81
+#: app/journal/views.py:136 app/templates/base.html:53
+#: app/templates/journeys.html:80
 msgid "Travel Journal"
 msgstr "Reisetagebuch"
 
-#: app/journal/views.py:145
+#: app/journal/views.py:159
 msgid "Journal entry deleted."
 msgstr "Eintrag gelöscht."
 
-#: app/journal/views.py:147
+#: app/journal/views.py:162
 msgid "Failed to delete journal entry."
 msgstr "Eintrag löschen fehlgeschlagen"
 
@@ -217,67 +225,109 @@ msgstr "Muss ausgewählt sein"
 msgid "Delete account"
 msgstr "Konto löschen"
 
-#: app/main/views.py:32 app/templates/base.html:63
+#: app/main/views.py:34 app/templates/base.html:51
 msgid "Home"
 msgstr "Start"
 
-#: app/main/views.py:37 app/templates/base.html:100
+#: app/main/views.py:39 app/templates/base.html:89
 msgid "Data Protection"
 msgstr "Datenschutz"
 
-#: app/main/views.py:42 app/templates/base.html:101
+#: app/main/views.py:49 app/templates/base.html:90
 msgid "Imprint"
 msgstr "Impressum"
 
-#: app/main/views.py:62 app/templates/base.html:67
+#: app/main/views.py:70 app/templates/base.html:55
 msgid "Profile"
 msgstr "Profil"
 
-#: app/main/views.py:76
+#: app/main/views.py:85
 msgid "Your account has been deleted."
 msgstr "Dein Konto wurde gelöscht."
 
-#: app/main/views.py:79 app/templates/delete_account.html:7
+#: app/main/views.py:87 app/templates/delete_account.html:7
 msgid "Delete Account"
 msgstr "Konto löschen"
 
-#: app/templates/base.html:52
+#: app/templates/404.html:5
+msgid "Page Not Found!"
+msgstr "Seite nicht gefunden!"
+
+#: app/templates/404.html:7
+msgid "Unfortunately, the page you requested could not be found"
+msgstr "Leider konnte die angeforderte Seite nicht gefunden werden"
+
+#: app/templates/404.html:11
+msgid ""
+"If you don't think that this was your mistake you can complain by sending"
+" an email to "
+msgstr "Wenn du denkst, dass das nicht dein Fehler war, kannst du deine Beschwerde per E-Mail an "
+
+#: app/templates/404.html:13 app/templates/500.html:14
+#: app/templates/home.html:20
+msgid "or open an issue on"
+msgstr "senden, oder ein Ticket im"
+
+#: app/templates/404.html:14 app/templates/500.html:15
+#: app/templates/home.html:21
+msgid "the issue tracker"
+msgstr "Tracker erstellen"
+
+#: app/templates/404.html:18 app/templates/500.html:19
+msgid "Return to main page"
+msgstr "Zurück zur Startseite"
+
+#: app/templates/500.html:5
+msgid "Internal Server Error!"
+msgstr "Internet Server-Fehler"
+
+#: app/templates/500.html:7
+msgid "Unfortunately, your request caused an internal server error."
+msgstr "Leider konnte die Anfrage aufgrund eines internen Server-Fehlers nicht bearbeitet werden."
+
+#: app/templates/500.html:11
+msgid ""
+"The error has been logged and the site administrators have been notified."
+" If you would like to add further context you can send an email to "
+msgstr "Der Fehler wurde protokolliert und die Betreiber der Seite wurden benachrichtigt. Um den Zusammenhangen aufzuklären, kannst du eine E-Mail an "
+
+#: app/templates/base.html:40
 #, fuzzy
 msgid "Logo: A happy Train"
 msgstr "Logo: Ein Zug"
 
-#: app/templates/base.html:64 app/ticket_price/views.py:12
+#: app/templates/base.html:52 app/ticket_price/views.py:12
 #: app/ticket_price/views.py:13
 msgid "Ticket Price"
 msgstr "Ticketpreis"
 
-#: app/templates/base.html:68
+#: app/templates/base.html:56
 msgid "Logout"
 msgstr "Abmelden"
 
-#: app/templates/base.html:70 app/templates/login.html:2
+#: app/templates/base.html:58 app/templates/login.html:2
 #: app/templates/login.html:20
 msgid "Login"
 msgstr "Anmelden"
 
-#: app/templates/base.html:71 app/templates/register.html:2
+#: app/templates/base.html:59 app/templates/register.html:2
 #: app/templates/register.html:8
 msgid "Register"
 msgstr "Registrieren"
 
-#: app/templates/base.html:95
+#: app/templates/base.html:84
 msgid "A"
 msgstr "Eine"
 
-#: app/templates/base.html:95
+#: app/templates/base.html:84
 msgid "production"
 msgstr "Produktion"
 
-#: app/templates/base.html:106 app/templates/home.html:17
+#: app/templates/base.html:95 app/templates/home.html:17
 msgid "Contact"
 msgstr "Kontakt"
 
-#: app/templates/base.html:107
+#: app/templates/base.html:96
 msgid "Source Code"
 msgstr "Quellcode"
 
@@ -319,14 +369,6 @@ msgstr ""
 "Für Beschwerden, Fehlermeldungen oder jegliches andere Feedback kannst du"
 " eine E-Mail an"
 
-#: app/templates/home.html:20
-msgid "or open an issue on"
-msgstr "senden, oder ein Ticket im"
-
-#: app/templates/home.html:21
-msgid "the issue tracker"
-msgstr "Tracker erstellen"
-
 #: app/templates/journeys.html:9
 msgid "Note"
 msgstr "Notiz"
@@ -358,63 +400,63 @@ msgstr "Preis ermitteln"
 msgid "Reverse Direction"
 msgstr "Richtung wechseln"
 
-#: app/templates/journeys.html:56
+#: app/templates/journeys.html:55
 msgid "Travel Statistics"
 msgstr "Reisestatistik"
 
-#: app/templates/journeys.html:59
+#: app/templates/journeys.html:58
 msgid "Journeys"
 msgstr "Fahrten"
 
-#: app/templates/journeys.html:62
+#: app/templates/journeys.html:61
 msgid "Sum ticket prices"
 msgstr "Summe Ticketpreise"
 
-#: app/templates/journeys.html:67
+#: app/templates/journeys.html:66
 msgid "Klimaticket gains"
 msgstr "Klimaticket Gewinn"
 
-#: app/templates/journeys.html:71
+#: app/templates/journeys.html:70
 msgid "POSITIVE"
 msgstr "POSITIV"
 
-#: app/templates/journeys.html:73
+#: app/templates/journeys.html:72
 msgid "NEGATIVE"
 msgstr "NEGATIV"
 
-#: app/templates/journeys.html:84
+#: app/templates/journeys.html:83
 msgid "Export"
 msgstr "Export"
 
-#: app/templates/journeys.html:88
-msgid "Delete all"
-msgstr "Alle löschen"
-
-#: app/templates/journeys.html:95
-msgid "Current"
-msgstr "Aktuell"
-
 #: app/templates/journeys.html:99
-msgid "Archive"
-msgstr "Archiv"
-
-#: app/templates/journeys.html:127 app/templates/profile.html:25
-msgid "Danger Zone"
-msgstr "Gefahrenbereich"
-
-#: app/templates/journeys.html:133
-msgid "Are you sure you want to delete <strong>ALL</strong> your journal entries?"
-msgstr "Bist du dir sicher, dass du <strong>ALLE</strong> Einträge löschen willst?"
-
-#: app/templates/journeys.html:137 app/templates/journeys.html:163
-msgid "Close"
-msgstr "Schließen"
-
-#: app/templates/journeys.html:159
 msgid "Using the form below, you can import a previously exported journal."
 msgstr ""
 "Mit dem folgenden Formular kannst du ein exportiertes Tagebuch "
 "importieren."
+
+#: app/templates/journeys.html:104 app/templates/journeys.html:131
+msgid "Close"
+msgstr "Schließen"
+
+#: app/templates/journeys.html:114
+msgid "Delete all"
+msgstr "Alle löschen"
+
+#: app/templates/journeys.html:120 app/templates/profile.html:25
+msgid "Danger Zone"
+msgstr "Gefahrenbereich"
+
+#: app/templates/journeys.html:126
+msgid "Are you sure you want to delete <strong>ALL</strong> your journal entries?"
+msgstr "Bist du dir sicher, dass du <strong>ALLE</strong> Einträge löschen willst?"
+
+#: app/templates/journeys.html:145
+msgid "Current"
+msgstr "Aktuell"
+
+#: app/templates/journeys.html:149
+msgid "Archive"
+msgstr "Archiv"
 
 #: app/templates/price_form.html:7
 msgid "Ticket Price Search"
