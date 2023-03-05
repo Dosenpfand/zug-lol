@@ -5,6 +5,7 @@ from statistics import median
 from typing import Optional, Dict, List, Union
 
 import requests
+from sentry_sdk import add_breadcrumb
 
 CONFIG = dict(
     user_agent="Mozilla/5.0 (X11; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/104.0",
@@ -274,6 +275,7 @@ def get_price_for_connection(
     if prices_cleaned:
         price = median(prices_cleaned)
     else:
+        add_breadcrumb(data={"text": r.text})
         logger.error("Could not get price for connection.")
         price = None
 
