@@ -24,7 +24,7 @@ async def async_update(count: int = 10, min_age_days: int = 30) -> List["Price"]
         await asyncio.sleep(wait)
         price = Price.update_oldest(min_update_time=min_age, delete_if_no_price=True)
         if not price:
-            current_app.logger.warning("Could not update any prices.")
+            current_app.logger.info("Could not update any more prices.")
             break
         prices.extend(price)
 
