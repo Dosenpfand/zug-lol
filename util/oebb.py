@@ -275,7 +275,7 @@ def get_price_for_connection(
     if prices_cleaned:
         price = median(prices_cleaned)
     else:
-        add_breadcrumb(data={"text": r.text})
+        add_breadcrumb(type="info", category="response.json", data=r.json())
         logger.error("Could not get price for connection.")
         price = None
 
