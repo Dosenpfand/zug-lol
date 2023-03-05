@@ -16,3 +16,4 @@
 - [ ] Pre-commit checks
 - [ ] Add test if all strings translated
 - [ ] Don't tell user whether username or password was wrong
+- [ ] Custom error page that catches all internal server errors
