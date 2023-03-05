@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">{{ _('Internal Server Error!') }}</h1>
+        <p class="lead">
+            {{ _('Unfortunately, your request caused an internal server error.') }}
+        </p>
+        <hr class="my-4">
+        <p>
+            {{ _("The error has been logged and the site administrators have been notified. If you would like to add further context you can send an email to ") }}
+            <a
+                    href="mailto:zug@sad.bz">zug@sad.bz</a>
+            {{ _('or open an issue on') }}
+            <a href="https://github.com/Dosenpfand/zug-lol/issues">{{ _('the issue tracker') }}</a>.
+        </p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="{{ url_for('main.home') }}"
+               role="button">{{ _('Return to main page') }}</a>
+        </p>
+    </div>
+{% endblock %}

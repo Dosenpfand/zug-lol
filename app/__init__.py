@@ -18,6 +18,7 @@ from flask_wtf.csrf import CSRFProtect
 from sentry_sdk.integrations.flask import FlaskIntegration
 
 from app.cronjobs import update_oldest_prices
+from app.error.views import page_not_found, internal_server_error
 from app.extended_security.forms import ExtendedRegisterForm
 
 bootstrap = Bootstrap4()
@@ -46,6 +47,12 @@ def create_app(
         app.config.from_object(config)
         app.config.from_envvar("APPLICATION_SETTINGS", silent=True)
         app.config.from_prefixed_env(loads=str)
+
+        # Register error handlers
+        app.register_error_handler(404, page_not_found)
+        app.register_error_handler(500, internal_server_error)
+
+        # Initialize extensions
         bootstrap.init_app(app)
         db.init_app(app)
         # TODO: check for alternative
@@ -75,6 +82,8 @@ def create_app(
 
         user_datastore = SQLAlchemyUserDatastore(db, User, Role)
         security.init_app(app, user_datastore, register_form=ExtendedRegisterForm)
+
+        # Initialize blueprints
 
         from app.main import bp as main_bp  # noqa
 

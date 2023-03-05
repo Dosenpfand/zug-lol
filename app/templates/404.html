@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">{{ _('Page Not Found!') }}</h1>
+        <p class="lead">
+            {{ _('Unfortunately, the page you requested could not be found') }}
+        </p>
+        <hr class="my-4">
+        <p>
+            {{ _("If you don't think that this was your mistake you can complain by sending an email to ") }} <a
+                href="mailto:zug@sad.bz">zug@sad.bz</a>
+            {{ _('or open an issue on') }}
+            <a href="https://github.com/Dosenpfand/zug-lol/issues">{{ _('the issue tracker') }}</a>.
+        </p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="{{ url_for('main.home') }}"
+               role="button">{{ _('Return to main page') }}</a>
+        </p>
+    </div>
+{% endblock %}

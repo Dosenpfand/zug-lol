@@ -60,7 +60,8 @@
                     {% endif %}
                     {% for code, lang in config['LANGUAGES'].items() %}
                     {% if not code == session['lang'] %}
-                    {{ render_nav_item(request.url_rule.endpoint, lang, lang=code) }}
+                    {% set endpoint = request.url_rule.endpoint if request.url_rule.endpoint else 'main.home' %}
+                    {{ render_nav_item(endpoint, lang, lang=code) }}
                     {% endif %}
                     {% endfor %}
                 </div>
