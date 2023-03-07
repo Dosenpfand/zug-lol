@@ -77,14 +77,14 @@ def journeys() -> Union[str, "BaseResponse"]:
                 )
                 db.session.add(journey)
             db.session.commit()
-        except UnicodeDecodeError:
-            logger.error("Decode error on journal CSV upload.")
+        except UnicodeDecodeError as e:
+            logger.exception(f"Decode error on journal CSV upload: {e}")
             flash(
                 _("Could not decode the file. Are you sure you uploaded a CSV file?"),
                 category="danger",
             )
         except KeyError as e:
-            logger.error("Key error on journal CSV upload.")
+            logger.exception(f"Key error on journal CSV upload: {e}")
             flash(
                 _(
                     "Could not find the expected column {} in the uploaded CSV file.".format(
@@ -93,8 +93,8 @@ def journeys() -> Union[str, "BaseResponse"]:
                 ),
                 category="danger",
             )
-        except Exception:
-            logger.error("Generic error on journal CSV upload.")
+        except Exception as e:
+            logger.exception(f"Generic error on journal CSV upload: {e}")
             flash(_("Could not process the uploaded CSV file."), category="danger")
         else:
             logger.info("Journal imported.")
