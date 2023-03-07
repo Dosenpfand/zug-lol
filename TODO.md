@@ -5,7 +5,6 @@
 - [ ] Grey out button while determining price
 - [ ] Edit journey
 - [ ] Pagination
-- [ ] Cache invalidation
 - [ ] admin interface using flask-admin
 - [ ] Add password reset functionality
 

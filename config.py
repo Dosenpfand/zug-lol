@@ -44,7 +44,13 @@ CONTENT_SECURITY_POLICY = {
         "'self'",
         "https://hcaptcha.com",
         "https://*.hcaptcha.com",
+        "https://sentry.io",
     ],
+    "report-uri": (
+        "https://o4504754043682816.ingest.sentry.io"
+        "/api/4504754195267584/security"
+        "/?sentry_key=c64aaf9777674f8e9f2a8c67bfb9820e"
+    ),
 }
 CONTENT_SECURITY_POLICY_NONCE_IN = ["script-src"]
 FORCE_HTTPS = True
