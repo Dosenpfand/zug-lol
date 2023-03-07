@@ -12,6 +12,7 @@ from flask import (
     Response,
     stream_with_context,
     current_app,
+    session,
 )
 from flask_babel import gettext as _
 from flask_login import current_user
@@ -47,8 +48,8 @@ def journeys() -> Union[str, "BaseResponse"]:
         )
         db.session.add(journey)
         db.session.commit()
-        add_journey_form.price.raw_data = None
-        add_journey_form.price.data = None
+        session["last_origin"] = add_journey_form.origin.data
+        session["last_destination"] = add_journey_form.destination.data
         logger.info("Journal entry added.")
         flash(_("Journal entry added."))
         return post_redirect()
@@ -130,6 +131,9 @@ def journeys() -> Union[str, "BaseResponse"]:
     journey_count = len(current_journeys)
     price_sum = round(sum(journey.price for journey in current_journeys), 2)
     klimaticket_gains = round(price_sum - current_user.klimaticket_price, 2)
+
+    add_journey_form.origin.data = session.pop("last_origin", None)
+    add_journey_form.destination.data = session.pop("last_destination", None)
 
     return render_template(
         "journeys.html",
