@@ -50,6 +50,10 @@ def journeys() -> Union[str, "BaseResponse"]:
         db.session.commit()
         session["last_origin"] = add_journey_form.origin.data
         session["last_destination"] = add_journey_form.destination.data
+        session["last_price"] = add_journey_form.price.data
+        session["last_date"] = add_journey_form.date.data.strftime(
+            add_journey_form.date.strptime_format[0]
+        )
         logger.info("Journal entry added.")
         flash(_("Journal entry added."))
         return post_redirect()
@@ -134,6 +138,12 @@ def journeys() -> Union[str, "BaseResponse"]:
 
     add_journey_form.origin.data = session.pop("last_origin", None)
     add_journey_form.destination.data = session.pop("last_destination", None)
+    add_journey_form.price.data = session.pop("last_price", None)
+    date_str = session.pop("last_date", None)
+    if date_str:
+        add_journey_form.date.data = datetime.strptime(
+            date_str, add_journey_form.date.strptime_format[0]
+        )
 
     return render_template(
         "journeys.html",
