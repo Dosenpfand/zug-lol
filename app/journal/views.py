@@ -48,9 +48,9 @@ def journeys() -> Union[str, "BaseResponse"]:
         )
         db.session.add(journey)
         db.session.commit()
-        session["last_origin"] = add_journey_form.origin.data
-        session["last_destination"] = add_journey_form.destination.data
-        session["last_price"] = add_journey_form.price.data
+        session["last_origin"] = journey.origin
+        session["last_destination"] = journey.destination
+        session["last_price"] = journey.price
         session["last_date"] = journey.date.strftime(
             add_journey_form.date.strptime_format[0]
         )
