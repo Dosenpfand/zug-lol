@@ -51,7 +51,7 @@ def journeys() -> Union[str, "BaseResponse"]:
         session["last_origin"] = add_journey_form.origin.data
         session["last_destination"] = add_journey_form.destination.data
         session["last_price"] = add_journey_form.price.data
-        session["last_date"] = add_journey_form.date.data.strftime(
+        session["last_date"] = journey.date.strftime(
             add_journey_form.date.strptime_format[0]
         )
         logger.info("Journal entry added.")
