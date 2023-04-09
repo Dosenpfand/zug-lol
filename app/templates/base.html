@@ -12,14 +12,16 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ config['SITE_BASE_URI'] }}">
     <meta property="og:title" content="{{ title }} - {{ config['SITE_TITLE'] }}">
-    <meta property="og:site_name" content="{{ config['SITE_TITLE'] }}" />
+    <meta property="og:site_name" content="{{ config['SITE_TITLE'] }}"/>
     <meta property="og:description" content="{{ config['SITE_DESCRIPTION'] }}">
-    <meta property="og:image" content="{{ config['SITE_BASE_URI'] }}{{ url_for('static', filename='logo_w_name.png') }}">
+    <meta property="og:image"
+          content="{{ config['SITE_BASE_URI'] }}{{ url_for('static', filename='logo_w_name.png') }}">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ config['SITE_BASE_URI'] }}">
     <meta property="twitter:title" content="{{ title }} - {{ config['SITE_TITLE'] }}">
     <meta property="twitter:description" content="{{ config['SITE_DESCRIPTION'] }}">
-    <meta property="twitter:image" content="{{ config['SITE_BASE_URI'] }}{{ url_for('static', filename='logo_w_name.png') }}">
+    <meta property="twitter:image"
+          content="{{ config['SITE_BASE_URI'] }}{{ url_for('static', filename='logo_w_name.png') }}">
 
     <meta name="htmx-config" content='{"includeIndicatorStyles": false}'>
 
@@ -32,78 +34,82 @@
     <link rel="manifest" href="{{ url_for('static', filename='manifest.webmanifest') }}">
 </head>
 <body>
-    <div class="bg-light mb-4">
-        <div class="container">
-              <div class="row">
-                  <div class="col-auto my-auto">
-                      <a class="text-reset text-decoration-none" href="{{ url_for('main.home') }}">
-                          <img src="{{ url_for('static', filename='logo.png') }}" height="72" width="72" alt="{{ _('Logo: A happy Train') }}">
-                      </a>
-                  </div>
-                  <div class="col-auto my-auto display-4">
-                    <a class="text-reset text-decoration-none" href="{{ url_for('main.home') }}">zug.lol</a>
-                  </div>
-              </div>
+<div class="bg-light mb-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-auto my-auto">
+                <a class="text-reset text-decoration-none" href="{{ url_for('main.home') }}">
+                    <img src="{{ url_for('static', filename='logo.png') }}" height="72" width="72"
+                         alt="{{ _('Logo: A happy Train') }}">
+                </a>
+            </div>
+            <div class="col-auto my-auto display-4">
+                <a class="text-reset text-decoration-none" href="{{ url_for('main.home') }}">zug.lol</a>
+            </div>
         </div>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <div class="navbar-nav mr-auto">
-                    {{ render_nav_item('main.home', _('Home')) }}
-                    {{ render_nav_item('ticket_price.price_form', _('Ticket Price')) }}
-                    {{ render_nav_item('journal.journeys', _('Travel Journal')) }}
-                    {% if current_user and current_user.is_authenticated %}
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <div class="navbar-nav mr-auto">
+                {{ render_nav_item('main.home', _('Home')) }}
+                {{ render_nav_item('ticket_price.price_form', _('Ticket Price')) }}
+                {{ render_nav_item('journal.journeys', _('Travel Journal')) }}
+                {% if current_user and current_user.is_authenticated %}
                     {{ render_nav_item('main.profile', _('Profile')) }}
                     {{ render_nav_item('security.logout', _('Logout')) }}
-                    {% else %}
+                {% else %}
                     {{ render_nav_item('security.login', _('Login')) }}
                     {{ render_nav_item('security.register', _('Register')) }}
-                    {% endif %}
-                    {% for code, lang in config['LANGUAGES'].items() %}
+                {% endif %}
+                {% for code, lang in config['LANGUAGES'].items() %}
                     {% if not code == session['lang'] %}
-                    {% set endpoint = request.url_rule.endpoint if request.url_rule.endpoint else 'main.home' %}
-                    {{ render_nav_item(endpoint, lang, lang=code) }}
+                        {% set endpoint = request.url_rule.endpoint if request.url_rule.endpoint and request.url_rule.endpoint != 'static' else 'main.home' %}
+                        {{ render_nav_item(endpoint, lang, lang=code) }}
                     {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-        </nav>
-    </div>
-
-    <main class="container">
-        {{ render_messages(container=False, dismissible=False) }}
-        {% block content %}
-        {% endblock %}
-    </main>
-
-    <footer class="pt-4 my-md-5 pt-md-5 border-top">
-        <div class="container">
-            <div class="row">
-                <div class="col col-md-6 small text-muted">
-                    <ul class="list-unstyled text-small">
-                        <li>🄯 2022 <a class="text-muted" href="{{ url_for('main.home') }}">{{ config['SITE_TITLE'] }}</a></li>
-                        <li>{{ _('A') }} <a class="text-muted" href="https://sad.bz">sad.bz</a> {{ _('production') }}</li>
-                    </ul>
-                </div>
-                <div class="col col-md-2 small">
-                    <ul class="list-unstyled text-small">
-                        <li><a class="text-muted" href="{{ url_for('main.data_protection') }}">{{ _('Data Protection') }}</a></li>
-                        <li><a class="text-muted" href="{{ url_for('main.imprint') }}">{{ _('Imprint') }}</a></li>
-                    </ul>
-                </div>
-                <div class="col col-md-2 small">
-                    <ul class="list-unstyled text-small">
-                        <li><a class="text-muted" href="mailto:{{ config['SITE_EMAIL'] }}">{{ _('Contact') }}</a></li>
-                        <li><a class="text-muted" href="https://github.com/Dosenpfand/zug-lol">{{ _('Source Code') }}</a></li>
-                    </ul>
-                </div>
+                {% endfor %}
             </div>
         </div>
-    </footer>
+    </nav>
+</div>
 
-    {{ bootstrap.load_js(nonce=csp_nonce()) }}
-    <script nonce="{{ csp_nonce() }}" id="htmx-script" src="{{ url_for('static', filename='htmx.min.js') }}" defer></script>
-    <script nonce="{{ csp_nonce() }}" src="{{ url_for('static', filename='sse.js') }}" defer></script>
-    <script nonce="{{ csp_nonce() }}" src="{{ url_for('static', filename='bootstrap-autocomplete.min.js') }}"></script>
-    <script nonce="{{ csp_nonce() }}" src="{{ url_for('static', filename='script.js') }}"></script>
+<main class="container">
+    {{ render_messages(container=False, dismissible=False) }}
+    {% block content %}
+    {% endblock %}
+</main>
+
+<footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <div class="container">
+        <div class="row">
+            <div class="col col-md-6 small text-muted">
+                <ul class="list-unstyled text-small">
+                    <li>🄯 2022 <a class="text-muted" href="{{ url_for('main.home') }}">{{ config['SITE_TITLE'] }}</a>
+                    </li>
+                    <li>{{ _('A') }} <a class="text-muted" href="https://sad.bz">sad.bz</a> {{ _('production') }}</li>
+                </ul>
+            </div>
+            <div class="col col-md-2 small">
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted"
+                           href="{{ url_for('main.data_protection') }}">{{ _('Data Protection') }}</a></li>
+                    <li><a class="text-muted" href="{{ url_for('main.imprint') }}">{{ _('Imprint') }}</a></li>
+                </ul>
+            </div>
+            <div class="col col-md-2 small">
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="mailto:{{ config['SITE_EMAIL'] }}">{{ _('Contact') }}</a></li>
+                    <li><a class="text-muted" href="https://github.com/Dosenpfand/zug-lol">{{ _('Source Code') }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+{{ bootstrap.load_js(nonce=csp_nonce()) }}
+<script nonce="{{ csp_nonce() }}" id="htmx-script" src="{{ url_for('static', filename='htmx.min.js') }}" defer></script>
+<script nonce="{{ csp_nonce() }}" src="{{ url_for('static', filename='sse.js') }}" defer></script>
+<script nonce="{{ csp_nonce() }}" src="{{ url_for('static', filename='bootstrap-autocomplete.min.js') }}"></script>
+<script nonce="{{ csp_nonce() }}" src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
