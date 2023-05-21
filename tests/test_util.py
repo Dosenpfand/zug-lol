@@ -19,7 +19,7 @@ class TestUtil:
 
     def test_sse(self, app: "Flask") -> None:
         origin = "Wien"
-        destination = "St. Pölten"
+        destination = "Amstetten"
         with app.app_context():
             from app.util import get_price_generator
 
@@ -39,7 +39,7 @@ class TestUtil:
 
     def test_get_price(self) -> None:
         origin = "Wien"
-        destination = "St. Pölten"
+        destination = "Amstetten"
         price = get_price(origin, destination, has_vc66=True, take_median=True)
 
         assert price
