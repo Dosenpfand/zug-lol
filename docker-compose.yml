@@ -9,7 +9,7 @@ services:
     environment:
       - MODULE_NAME=wsgi
 
-  db:
+  postgres:
     image: postgres:alpine
     restart: always
     # TODO
