@@ -23,7 +23,11 @@ The application uses the following components.
 
 ## Run
 
-To run the application locally follow these steps.
+To run the application locally you can use docker-compose:
+```
+docker-compose up --build -d
+```
+For an docker-free setup follow these steps.
 
 1. Create and activate a virtual environment
     ```
@@ -86,6 +90,8 @@ A live version can be reached at https://zug.lol
 ## Deploy
 
 The following files can be helpful to deploy the application:
+
+TODO: adapt to docker
 
 1. `zug-lol.service` as systemd service to run the web app.
 2. `zug-lol-cron.service` and `zug-lol-cron.timer` as systemd service/timer to run the cron tasks.

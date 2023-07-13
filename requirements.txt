@@ -2,7 +2,8 @@ Flask~=2.2
 requests~=2.28
 Bootstrap-Flask~=2.2
 Flask-WTF~=1.0
-gunicorn~=20.1
+# gunicorn~=20.1 TODO: delete?
+greenlet<0.5 # For meinheld deployment
 WTForms~=3.0
 SQLAlchemy~=1.4
 Flask-SQLAlchemy~=2.5
