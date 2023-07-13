@@ -8,6 +8,8 @@ services:
       - 5000:80
     environment:
       - MODULE_NAME=wsgi
+    depends_on:
+      - postgres
 
   postgres:
     image: postgres:alpine
