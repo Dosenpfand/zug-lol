@@ -27,6 +27,7 @@ To run the application locally you can use docker-compose:
 ```
 docker-compose up --build -d
 ```
+Please note that when using this method the database will not be persistent.
 For an docker-free setup follow these steps.
 
 1. Create and activate a virtual environment
