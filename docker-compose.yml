@@ -17,5 +17,7 @@ services:
     # TODO
     # volumes:
     #   - postgres:/var/lib/postgresql/data:Z
-    env_file:
-      - db.env
+    environment:
+      - POSTGRES_PASSWORD=zug
+      - POSTGRES_DB=zug
+      - POSTGRES_USER=zug
