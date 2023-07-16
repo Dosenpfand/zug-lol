@@ -1,4 +1,12 @@
 #!/bin/sh
 
 pybabel compile -d app/translations
-flask db upgrade || flask init-db
+
+if flask is-db-init; then
+    echo "Running database upgrade."
+    flask db upgrade 
+else
+    echo "Initizalizing database."
+    flask init-db
+    flask db stamp head
+fi

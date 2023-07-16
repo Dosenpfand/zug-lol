@@ -21,10 +21,15 @@ services:
       - POSTGRES_USER=zug
     volumes:
       - ./db_backup:/docker-entrypoint-initdb.d
+      # Uncomment for database persistence
+      # - database:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U zug"]
       interval: 2s
       timeout: 5s
       retries: 10
+
+volumes:
+  database:
 
   # TODO: cron service!

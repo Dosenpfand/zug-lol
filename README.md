@@ -27,8 +27,10 @@ To run the application locally you can use docker-compose:
 ```
 docker-compose up --build -d
 ```
-Please note that when using this method the database will not be persistent.
-For an docker-free setup follow these steps.
+You should now be able to browse the app at http://localhost:5000 .
+If you want to restore an existing database backup, place its `.sql` in the `db_bakup/` folder before running the above command.
+Please note that when using this method the database will not be persistent. FOr persistence uncomment the corresponding lines in the `docker-compose.yml` file.
+For a docker-free setup follow these steps.
 
 1. Create and activate a virtual environment
     ```
