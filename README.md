@@ -90,28 +90,3 @@ For a docker-free setup follow these steps.
 ## Live Demo
 
 A live version can be reached at https://zug.lol
-
-## Deploy
-
-The following files can be helpful to deploy the application:
-
-TODO: adapt to docker
-
-1. `zug-lol.service` as systemd service to run the web app.
-2. `zug-lol-cron.service` and `zug-lol-cron.timer` as systemd service/timer to run the cron tasks.
-3. `wsgi.py` to start the WSGI.
-4. `post-receive` as git post-receive hook to finish deployment. To use it the deploy user needs to have password-less
-   sudo access to the systemctl command to restart the service, e.g. via `sudo visudo` add
-   ```
-   %sudo   ALL=(ALL:ALL) NOPASSWD: /bin/systemctl restart zug-lol.service
-   ```
-
-To use nginx as a proxy the following config snippet can be used inside a ```server``` section.
-
-```
-location / {
-   include proxy_params;
-   proxy_pass http://unix:/var/www/zug-lol/zug-lol.sock;
-   proxy_buffering off;
-}
-```
