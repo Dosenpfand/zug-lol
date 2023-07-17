@@ -28,20 +28,26 @@ To run the application locally you can use docker-compose:
 docker-compose up -f docker/docker-compose.yml --build -d
 ```
 You should now be able to browse the app at http://localhost:5000 .
+
 If you want to restore an existing database backup, place its `.sql` in the `db_backup/` folder before running the above command.
-Please note that when using this method the database will not be persistent. FOr persistence uncomment the corresponding lines in the `docker-compose.yml` file.
+Please note that when using this method the database will not be persistent. For persistence uncomment the corresponding lines in the `docker-compose.yml` file.
+
 For a docker-free setup follow these steps.
 
-1. Create and activate a virtual environment
+1. Install and switch to the supported Python version:
+   ```
+   pyenv install 3.9 && pyenv local 3.9
+   ```
+2. Create and activate a virtual environment
     ```
     python -m venv venv
     source venv/bin/activate
     ```
-2. Install dependencies
+3. Install dependencies
     ```
     pip install -r requirements.txt
     ```
-3. For local development install additional dependencies
+4. For local development install additional dependencies
    ```
    pip install -r requirements-dev.txt
    ```
@@ -49,8 +55,8 @@ For a docker-free setup follow these steps.
    ```
    pre-commit install
    ```
-4. Setup a PostgreSQL database and configure it via
-5. Adapt the config, either by changing the contents in ```config.py```, or by pointing the environment
+5. Setup a PostgreSQL database and configure it via
+6. Adapt the config, either by changing the contents in ```config.py```, or by pointing the environment
    variable ```APPLICATION_SETTINGS``` to an alternative file, or by setting environment variables with
    the `FLASK_` prefix.
    At least the following variables need to be set/changed:
@@ -63,29 +69,29 @@ For a docker-free setup follow these steps.
    ```
    If Sentry error reporting should be performed `SENTRY_DSN` needs to be set.
 
-6. Initialize the database
+7. Initialize the database
    ```
    flask init-db
    ```
-7. Adapt the translation
+8. Adapt the translation
    ```bash
    pybabel extract -F babel.cfg -k lazy_gettext -o messages.pot .
    pybabel update -i messages.pot -d app/translations
    # Adapt app/translations/de/LC_MESSAGES/messages.po
    pybabel compile -d app/translations
    ```
-8. Upgrade the database schema:
+9. Upgrade the database schema:
    ```bash
    flask db migrate
    flask db upgrade
    ```
-9. Run the app
+10. Run the app
     ```
     export FLASK_DEBUG=True
     export FLASK_APP=app
     flask run
     ```
-10. Open in your browser: http://localhost:5000
+11. Open in your browser: http://localhost:5000
 
 ## Live Demo
 
