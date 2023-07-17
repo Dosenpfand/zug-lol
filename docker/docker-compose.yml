@@ -2,7 +2,7 @@ version: '3'
 
 services:
   app:
-    build: ./
+    build: ../
     restart: always
     ports:
       - 5000:80
@@ -20,7 +20,7 @@ services:
       retries: 3
 
   cron:
-    build: ./
+    build: ../
     restart: always
     environment:
       - FLASK_SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://zug:zug@postgres:5432/zug
@@ -43,7 +43,7 @@ services:
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U zug" ]
       start_period: 10s
-      # TODO switch on when supported (and decrease interval): start_interval: 2s
+      # TODO: Switch on when supported (and decrease interval): start_interval: 2s
       interval: 5s
       timeout: 5s
       retries: 1
