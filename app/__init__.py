@@ -1,4 +1,5 @@
 import logging
+import sys
 from typing import Optional, Union
 
 import click
@@ -16,6 +17,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_talisman import Talisman
 from flask_wtf.csrf import CSRFProtect
 from sentry_sdk.integrations.flask import FlaskIntegration
+from sqlalchemy import inspect
 
 from app.cronjobs import update_oldest_prices
 from app.error.views import page_not_found, internal_server_error
@@ -75,6 +77,7 @@ def create_app(
         app.jinja_env.filters["format_number"] = format_number
 
         app.cli.add_command(init_db_command)
+        app.cli.add_command(is_db_init_command)
         app.cli.add_command(update_oldest_price_command)
 
         fsqla.FsModels.set_db_info(db)
@@ -128,12 +131,27 @@ def init_db(drop: bool = True) -> None:
     db.create_all()
 
 
+def is_db_init() -> bool:
+    from app.models import User  # noqa
+
+    return inspect(db.engine).has_table(User.__tablename__)
+
+
 @click.command("init-db")
 @with_appcontext
 def init_db_command() -> None:
     """Clear existing data and create new tables."""
     init_db()
     click.echo("Initialized the database.")
+
+
+@click.command("is-db-init")
+@with_appcontext
+def is_db_init_command() -> None:
+    """Determine wheter the database is initialized."""
+    result = is_db_init()
+    print("Database is initialized." if result else "Database is NOT initialized.")
+    sys.exit(not result)
 
 
 @click.command("update-oldest-price")

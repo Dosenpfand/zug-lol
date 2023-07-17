@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  app:
+    build: ../
+    restart: always
+    ports:
+      - 5000:80
+    environment:
+      - MODULE_NAME=wsgi
+      - FLASK_SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://zug:zug@postgres:5432/zug
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost" ]
+      start_period: 10s
+      interval: 5m
+      timeout: 5s
+      retries: 3
+
+  cron:
+    build: ../
+    restart: always
+    environment:
+      - FLASK_SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://zug:zug@postgres:5432/zug
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: sh -c "/root/create_env.sh; cron -f & touch /var/log/cron.log && tail -f /var/log/cron.log"
+
+  postgres:
+    image: postgres:alpine
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=zug
+      - POSTGRES_DB=zug
+      - POSTGRES_USER=zug
+    volumes:
+      - ./db_backup:/docker-entrypoint-initdb.d
+      # Uncomment for database persistence
+      # - database:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U zug" ]
+      start_period: 10s
+      # TODO: Switch on when supported (and decrease interval): start_interval: 2s
+      interval: 5s
+      timeout: 5s
+      retries: 1
+
+volumes:
+  database:
