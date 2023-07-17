@@ -12,5 +12,6 @@ RUN set -eux; \
 	apt-get install -y --no-install-recommends cron; \
 	rm -rf /var/lib/apt/lists/*
 COPY crontab ${CRONTAB_FILE}
+COPY create_env.sh /root/create_env.sh
 
 COPY ./ /app

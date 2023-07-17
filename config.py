@@ -2,8 +2,7 @@ from flask_babel import lazy_gettext as _
 
 SECRET_KEY = "fffffffffffffffffffffffffffffffffffffffffff"
 SECURITY_PASSWORD_SALT = "000000000000000000000000000000000000000"
-# TODO: get from env variables?
-SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://zug:zug@postgres:5432/zug"
+SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://zug:zug@localhost:5432/zug"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_ENGINE_OPTIONS = {
     "pool_pre_ping": True,

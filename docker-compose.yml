@@ -8,6 +8,7 @@ services:
       - 5000:80
     environment:
       - MODULE_NAME=wsgi
+      - FLASK_SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://zug:zug@postgres:5432/zug
     depends_on:
       postgres:
         condition: service_healthy
@@ -22,11 +23,11 @@ services:
     build: ./
     restart: always
     environment:
-      - CRON_LOG_FILE=/var/log/cron.log
+      - FLASK_SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://zug:zug@postgres:5432/zug
     depends_on:
       postgres:
         condition: service_healthy
-    command: sh -c "cron -f & touch /var/log/cron.log && tail -f /var/log/cron.log"
+    command: sh -c "/root/create_env.sh; cron -f & touch /var/log/cron.log && tail -f /var/log/cron.log"
 
   postgres:
     image: postgres:alpine
