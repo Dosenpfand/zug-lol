@@ -5,4 +5,12 @@ RUN pip install --upgrade pip
 RUN pip install --upgrade wheel
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
+# Cron job
+ENV CRONTAB_FILE=/etc/cron.d/app_cron
+RUN set -eux; \
+	apt-get update; \
+	apt-get install -y --no-install-recommends cron; \
+	rm -rf /var/lib/apt/lists/*
+COPY crontab ${CRONTAB_FILE}
+
 COPY ./ /app

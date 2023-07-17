@@ -11,6 +11,22 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost" ]
+      start_period: 10s
+      interval: 5m
+      timeout: 5s
+      retries: 3
+
+  cron:
+    build: ./
+    restart: always
+    environment:
+      - CRON_LOG_FILE=/var/log/cron.log
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: sh -c "cron -f & touch /var/log/cron.log && tail -f /var/log/cron.log"
 
   postgres:
     image: postgres:alpine
@@ -24,12 +40,12 @@ services:
       # Uncomment for database persistence
       # - database:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U zug"]
-      interval: 2s
+      test: [ "CMD-SHELL", "pg_isready -U zug" ]
+      start_period: 10s
+      # TODO switch on when supported (and decrease interval): start_interval: 2s
+      interval: 5s
       timeout: 5s
-      retries: 10
+      retries: 1
 
 volumes:
   database:
-
-  # TODO: cron service!
