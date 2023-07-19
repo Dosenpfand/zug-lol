@@ -35,6 +35,8 @@ class AuthActions(object):
         return self._client.get("/logout")
 
 
+# TODO: Session scope should not be necessary, but in memory db results in error
+# https://stackoverflow.com/questions/37908767/table-roles-users-is-already-defined-for-this-metadata-instance?answertab=modifieddesc#tab-top
 @pytest.fixture(scope="session")
 def app() -> Iterator["Flask"]:
     import config as app_config
@@ -43,12 +45,13 @@ def app() -> Iterator["Flask"]:
         "TESTING": True,
         "WTF_CSRF_ENABLED": False,
         "SECURITY_PASSWORD_HASH": "plaintext",
-        "SQLALCHEMY_DATABASE_URI": "sqlite:///app.db",
+        "SQLALCHEMY_DATABASE_URI": "sqlite://",
         "BABEL_DEFAULT_LOCALE": "de",
         "FORCE_HTTPS": False,
     }
     for key, value in test_config.items():
         setattr(app_config, key, value)
+
     app = create_app(config=app_config)
 
     with app.app_context():
@@ -63,9 +66,6 @@ def app() -> Iterator["Flask"]:
         db.session.commit()
 
     yield app
-
-    # TODO: Teardown (and session scope) should not be necessary, but in memory db results in error
-    os.remove("app/app.db")
 
 
 @pytest.fixture()
