@@ -132,6 +132,7 @@ def init_db(drop: bool = True) -> None:
 
 
 def is_db_init() -> bool:
+    from app.db import db
     from app.models import User  # noqa
 
     return inspect(db.engine).has_table(User.__tablename__)
