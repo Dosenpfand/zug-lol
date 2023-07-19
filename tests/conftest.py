@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING, Iterator
 import pytest
 from flask_security import hash_password
 
-from app import create_app, init_db, security, db
+from app import create_app, init_db
 
 if TYPE_CHECKING:
     from flask.testing import FlaskClient
@@ -54,10 +54,12 @@ def app() -> Iterator["Flask"]:
     with app.app_context():
         init_db(drop=False)
 
-        if not security.datastore.find_user(email=TEST_EMAIL):
-            security.datastore.create_user(
+        if not app.extensions["security"].datastore.find_user(email=TEST_EMAIL):
+            app.extensions["security"].datastore.create_user(
                 email=TEST_EMAIL, password=hash_password(TEST_PASSWORD), roles=[]
             )
+        from app.db import db
+
         db.session.commit()
 
     yield app

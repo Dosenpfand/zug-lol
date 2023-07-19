@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from app import db
+from app.db import db
 
 if TYPE_CHECKING:
     from flask import Flask
@@ -9,6 +9,7 @@ if TYPE_CHECKING:
 class TestPrice:
     def test_update_oldest_empty(self, app: "Flask") -> None:
         with app.app_context():
+            from app.db import db
             from app.models import Price
 
             updated_prices = Price.update_oldest()

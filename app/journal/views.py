@@ -18,7 +18,7 @@ from flask_babel import gettext as _
 from flask_login import current_user
 from flask_security import auth_required
 
-from app import db
+from app.db import db
 from app.journal import bp
 from app.journal.forms import JourneyForm, DeleteJournalForm, ImportJournalForm
 from app.models import Journey

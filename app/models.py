@@ -1,18 +1,15 @@
 from datetime import datetime, date
 from time import time
 from typing import Optional, List
+from flask_sqlalchemy import SQLAlchemy
 
 import jwt
 from flask import current_app
 from flask_babel import format_decimal, format_date
 from flask_security.models import fsqla_v2 as fsqla
-from sqlalchemy.ext.declarative import DeclarativeMeta
 
-from app import db
+from app.db import db, BaseModel
 from util.oebb import get_price, get_access_token
-
-# NOTE: Needed for mypy
-BaseModel: DeclarativeMeta = db.Model
 
 logger = current_app.logger
 

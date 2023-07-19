@@ -7,7 +7,7 @@ from flask_babel import lazy_gettext as _, format_decimal
 if TYPE_CHECKING:
     from werkzeug import Response as BaseResponse
 
-from app import db
+from app.db import db
 from app.models import Price, AuthToken
 from util.oebb import (
     get_station_id,

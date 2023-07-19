@@ -16,7 +16,7 @@ from flask_babel import gettext as _
 from flask_login import current_user
 from flask_security import auth_required
 
-from app import db
+from app.db import db
 from app.main import bp
 from app.main.forms import ProfileForm, DeleteAccountForm
 from app.models import User, StationAutocomplete, AuthToken

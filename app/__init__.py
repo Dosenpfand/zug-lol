@@ -23,15 +23,6 @@ from app.cronjobs import update_oldest_prices
 from app.error.views import page_not_found, internal_server_error
 from app.extended_security.forms import ExtendedRegisterForm
 
-bootstrap = Bootstrap4()
-db = SQLAlchemy()
-security = Security()
-migrate = Migrate()
-babel = Babel()
-csrf = CSRFProtect()
-debug_toolbar = DebugToolbarExtension()
-talisman = Talisman()
-
 
 def create_app(
     import_name: Optional[str] = None, config: Union[object, str] = "config"
@@ -55,11 +46,18 @@ def create_app(
         app.register_error_handler(500, internal_server_error)
 
         # Initialize extensions
-        bootstrap.init_app(app)
+        bootstrap = Bootstrap4()
+        security = Security()
+        migrate = Migrate()
+        babel = Babel()
+        csrf = CSRFProtect()
+        debug_toolbar = DebugToolbarExtension()
+        talisman = Talisman()
+
+        from app.db import db
+
         db.init_app(app)
-        # TODO: check for alternative
-        #  https://stackoverflow.com/questions/37908767/table-roles-users-is-already-defined-for-this-metadata-instance
-        db.metadata.clear()
+        bootstrap.init_app(app)
         migrate.init_app(app, db)
         babel.init_app(app)
         csrf.init_app(app)
@@ -126,6 +124,8 @@ def create_app(
 
 
 def init_db(drop: bool = True) -> None:
+    from app.db import db
+
     if drop:
         db.drop_all()
     db.create_all()
