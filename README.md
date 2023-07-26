@@ -25,7 +25,7 @@ The application uses the following components.
 
 To run the application locally you can use docker-compose:
 ```
-docker-compose up -f docker/docker-compose.yml --build -d
+docker-compose up --build -d
 ```
 You should now be able to browse the app at http://localhost:5000 .
 
