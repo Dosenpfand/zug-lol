@@ -14,4 +14,7 @@ RUN set -eux; \
 COPY docker/crontab ${CRONTAB_FILE}
 COPY docker/create_env.sh /root/create_env.sh
 
+# App
+ENV MODULE_NAME=wsgi
+RUN rm -rf /app
 COPY ./ /app
