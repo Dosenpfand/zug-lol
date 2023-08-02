@@ -39,7 +39,7 @@ def create_app(
     with app.app_context():
         app.config.from_object(config)
         app.config.from_envvar("APPLICATION_SETTINGS", silent=True)
-        app.config.from_prefixed_env(loads=str)
+        app.config.from_prefixed_env()
 
         # Register error handlers
         app.register_error_handler(404, page_not_found)
