@@ -44,7 +44,7 @@
                 </a>
             </div>
             <div class="col-auto my-auto display-4">
-                <a class="text-reset text-decoration-none" href="{{ url_for('main.home') }}">zug.lol</a>
+                <a class="text-reset text-decoration-none" href="{{ url_for('main.home') }}">{{ config['SITE_TITLE'] }}</a>
             </div>
         </div>
     </div>
@@ -63,8 +63,8 @@
                 {% endif %}
                 {% for code, lang in config['LANGUAGES'].items() %}
                     {% if not code == session['lang'] %}
-                        {% set endpoint = request.url_rule.endpoint 
-                            if (request.url_rule.endpoint and (request.url_rule.endpoint not in ['static', 'bootstrap.static'])) 
+                        {% set endpoint = request.url_rule.endpoint
+                            if (request.url_rule.endpoint and (request.url_rule.endpoint not in ['static', 'bootstrap.static']))
                             else 'main.home' %}
                         {{ render_nav_item(endpoint, lang, lang=code) }}
                     {% endif %}
