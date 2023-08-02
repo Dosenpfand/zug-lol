@@ -125,6 +125,7 @@ def create_app(
 
 def init_db(drop: bool = True) -> None:
     from app.db import db
+    from app.models import Price, StationAutocomplete, AuthToken, Role, User, Journey
 
     if drop:
         db.drop_all()
