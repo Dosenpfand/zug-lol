@@ -5,7 +5,6 @@
 - [ ] Grey out button while determining price
 - [ ] Edit journey
 - [ ] Pagination
-- [ ] admin interface using flask-admin
 - [ ] Add password reset functionality
 - [ ] Improve price determination algorithm
 - [ ] Dependency injection for OEBB functionality
