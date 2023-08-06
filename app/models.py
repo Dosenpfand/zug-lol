@@ -136,7 +136,10 @@ class User(BaseModel, fsqla.FsUserMixin):
     )
 
     def __repr__(self) -> str:
-        return f"User({self.email}, {self.username}, {self.active}, {self.fs_uniquifier}, {self.confirmed_at})"
+        return f"<{self.__class__.__name__} {self.email}>"
+
+    def __str__(self) -> str:
+        return f"{self.email}"
 
 
 class Journey(BaseModel):
