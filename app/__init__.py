@@ -1,6 +1,6 @@
 import logging
 import sys
-from typing import Optional, Union
+from typing import NoReturn, Optional, Union
 
 import click
 import sentry_sdk
@@ -49,13 +49,15 @@ def create_app(
 
         # Register
         @app.before_request
-        def check_maintanence():
+        def check_maintanence() -> Union[None, NoReturn]:
             if (
                 app.config.get("MAINTENANCE")
+                and request.url_rule
                 and request.url_rule.endpoint
                 and (request.url_rule.endpoint not in ["static", "bootstrap.static"])
             ):
                 abort(503)
+            return None
 
         # Instantiate extensions
         bootstrap = Bootstrap4()
