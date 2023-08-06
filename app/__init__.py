@@ -13,15 +13,16 @@ from flask_debugtoolbar import DebugToolbarExtension
 from flask_migrate import Migrate
 from flask_security import SQLAlchemyUserDatastore, Security, current_user
 from flask_security.models import fsqla_v2 as fsqla
-from flask_sqlalchemy import SQLAlchemy
 from flask_talisman import Talisman
 from flask_wtf.csrf import CSRFProtect
+from flask_admin import Admin
 from sentry_sdk.integrations.flask import FlaskIntegration
 from sqlalchemy import inspect
 
 from app.cronjobs import update_oldest_prices
 from app.error.views import page_not_found, internal_server_error
 from app.extended_security.forms import ExtendedRegisterForm
+from app.extended_security.admin import AdminModelView, ExtendedAdminIndex
 
 
 def create_app(
@@ -45,7 +46,7 @@ def create_app(
         app.register_error_handler(404, page_not_found)
         app.register_error_handler(500, internal_server_error)
 
-        # Initialize extensions
+        # Instantiate extensions
         bootstrap = Bootstrap4()
         security = Security()
         migrate = Migrate()
@@ -53,10 +54,14 @@ def create_app(
         csrf = CSRFProtect()
         debug_toolbar = DebugToolbarExtension()
         talisman = Talisman()
+        admin = Admin(template_mode="bootstrap4", index_view=ExtendedAdminIndex())
 
+        # Initialize database
         from app.db import db
 
         db.init_app(app)
+
+        # Initialize minor extensions
         bootstrap.init_app(app)
         migrate.init_app(app, db)
         babel.init_app(app)
@@ -74,10 +79,12 @@ def create_app(
         app.jinja_env.add_extension("jinja2.ext.i18n")
         app.jinja_env.filters["format_number"] = format_number
 
+        # Initialize CLI
         app.cli.add_command(init_db_command)
         app.cli.add_command(is_db_init_command)
         app.cli.add_command(update_oldest_price_command)
 
+        # Initialize security
         fsqla.FsModels.set_db_info(db)
         from app.models import User, Role  # noqa
 
@@ -97,6 +104,16 @@ def create_app(
         from app.ticket_price import bp as ticket_price_bp  # noqa
 
         app.register_blueprint(ticket_price_bp)
+
+        # Initialize admin
+        from app.models import Price, StationAutocomplete, AuthToken, Journey  # noqa
+
+        admin.init_app(app)
+        admin.add_view(AdminModelView(Price, db.session))
+        admin.add_view(AdminModelView(StationAutocomplete, db.session))
+        admin.add_view(AdminModelView(AuthToken, db.session))
+        admin.add_view(AdminModelView(Journey, db.session))
+        admin.add_view(AdminModelView(User, db.session))
 
         @babel.localeselector
         def get_locale() -> str:
