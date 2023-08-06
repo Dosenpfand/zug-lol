@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-03-05 14:20+0100\n"
+"POT-Creation-Date: 2023-08-06 17:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.11.0\n"
+"Generated-By: Babel 2.12.1\n"
 
 #: config.py:20
 msgid ""
@@ -23,7 +23,7 @@ msgid ""
 " find out if your Klimaticket pays off."
 msgstr ""
 
-#: app/__init__.py:110
+#: app/__init__.py:139
 msgid "Language changed"
 msgstr ""
 
@@ -85,19 +85,23 @@ msgstr ""
 msgid "Failed to retrieve price"
 msgstr ""
 
-#: app/error/views.py:6
+#: app/error/views.py:8
 msgid "Page Not Found"
 msgstr ""
 
-#: app/error/views.py:11
+#: app/error/views.py:12
 msgid "Internal Server Error"
+msgstr ""
+
+#: app/error/views.py:15 app/templates/503.html:5
+msgid "Maintenance"
 msgstr ""
 
 #: app/extended_security/forms.py:7
 msgid "Prove that you are human"
 msgstr ""
 
-#: app/journal/forms.py:12 app/journal/views.py:123 app/ticket_price/forms.py:9
+#: app/journal/forms.py:12 app/journal/views.py:128 app/ticket_price/forms.py:9
 msgid "Origin"
 msgstr ""
 
@@ -105,7 +109,7 @@ msgstr ""
 msgid "e.g. Wien"
 msgstr ""
 
-#: app/journal/forms.py:21 app/journal/views.py:124
+#: app/journal/forms.py:21 app/journal/views.py:129
 #: app/ticket_price/forms.py:18
 msgid "Destination"
 msgstr ""
@@ -114,7 +118,7 @@ msgstr ""
 msgid "e.g. Innsbruck"
 msgstr ""
 
-#: app/journal/forms.py:30 app/journal/views.py:125
+#: app/journal/forms.py:30 app/journal/views.py:130
 msgid "Price in €"
 msgstr ""
 
@@ -122,7 +126,7 @@ msgstr ""
 msgid "e.g. 10.5"
 msgstr ""
 
-#: app/journal/forms.py:33 app/journal/forms.py:35 app/journal/views.py:126
+#: app/journal/forms.py:33 app/journal/forms.py:35 app/journal/views.py:131
 msgid "Date"
 msgstr ""
 
@@ -143,44 +147,44 @@ msgstr ""
 msgid "Import"
 msgstr ""
 
-#: app/journal/views.py:53
+#: app/journal/views.py:58
 msgid "Journal entry added."
 msgstr ""
 
-#: app/journal/views.py:60
+#: app/journal/views.py:65
 msgid "All journal entries deleted."
 msgstr ""
 
-#: app/journal/views.py:82
+#: app/journal/views.py:87
 msgid "Could not decode the file. Are you sure you uploaded a CSV file?"
 msgstr ""
 
-#: app/journal/views.py:89
+#: app/journal/views.py:94
 msgid "Could not find the expected column {} in the uploaded CSV file."
 msgstr ""
 
-#: app/journal/views.py:97
+#: app/journal/views.py:102
 msgid "Could not process the uploaded CSV file."
 msgstr ""
 
-#: app/journal/views.py:100
+#: app/journal/views.py:105
 msgid "All journal entries imported."
 msgstr ""
 
-#: app/journal/views.py:129
+#: app/journal/views.py:134
 msgid "Actions"
 msgstr ""
 
-#: app/journal/views.py:136 app/templates/base.html:53
+#: app/journal/views.py:150 app/templates/base.html:56
 #: app/templates/journeys.html:80
 msgid "Travel Journal"
 msgstr ""
 
-#: app/journal/views.py:159
+#: app/journal/views.py:173
 msgid "Journal entry deleted."
 msgstr ""
 
-#: app/journal/views.py:162
+#: app/journal/views.py:176
 msgid "Failed to delete journal entry."
 msgstr ""
 
@@ -216,27 +220,27 @@ msgstr ""
 msgid "Delete account"
 msgstr ""
 
-#: app/main/views.py:34 app/templates/base.html:51
+#: app/main/views.py:34 app/templates/base.html:54
 msgid "Home"
 msgstr ""
 
-#: app/main/views.py:39 app/templates/base.html:89
+#: app/main/views.py:39 app/templates/base.html:96
 msgid "Data Protection"
 msgstr ""
 
-#: app/main/views.py:49 app/templates/base.html:90
+#: app/main/views.py:44 app/templates/base.html:97
 msgid "Imprint"
 msgstr ""
 
-#: app/main/views.py:70 app/templates/base.html:55
+#: app/main/views.py:65 app/templates/base.html:58
 msgid "Profile"
 msgstr ""
 
-#: app/main/views.py:85
+#: app/main/views.py:80
 msgid "Your account has been deleted."
 msgstr ""
 
-#: app/main/views.py:87 app/templates/delete_account.html:7
+#: app/main/views.py:82 app/templates/delete_account.html:7
 msgid "Delete Account"
 msgstr ""
 
@@ -255,12 +259,12 @@ msgid ""
 msgstr ""
 
 #: app/templates/404.html:13 app/templates/500.html:14
-#: app/templates/home.html:20
+#: app/templates/503.html:14 app/templates/home.html:20
 msgid "or open an issue on"
 msgstr ""
 
 #: app/templates/404.html:14 app/templates/500.html:15
-#: app/templates/home.html:21
+#: app/templates/503.html:15 app/templates/home.html:21
 msgid "the issue tracker"
 msgstr ""
 
@@ -282,42 +286,50 @@ msgid ""
 " If you would like to add further context you can send an email to "
 msgstr ""
 
-#: app/templates/base.html:40
+#: app/templates/503.html:7
+msgid "The site is currently in maintenance, please check back later"
+msgstr ""
+
+#: app/templates/503.html:11
+msgid "To get in touch you can send an email to "
+msgstr ""
+
+#: app/templates/base.html:43
 msgid "Logo: A happy Train"
 msgstr ""
 
-#: app/templates/base.html:52 app/ticket_price/views.py:12
+#: app/templates/base.html:55 app/ticket_price/views.py:12
 #: app/ticket_price/views.py:13
 msgid "Ticket Price"
 msgstr ""
 
-#: app/templates/base.html:56
+#: app/templates/base.html:59
 msgid "Logout"
 msgstr ""
 
-#: app/templates/base.html:58 app/templates/login.html:2
+#: app/templates/base.html:61 app/templates/login.html:2
 #: app/templates/login.html:20
 msgid "Login"
 msgstr ""
 
-#: app/templates/base.html:59 app/templates/register.html:2
+#: app/templates/base.html:62 app/templates/register.html:2
 #: app/templates/register.html:8
 msgid "Register"
 msgstr ""
 
-#: app/templates/base.html:84
+#: app/templates/base.html:90
 msgid "A"
 msgstr ""
 
-#: app/templates/base.html:84
+#: app/templates/base.html:90
 msgid "production"
 msgstr ""
 
-#: app/templates/base.html:95 app/templates/home.html:17
+#: app/templates/base.html:102 app/templates/home.html:17
 msgid "Contact"
 msgstr ""
 
-#: app/templates/base.html:96
+#: app/templates/base.html:103
 msgid "Source Code"
 msgstr ""
 

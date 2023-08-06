@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">{{ _('Maintenance') }}</h1>
+        <p class="lead">
+            {{ _('The site is currently in maintenance, please check back later') }}
+        </p>
+        <hr class="my-4">
+        <p>
+            {{ _("To get in touch you can send an email to ") }}
+            <a
+                    href="mailto:zug@sad.bz">zug@sad.bz</a>
+            {{ _('or open an issue on') }}
+            <a href="https://github.com/Dosenpfand/zug-lol/issues">{{ _('the issue tracker') }}</a>.
+        </p>
+    </div>
+{% endblock %}

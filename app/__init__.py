@@ -4,7 +4,7 @@ from typing import Optional, Union
 
 import click
 import sentry_sdk
-from flask import Flask, current_app, request, session, flash
+from flask import Flask, abort, current_app, request, session, flash
 from flask.cli import with_appcontext
 from flask_babel import Babel, format_number
 from flask_babel import lazy_gettext as _
@@ -20,7 +20,7 @@ from sentry_sdk.integrations.flask import FlaskIntegration
 from sqlalchemy import inspect
 
 from app.cronjobs import update_oldest_prices
-from app.error.views import page_not_found, internal_server_error
+from app.error.views import page_not_found, internal_server_error, service_unavailable
 from app.extended_security.forms import ExtendedRegisterForm
 from app.extended_security.admin import AdminModelView, ExtendedAdminIndex
 
@@ -45,6 +45,17 @@ def create_app(
         # Register error handlers
         app.register_error_handler(404, page_not_found)
         app.register_error_handler(500, internal_server_error)
+        app.register_error_handler(503, service_unavailable)
+
+        # Register
+        @app.before_request
+        def check_maintanence():
+            if (
+                app.config.get("MAINTENANCE")
+                and request.url_rule.endpoint
+                and (request.url_rule.endpoint not in ["static", "bootstrap.static"])
+            ):
+                abort(503)
 
         # Instantiate extensions
         bootstrap = Bootstrap4()
