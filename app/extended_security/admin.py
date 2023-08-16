@@ -2,8 +2,10 @@ import typing
 from flask import abort, current_app
 from flask_admin.form import SecureForm
 from flask_admin.contrib.sqla import ModelView
-from flask_admin.base import AdminIndexView
+from flask_admin.base import AdminIndexView, expose
 from flask_security import current_user
+
+# Note: flask-admin templates do not support strict CSP, so we need to disable it here
 
 
 class AdminSecurityMixIn:
@@ -23,8 +25,37 @@ class AdminModelView(AdminSecurityMixIn, ModelView):
     column_hide_backrefs = False
     can_view_details = True
     can_export = True
-    form_base_class = SecureForm
+    # TODO: CSRF validation fails!
+    # form_base_class = SecureForm
+
+    @expose("/")
+    def index_view(self):
+        return super().index_view()
+
+    index_view.talisman_view_options = {"content_security_policy": None}
+
+    @expose("/new/", methods=("GET", "POST"))
+    def create_view(self):
+        return super().create_view()
+
+    create_view.talisman_view_options = {"content_security_policy": None}
+
+    @expose("/edit/", methods=("GET", "POST"))
+    def edit_view(self):
+        return super().edit_view()
+
+    edit_view.talisman_view_options = {"content_security_policy": None}
+
+    @expose("/details/")
+    def details_view(self):
+        return super().details_view()
+
+    details_view.talisman_view_options = {"content_security_policy": None}
 
 
 class ExtendedAdminIndex(AdminSecurityMixIn, AdminIndexView):
-    pass
+    @expose()
+    def index(self):
+        return super().index()
+
+    index.talisman_view_options = {"content_security_policy": None}
