@@ -29,25 +29,25 @@ class AdminModelView(AdminSecurityMixIn, ModelView):
     # form_base_class = SecureForm
 
     @expose("/")
-    def index_view(self):
+    def index_view(self) -> str:
         return super().index_view()
 
     index_view.talisman_view_options = {"content_security_policy": None}
 
     @expose("/new/", methods=("GET", "POST"))
-    def create_view(self):
+    def create_view(self) -> str:
         return super().create_view()
 
     create_view.talisman_view_options = {"content_security_policy": None}
 
     @expose("/edit/", methods=("GET", "POST"))
-    def edit_view(self):
+    def edit_view(self) -> str:
         return super().edit_view()
 
     edit_view.talisman_view_options = {"content_security_policy": None}
 
     @expose("/details/")
-    def details_view(self):
+    def details_view(self) -> str:
         return super().details_view()
 
     details_view.talisman_view_options = {"content_security_policy": None}
@@ -55,7 +55,7 @@ class AdminModelView(AdminSecurityMixIn, ModelView):
 
 class ExtendedAdminIndex(AdminSecurityMixIn, AdminIndexView):
     @expose()
-    def index(self):
+    def index(self) -> str:
         return super().index()
 
     index.talisman_view_options = {"content_security_policy": None}
