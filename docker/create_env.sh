@@ -1,3 +1,3 @@
 #!/bin/sh
 
-printenv | sed 's/^\(.*\)$/export \1/g' | grep -E "^export FLASK_" > /root/get_env.sh
+declare -p | grep -Ev 'BASHOPTS|BASH_VERSINFO|EUID|PPID|SHELLOPTS|UID' > /root/get_env.sh
