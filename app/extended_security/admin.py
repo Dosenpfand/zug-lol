@@ -25,6 +25,7 @@ class AdminModelView(AdminSecurityMixIn, ModelView):
     column_hide_backrefs = False
     can_view_details = True
     can_export = True
+    export_types = ["csv", "json"]
     # TODO: CSRF validation fails!
     # form_base_class = SecureForm
 

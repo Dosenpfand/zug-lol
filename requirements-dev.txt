@@ -1,4 +1,4 @@
-black~=22.10
+black~=24.2
 pre-commit~=2.19
 pytest~=7.1
 flake8~=5.0
