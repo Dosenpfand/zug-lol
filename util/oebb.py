@@ -266,6 +266,10 @@ def get_price_for_connection(
     headers = get_request_headers(access_token)
     r = requests.get(url, params=params, headers=headers)
 
+    if not r.ok:
+        logger.error("Could not retrieve price for connection.")
+        return None
+
     prices = [
         offer.get("price") if not offer.get("reducedScope") else None
         for offer in r.json()["offers"]
@@ -276,7 +280,7 @@ def get_price_for_connection(
         price = median(prices_cleaned)
     else:
         add_breadcrumb(type="info", category="response.json", data=r.json())
-        logger.error("Could not get price for connection.")
+        logger.error("Could not determine price for connection.")
         price = None
 
     return price
