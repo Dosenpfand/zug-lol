@@ -104,7 +104,7 @@ msgstr "Wartungsarbeiten"
 
 #: app/extended_security/forms.py:7
 msgid "Prove that you are human"
-msgstr "Mensch oder Maschine?"
+msgstr "Mensch oder Lokomotive?"
 
 #: app/journal/forms.py:12 app/journal/views.py:128 app/ticket_price/forms.py:9
 msgid "Origin"
