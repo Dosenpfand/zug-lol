@@ -13,6 +13,7 @@ RUN set -eux; \
 	rm -rf /var/lib/apt/lists/*
 COPY docker/crontab ${CRONTAB_FILE}
 COPY docker/create_env.sh /root/create_env.sh
+COPY docker/cron.sh /root/cron.sh
 
 # App
 ENV MODULE_NAME=wsgi
