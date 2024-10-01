@@ -285,7 +285,7 @@ msgstr "Zurück zur Startseite"
 
 #: app/templates/500.html:5
 msgid "Internal Server Error!"
-msgstr "Internet Server-Fehler"
+msgstr "Interner Server-Fehler"
 
 #: app/templates/500.html:7
 msgid "Unfortunately, your request caused an internal server error."
