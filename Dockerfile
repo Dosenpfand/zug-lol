@@ -1,4 +1,4 @@
-FROM tiangolo/meinheld-gunicorn:python3.9
+FROM tiangolo/uvicorn-gunicorn:python3.11
 
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install --upgrade pip
@@ -17,5 +17,6 @@ COPY docker/cron.sh /root/cron.sh
 
 # App
 ENV MODULE_NAME=wsgi
+ENV WORKER_CLASS=gthread
 RUN rm -rf /app
 COPY ./ /app

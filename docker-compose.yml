@@ -42,10 +42,9 @@ services:
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U zug" ]
       start_period: 10s
-      # TODO: Switch on when supported (and decrease interval): start_interval: 2s
       interval: 5s
       timeout: 5s
-      retries: 1
+      retries: 10
 
 volumes:
   database:

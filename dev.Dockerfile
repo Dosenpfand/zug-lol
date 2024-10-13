@@ -1,4 +1,4 @@
-FROM tiangolo/meinheld-gunicorn:python3.9
+FROM tiangolo/uvicorn-gunicorn:python3.11
 
 COPY requirements.txt /tmp/requirements.txt
 COPY requirements-dev.txt /tmp/requirements-dev.txt
