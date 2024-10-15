@@ -14,5 +14,5 @@ Flask-Babel~=2.0
 psycopg2~=2.9
 Flask-DebugToolbar~=0.13
 flask-talisman~=1.0
-sentry-sdk[flask]~=1.16
+sentry-sdk[flask]~=2.16
 Flask-Admin~=1.6.1
