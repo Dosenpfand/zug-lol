@@ -180,7 +180,7 @@ def init_db_command() -> None:
 @click.command("is-db-init")
 @with_appcontext
 def is_db_init_command() -> None:
-    """Determine wheter the database is initialized."""
+    """Determine wether the database is initialized."""
     result = is_db_init()
     print("Database is initialized." if result else "Database is NOT initialized.")
     sys.exit(not result)
