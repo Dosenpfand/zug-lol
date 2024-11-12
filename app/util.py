@@ -117,7 +117,6 @@ def get_price_generator(
     connection_ids = get_connection_ids(
         travel_action_id,
         date=date,
-        has_vc66=has_vc66,
         get_only_first=False,
         access_token=access_token,
     )
@@ -130,7 +129,9 @@ def get_price_generator(
     current_step += 1
     current_message = _("Retrieving price")
     yield render(current_message, current_step, total_steps)
-    price = get_price_for_connection(connection_ids, access_token=access_token)
+    price = get_price_for_connection(
+        connection_ids, access_token=access_token, has_vc66=has_vc66
+    )
     if not price:
         logger.warning("Could not retrieve price.")
         current_message = _("Failed to retrieve price")
