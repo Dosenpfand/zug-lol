@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eu -o pipefail1
+set -eu -o pipefail
 
 . /root/get_env.sh
 cd /app
