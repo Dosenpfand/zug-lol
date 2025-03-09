@@ -1,4 +1,4 @@
-SHELL=/bin/sh
+SHELL=/bin/bash
 PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-* * * * * root bash -c "/root/cron.sh"
+* * * * * root flock -n /var/lock/cron.lock --timeout 10 -c "/root/cron.sh"
