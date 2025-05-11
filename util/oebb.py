@@ -8,12 +8,12 @@ import requests
 from sentry_sdk import add_breadcrumb
 
 CONFIG = dict(
-    user_agent="Mozilla/5.0 (X11; Linux x86_64; rv:104.0) Gecko/20100101 Firefox/104.0",
+    user_agent="Mozilla/5.0 (X11; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0",
     host="https://shop.oebbtickets.at",
 )
 
 API_PATHS = {
-    "access_token": "/api/domain/v4/init",
+    "access_token": "/api/domain/v1/anonymousToken",
     "stations": "/api/hafas/v1/stations",
     "travel_actions": "/api/offer/v2/travelActions",
     "timetable": "/api/hafas/v4/timetable",
@@ -26,13 +26,20 @@ logger = logging.getLogger(__name__)
 def get_access_token(
     host: str = CONFIG["host"], user_agent: str = CONFIG["user_agent"]
 ) -> Optional[str]:
-    headers = {"User-Agent": user_agent}
+    headers = {
+        "User-Agent": user_agent,
+        "Accept": "application/json, text/plain, */*",
+        "Channel": "inet",
+        "Lang": "de",
+        "ClientId": "1",
+    }
+
     r = requests.get(host + API_PATHS["access_token"], headers=headers)
     if not r:
         logger.error("Could not get access token.")
         return None
 
-    access_token = r.json().get("accessToken")
+    access_token = r.json().get("access_token")
     return access_token
 
 
