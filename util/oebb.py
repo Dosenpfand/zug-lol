@@ -30,6 +30,8 @@ def init_user_data(
     user_agent: str = CONFIG["user_agent"],
 ) -> bool:
     """Initializes user data after obtaining an access token."""
+
+    # TODO: Check what is needed and put in get_request_headers()
     headers = {
         "User-Agent": user_agent,
         "Accept": "application/json, text/plain, */*",
@@ -107,6 +109,7 @@ def get_request_headers(
     return headers
 
 
+# TODO: Maybe not even needed?
 def get_station_details(
     name: str,
     access_token: Optional[str] = None,
@@ -178,7 +181,13 @@ def get_travel_action_id(
         date = datetime.utcnow()
 
     # TODO: Check what is needed and put in get_request_headers()
-    headers = get_request_headers(access_token) | {
+    base_headers = get_request_headers(access_token)
+    if not base_headers:
+        logger.error("Failed to get base request headers for get_travel_action_id.")
+        return None
+
+    # TODO: Check what is needed and put in get_request_headers()
+    specific_headers = {
         # "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0",
         "Accept": "application/json, text/plain, */*",
         "Accept-Language": "en,de;q=0.5",
@@ -199,6 +208,7 @@ def get_travel_action_id(
         "Sec-Fetch-Mode": "cors",
         "Sec-Fetch-Site": "same-origin",
     }
+    headers = {**base_headers, **specific_headers}
 
     url = host + API_PATHS["travel_actions"]
     # TODO: lat,long not needed, name not relevant
@@ -349,8 +359,6 @@ def get_connection_ids(
         "clientversion": "2.4.10975-7967",
         "Content-Type": "application/json",
         "Origin": host,
-        "DNT": "1",
-        "Sec-GPC": "1",
     }
     headers = {**base_headers, **specific_headers}
 
@@ -435,8 +443,6 @@ def get_price_for_connection(
         "x-ts-supportid": "WEB_z2qm6uuf_ynubh42i",
         "ClientId": "27",
         "clientversion": "2.4.10975-7967",
-        "DNT": "1",
-        "Sec-GPC": "1",
     }
     headers = {**base_headers, **specific_headers}
 
