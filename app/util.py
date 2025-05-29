@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 from app.db import db
 from app.models import Price, AuthToken
 from util.oebb import (
-    get_station_id,
+    get_station_details,
     get_travel_action_id,
     get_connection_ids,
     get_price_for_connection,
@@ -82,8 +82,8 @@ def get_price_generator(
     current_step += 1
     current_message = _("Processing origin")
     yield render(current_message, current_step, total_steps)
-    origin_id = get_station_id(origin, access_token=access_token)
-    if not origin_id:
+    origin_details = get_station_details(origin, access_token=access_token)
+    if not origin_details or not origin_details.get("number"):
         logger.warning("Could not process origin.")
         current_message = _("Failed to process origin")
         yield render(current_message)
@@ -92,8 +92,8 @@ def get_price_generator(
     current_step += 1
     current_message = _("Processing destination")
     yield render(current_message, current_step, total_steps)
-    destination_id = get_station_id(destination, access_token=access_token)
-    if not destination_id:
+    destination_details = get_station_details(destination, access_token=access_token)
+    if not destination_details or not destination_details.get("number"):
         logger.warning("Could not process destination.")
         current_message = _("Failed to process destination")
         yield render(current_message)
@@ -103,7 +103,10 @@ def get_price_generator(
     current_message = _("Processing travel action")
     yield render(current_message, current_step, total_steps)
     travel_action_id = get_travel_action_id(
-        origin_id, destination_id, date=date, access_token=access_token
+        origin_details["number"],
+        destination_details["number"],
+        date=date,
+        access_token=access_token,
     )
     if not travel_action_id:
         logger.warning("Could not process travel action.")
@@ -116,6 +119,8 @@ def get_price_generator(
     yield render(current_message, current_step, total_steps)
     connection_ids = get_connection_ids(
         travel_action_id,
+        origin_details,
+        destination_details,
         date=date,
         get_only_first=False,
         access_token=access_token,

@@ -18,9 +18,47 @@ API_PATHS = {
     "travel_actions": "/api/offer/v2/travelActions",
     "timetable": "/api/hafas/v4/timetable",
     "prices": "/api/offer/v1/prices",
+    "init_user_data": "/api/domain/v1/initUserData",
 }
 
 logger = logging.getLogger(__name__)
+
+
+def init_user_data(
+    access_token: str,
+    host: str = CONFIG["host"],
+    user_agent: str = CONFIG["user_agent"],
+) -> bool:
+    """Initializes user data after obtaining an access token."""
+    headers = {
+        "User-Agent": user_agent,
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "en,de;q=0.5",
+        "Referer": host + "/de/ticket",
+        "Channel": "inet",
+        "Lang": "de",
+        "x-ts-supportid": "WEB_z2qm6uuf_ynubh42i",  # TODO: Randomize?
+        "ClientId": "27",  # TODO: Randomize?
+        "AccessToken": access_token,
+        "clientversion": "2.4.10975-7967",  # TODO: Randomize?
+        "Content-Type": "application/json",
+        "Origin": host,
+        "DNT": "1",
+        "Sec-GPC": "1",
+    }
+    url = host + API_PATHS["init_user_data"]
+    try:
+        r = requests.post(url, headers=headers, json={})
+        r.raise_for_status()
+        logger.info("User data initialized successfully.")
+        return True
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Could not init user data: {e}")
+        if hasattr(e, "response") and e.response is not None:
+            logger.error(
+                f"Response status: {e.response.status_code}, Response text: {e.response.text}"
+            )
+        return False
 
 
 def get_access_token(
@@ -39,7 +77,17 @@ def get_access_token(
         logger.error("Could not get access token.")
         return None
 
-    access_token = r.json().get("access_token")
+    response_data = r.json()
+    access_token = response_data.get("access_token")
+
+    if not access_token:
+        logger.error("Access token not found in response.")
+        return None
+
+    if not init_user_data(access_token, host=host, user_agent=user_agent):
+        logger.error("Failed to initialize user data after obtaining token.")
+        return None
+
     return access_token
 
 
@@ -59,19 +107,46 @@ def get_request_headers(
     return headers
 
 
-def get_station_id(
+def get_station_details(
     name: str,
     access_token: Optional[str] = None,
     host: str = CONFIG["host"],
-) -> Optional[str]:
+) -> Optional[Dict[str, Union[str, int]]]:
+    """Fetches station details including ID, name, latitude, and longitude."""
     headers = get_request_headers(access_token)
     params = {"name": name, "count": "1"}
-    r = requests.get(host + API_PATHS["stations"], params, headers=headers)
-    if not r or not type(r.json()) is list or not len(r.json()):
-        logger.error("Could not get station ID.")
-        return None
+    try:
+        r = requests.get(host + API_PATHS["stations"], params=params, headers=headers)
+        r.raise_for_status()
+        response_data = r.json()
+        if not isinstance(response_data, list) or not len(response_data):
+            logger.error(
+                f"No station details found for '{name}'. Response: {response_data}"
+            )
+            return None
 
-    return r.json()[0]["number"]
+        station_data = response_data[0]
+        latitude = station_data.get("latitude")
+        longitude = station_data.get("longitude")
+
+        return {
+            "number": station_data.get("number"),
+            "name": station_data.get("name") or station_data.get("meta"),
+            "latitude": int(latitude * 1_000_000) if latitude is not None else None,
+            "longitude": int(longitude * 1_000_000) if longitude is not None else None,
+        }
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Could not get station details for '{name}': {e}")
+        if hasattr(e, "response") and e.response is not None:
+            logger.error(
+                f"Response status: {e.response.status_code}, Response text: {e.response.text}"
+            )
+        return None
+    except (ValueError, TypeError, KeyError) as e:
+        logger.error(
+            f"Error processing station data for '{name}': {e}. Data: {station_data if 'station_data' in locals() else 'N/A'}"
+        )
+        return None
 
 
 def get_station_names(
@@ -101,26 +176,51 @@ def get_travel_action_id(
 ) -> Optional[str]:
     if not date:
         date = datetime.utcnow()
-    headers = get_request_headers(access_token)
+
+    # TODO: Check what is needed and put in get_request_headers()
+    headers = get_request_headers(access_token) | {
+        # "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0",
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "en,de;q=0.5",
+        # "Accept-Encoding": "gzip, deflate, br, zstd",
+        "Referer": "https://shop.oebbtickets.at/de/ticket",
+        "Channel": "inet",
+        "Lang": "de",
+        "x-ts-supportid": "WEB_z2qm6uuf_ynubh42i",
+        "ClientId": "26",
+        # "AccessToken": "N/A",
+        "clientversion": "2.4.10940-TSPNEU-1",
+        "Content-Type": "application/json",
+        "Origin": "https://shop.oebbtickets.at",
+        "DNT": "1",
+        "Sec-GPC": "1",
+        "Connection": "keep-alive",
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "same-origin",
+    }
 
     url = host + API_PATHS["travel_actions"]
     # TODO: lat,long not needed, name not relevant
     data = {
         "from": {
+            "meta": "Wien",
             "latitude": 48208548,
             "longitude": 16372132,
-            "name": "Wien",
+            "name": "",
             "number": origin_id,
         },
         "to": {
+            "meta": "Innsbruck",
             "latitude": 47263774,
             "longitude": 11400973,
-            "name": "Innsbruck",
+            "name": "",
             "number": destination_id,
         },
-        "datetime": date.isoformat(),
+        "datetime": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3],
         "customerVias": [],
         "ignoreHistory": True,
+        "travelActionTypes": ["timetable"],
         "filter": {
             "productTypes": [],
             "history": True,
@@ -130,6 +230,7 @@ def get_travel_action_id(
     }
 
     r = requests.post(url, json=data, headers=headers)
+
     if not r:
         logger.error("Could not get travel actions.")
         return None
@@ -156,18 +257,20 @@ def get_travel_action_id(
 
 def get_connection_ids(
     travel_action_id: str,
+    origin_station_details: Dict[str, Union[str, int]],
+    destination_station_details: Dict[str, Union[str, int]],
     date: Optional[datetime] = None,
     get_only_first: bool = True,
     access_token: Optional[str] = None,
     host: str = CONFIG["host"],
-) -> Optional[List[str]]:
+) -> Optional[Union[str, List[str]]]:
     url = host + API_PATHS["timetable"]
     if not date:
         date = datetime.utcnow()
 
     data = {
         "travelActionId": travel_action_id,
-        "datetimeDeparture": date.isoformat(),
+        "datetimeDeparture": date.strftime("%Y-%m-%dT%H:%M:%S.000"),
         "filter": {
             "regionaltrains": False,
             "direct": False,
@@ -215,26 +318,85 @@ def get_connection_ids(
             "noCategoriesFilter": False,
         },
         "sortType": "DEPARTURE",
+        "from": {
+            "latitude": origin_station_details.get("latitude"),
+            "longitude": origin_station_details.get("longitude"),
+            "name": origin_station_details.get("name"),
+            "number": origin_station_details.get("number"),
+        },
+        "to": {
+            "latitude": destination_station_details.get("latitude"),
+            "longitude": destination_station_details.get("longitude"),
+            "name": destination_station_details.get("name"),
+            "number": destination_station_details.get("number"),
+        },
     }
-    # TODO: not necessary?
-    # 'from': {'latitude': 48208548, 'longitude': 16372132, 'name': 'Wien', 'number': 1190100},
-    # 'to': {'latitude': 47263774, 'longitude': 11400973, 'name': 'Innsbruck', 'number': 1170101}}
-    headers = get_request_headers(access_token)
-    r = requests.post(url, json=data, headers=headers)
-    if (
-        not r
-        or not r.json().get("connections")
-        or not type(r.json()["connections"]) is list
-        or not len(r.json()["connections"])
-    ):
-        logger.error("Could not get connection IDs.")
+
+    base_headers = get_request_headers(access_token, user_agent=CONFIG["user_agent"])
+    if not base_headers:
+        logger.error("Failed to get base request headers for get_connection_ids.")
+        return None
+
+    # TODO: Check what is needed and put in get_request_headers()
+    specific_headers = {
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "en,de;q=0.5",
+        "Referer": host + "/de/ticket/timetable",
+        "Channel": "inet",
+        "Lang": "de",
+        "x-ts-supportid": "WEB_z2qm6uuf_ynubh42i",
+        "ClientId": "27",
+        "clientversion": "2.4.10975-7967",
+        "Content-Type": "application/json",
+        "Origin": host,
+        "DNT": "1",
+        "Sec-GPC": "1",
+    }
+    headers = {**base_headers, **specific_headers}
+
+    try:
+        r = requests.post(url, json=data, headers=headers)
+        r.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Could not get connection IDs: {e}")
+        if hasattr(e, "response") and e.response is not None:
+            logger.error(
+                f"Response status: {e.response.status_code}, Response text: {e.response.text}"
+            )
+        return None
+
+    try:
+        response_json = r.json()
+    except requests.exceptions.JSONDecodeError:
+        logger.error(
+            f"Failed to decode JSON response from timetable. Text: {r.text[:500]}"
+        )  # Log snippet of text
+        return None
+
+    connections = response_json.get("connections")
+    if not isinstance(connections, list) or not connections:
+        logger.error(
+            f"No connections found or invalid format. Response: {response_json}"
+        )
         return None
 
     if get_only_first:
-        connection_id = r.json()["connections"][0]["id"]
+        connection_id = connections[0].get("id")
+        if not connection_id:
+            logger.error(
+                f"First connection is missing an ID. Connection data: {connections[0]}"
+            )
+            return None
         return connection_id
 
-    connection_ids = [connection["id"] for connection in r.json()["connections"]]
+    connection_ids = [
+        connection.get("id") for connection in connections if connection.get("id")
+    ]
+    if not connection_ids:  # If all connections were missing IDs
+        logger.error(
+            f"All connections were missing IDs. Connections data: {connections}"
+        )
+        return None
     return connection_ids
 
 
@@ -245,7 +407,7 @@ def get_price_for_connection(
     host: str = CONFIG["host"],
 ) -> Optional[float]:
     url = host + API_PATHS["prices"]
-    if type(connection_id) is str:
+    if isinstance(connection_id, str):
         connection_id = [connection_id]
 
     connection_id_params = [
@@ -255,16 +417,58 @@ def get_price_for_connection(
         ("sortType", "DEPARTURE"),
         ("bestPriceId", "undefined"),
     ]
-    headers = get_request_headers(access_token)
-    r = requests.get(url, params=params, headers=headers)
 
-    if not r.ok:
-        logger.error("Could not retrieve price for connection.")
+    base_headers = get_request_headers(access_token, user_agent=CONFIG["user_agent"])
+    if not base_headers:
+        logger.error("Failed to get base request headers for get_price_for_connection.")
+        return None
+
+    # TODO: Check what is needed and put in get_request_headers()
+    specific_headers = {
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "en,de;q=0.5",
+        "Referer": host + "/de/ticket/timetable",
+        "Channel": "inet",
+        "Lang": "de",
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+        "x-ts-supportid": "WEB_z2qm6uuf_ynubh42i",
+        "ClientId": "27",
+        "clientversion": "2.4.10975-7967",
+        "DNT": "1",
+        "Sec-GPC": "1",
+    }
+    headers = {**base_headers, **specific_headers}
+
+    try:
+        r = requests.get(url, params=params, headers=headers)
+        r.raise_for_status()  # Raise an exception for HTTP errors
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Could not retrieve price for connection: {e}")
+        if hasattr(e, "response") and e.response is not None:
+            logger.error(
+                f"Response status: {e.response.status_code}, Response text: {e.response.text}"
+            )
+        return None
+
+    try:
+        response_json = r.json()
+    except requests.exceptions.JSONDecodeError:
+        logger.error(
+            f"Failed to decode JSON response from prices. Text: {r.text[:500]}"
+        )
+        return None
+
+    offers = response_json.get("offers")
+    if not isinstance(offers, list):
+        logger.error(
+            f"Offers not found or invalid format in price response. Response: {response_json}"
+        )
         return None
 
     prices = [
         offer.get("price") if not offer.get("reducedScope") else None
-        for offer in r.json()["offers"]
+        for offer in offers
     ]
     prices_cleaned: List[float] = list(filter(None, prices))
 
@@ -299,14 +503,22 @@ def get_price(
         logger.warning("Could not get access token.")
         return None
 
-    origin_id = get_station_id(origin, access_token=access_token)
-    destination_id = get_station_id(destination, access_token=access_token)
-    if not origin_id or not destination_id:
-        logger.warning("Could not get origin/destination ID.")
+    origin_details = get_station_details(origin, access_token=access_token)
+    destination_details = get_station_details(destination, access_token=access_token)
+
+    if not origin_details or not destination_details:
+        logger.warning("Could not get origin/destination details.")
+        return None
+
+    if not origin_details.get("number") or not destination_details.get("number"):
+        logger.warning("Origin/destination station number missing in details.")
         return None
 
     travel_action_id = get_travel_action_id(
-        origin_id, destination_id, date=date, access_token=access_token
+        origin_details["number"],
+        destination_details["number"],
+        date=date,
+        access_token=access_token,
     )
     if not travel_action_id:
         logger.warning("Could not get travel action ID.")
@@ -314,9 +526,12 @@ def get_price(
 
     connection_ids = get_connection_ids(
         travel_action_id,
+        origin_details,
+        destination_details,
         date=date,
         get_only_first=(not take_median),
         access_token=access_token,
+        host=CONFIG["host"],
     )
     if not connection_ids:
         logger.warning("Could not get connection ID.")
