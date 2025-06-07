@@ -114,7 +114,7 @@ def get_station_details(
     name: str,
     access_token: Optional[str] = None,
     host: str = CONFIG["host"],
-) -> Optional[Dict[str, Union[str, int]]]:
+) -> Optional[Dict[str, Union[str, int, None]]]:
     """Fetches station details including ID, name, latitude, and longitude."""
     headers = get_request_headers(access_token)
     params = {"name": name, "count": "1"}
@@ -267,8 +267,8 @@ def get_travel_action_id(
 
 def get_connection_ids(
     travel_action_id: str,
-    origin_station_details: Dict[str, Union[str, int]],
-    destination_station_details: Dict[str, Union[str, int]],
+    origin_station_details: Dict[str, Union[str, int, None]],
+    destination_station_details: Dict[str, Union[str, int, None]],
     date: Optional[datetime] = None,
     get_only_first: bool = True,
     access_token: Optional[str] = None,
@@ -521,8 +521,8 @@ def get_price(
         return None
 
     travel_action_id = get_travel_action_id(
-        origin_details["number"],
-        destination_details["number"],
+        str(origin_details["number"]),
+        str(destination_details["number"]),
         date=date,
         access_token=access_token,
     )

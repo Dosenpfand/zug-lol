@@ -103,8 +103,8 @@ def get_price_generator(
     current_message = _("Processing travel action")
     yield render(current_message, current_step, total_steps)
     travel_action_id = get_travel_action_id(
-        origin_details["number"],
-        destination_details["number"],
+        str(origin_details["number"]),
+        str(destination_details["number"]),
         date=date,
         access_token=access_token,
     )
