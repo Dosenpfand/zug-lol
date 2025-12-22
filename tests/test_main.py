@@ -10,7 +10,7 @@ from conftest import TEST_EMAIL, TEST_PASSWORD
 
 
 class TestJourneys:
-    places = ["wien", "linz", "salzburg", "innsbruck"]
+    places = ["wien", "linz", "eisenstadt", "innsbruck"]
 
     @pytest.mark.parametrize("place", places)
     def test_station_autocomplete(self, client: "FlaskClient", place: str) -> None:
