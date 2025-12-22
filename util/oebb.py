@@ -270,6 +270,7 @@ def get_connection_ids(
     origin_station_details: Dict[str, Union[str, int, None]],
     destination_station_details: Dict[str, Union[str, int, None]],
     date: Optional[datetime] = None,
+    has_vc66: bool = False,
     get_only_first: bool = True,
     access_token: Optional[str] = None,
     host: str = CONFIG["host"],
@@ -278,6 +279,21 @@ def get_connection_ids(
     if not date:
         date = datetime.utcnow()
 
+    cards = []
+    if has_vc66:
+        cards.append(
+            {
+                "name": "Vorteilscard 66",
+                "cardId": 9097862,
+                "numberRequired": False,
+                "isChallenged": False,
+                "isFamily": False,
+                "isSelectable": True,
+                "image": "discountCard",
+                "isMergeableIntoCustomerAccount": True,
+                "motorailTrainRelevance": "PERSON_ONLY",
+            }
+        )
     data = {
         "travelActionId": travel_action_id,
         "datetimeDeparture": date.strftime("%Y-%m-%dT%H:%M:%S.000"),
@@ -301,7 +317,7 @@ def get_connection_ids(
                     "hasWheelchair": False,
                     "hasAttendant": False,
                 },
-                "cards": [],
+                "cards": cards,
                 "relations": [],
                 "isBirthdateChangeable": True,
                 "isBirthdateDeletable": True,
@@ -411,7 +427,6 @@ def get_connection_ids(
 def get_price_for_connection(
     connection_id: Union[str, List[str]],
     access_token: Optional[str] = None,
-    has_vc66: bool = False,
     host: str = CONFIG["host"],
 ) -> Optional[float]:
     url = host + API_PATHS["prices"]
@@ -480,8 +495,6 @@ def get_price_for_connection(
 
     if prices_cleaned:
         price = median(prices_cleaned)
-        if has_vc66:
-            price = round(price / 2, 2)
     else:
         add_breadcrumb(type="info", category="response.json", data=r.json())
         logger.error("Could not determine price for connection.")
@@ -535,6 +548,7 @@ def get_price(
         origin_details,
         destination_details,
         date=date,
+        has_vc66=has_vc66,
         get_only_first=(not take_median),
         access_token=access_token,
         host=CONFIG["host"],
@@ -543,7 +557,5 @@ def get_price(
         logger.warning("Could not get connection ID.")
         return None
 
-    price = get_price_for_connection(
-        connection_ids, access_token=access_token, has_vc66=has_vc66
-    )
+    price = get_price_for_connection(connection_ids, access_token=access_token)
     return price
