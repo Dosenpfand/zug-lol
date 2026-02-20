@@ -2,7 +2,7 @@ import logging
 import time
 from datetime import datetime, timedelta
 from statistics import median
-from typing import Optional, Dict, List, Union
+from typing import Optional, Dict, List, Union, Tuple
 
 import requests
 from sentry_sdk import add_breadcrumb
@@ -22,6 +22,8 @@ API_PATHS = {
 }
 
 logger = logging.getLogger(__name__)
+
+MAX_BATCHES = 5
 
 
 def init_user_data(
@@ -275,6 +277,32 @@ def get_connection_ids(
     access_token: Optional[str] = None,
     host: str = CONFIG["host"],
 ) -> Optional[Union[str, List[str]]]:
+    result = _get_connection_ids_with_next_date(
+        travel_action_id=travel_action_id,
+        origin_station_details=origin_station_details,
+        destination_station_details=destination_station_details,
+        date=date,
+        has_vc66=has_vc66,
+        get_only_first=get_only_first,
+        access_token=access_token,
+        host=host,
+    )
+    if result is None:
+        return None
+    connection_ids, _ = result
+    return connection_ids
+
+
+def _get_connection_ids_with_next_date(
+    travel_action_id: str,
+    origin_station_details: Dict[str, Union[str, int, None]],
+    destination_station_details: Dict[str, Union[str, int, None]],
+    date: Optional[datetime] = None,
+    has_vc66: bool = False,
+    get_only_first: bool = True,
+    access_token: Optional[str] = None,
+    host: str = CONFIG["host"],
+) -> Optional[Tuple[Union[str, List[str]], Optional[datetime]]]:
     url = host + API_PATHS["timetable"]
     if not date:
         date = datetime.utcnow()
@@ -394,7 +422,7 @@ def get_connection_ids(
     except requests.exceptions.JSONDecodeError:
         logger.error(
             f"Failed to decode JSON response from timetable. Text: {r.text[:500]}"
-        )  # Log snippet of text
+        )
         return None
 
     connections = response_json.get("connections")
@@ -404,6 +432,23 @@ def get_connection_ids(
         )
         return None
 
+    next_date: Optional[datetime] = None
+    last_connection = connections[-1]
+    last_departure_str = last_connection.get("from", {}).get(
+        "departure"
+    ) or last_connection.get("departure")
+    if last_departure_str:
+        try:
+            last_departure_str_trimmed = last_departure_str[:19]
+            last_departure = datetime.strptime(
+                last_departure_str_trimmed, "%Y-%m-%dT%H:%M:%S"
+            )
+            next_date = last_departure + timedelta(minutes=1)
+        except (ValueError, TypeError) as e:
+            logger.warning(
+                f"Could not parse last departure time '{last_departure_str}': {e}"
+            )
+
     if get_only_first:
         connection_id = connections[0].get("id")
         if not connection_id:
@@ -411,17 +456,17 @@ def get_connection_ids(
                 f"First connection is missing an ID. Connection data: {connections[0]}"
             )
             return None
-        return connection_id
+        return connection_id, next_date
 
     connection_ids = [
         connection.get("id") for connection in connections if connection.get("id")
     ]
-    if not connection_ids:  # If all connections were missing IDs
+    if not connection_ids:
         logger.error(
             f"All connections were missing IDs. Connections data: {connections}"
         )
         return None
-    return connection_ids
+    return connection_ids, next_date
 
 
 def get_price_for_connection(
@@ -503,6 +548,57 @@ def get_price_for_connection(
     return price
 
 
+def get_price_for_route(
+    travel_action_id: str,
+    origin_details: Dict[str, Union[str, int, None]],
+    destination_details: Dict[str, Union[str, int, None]],
+    date: Optional[datetime] = None,
+    has_vc66: bool = False,
+    access_token: Optional[str] = None,
+    host: str = CONFIG["host"],
+) -> Optional[float]:
+    if not date:
+        date = datetime.utcnow()
+
+    current_date = date
+    for batch_num in range(MAX_BATCHES):
+        logger.info(
+            f"Fetching connections batch {batch_num + 1}/{MAX_BATCHES} starting from {current_date}."
+        )
+        result = _get_connection_ids_with_next_date(
+            travel_action_id=travel_action_id,
+            origin_station_details=origin_details,
+            destination_station_details=destination_details,
+            date=current_date,
+            has_vc66=has_vc66,
+            get_only_first=False,
+            access_token=access_token,
+            host=host,
+        )
+        if result is None:
+            logger.warning(f"Could not get connections in batch {batch_num + 1}.")
+            return None
+
+        connection_ids, next_date = result
+
+        price = get_price_for_connection(
+            connection_ids, access_token=access_token, host=host
+        )
+        if price is not None:
+            return price
+
+        logger.info(f"No price found in batch {batch_num + 1}, trying next batch.")
+
+        if next_date is None:
+            logger.warning("Could not determine next batch date, stopping.")
+            return None
+
+        current_date = next_date
+
+    logger.warning(f"Could not find a price after {MAX_BATCHES} batches.")
+    return None
+
+
 def get_price(
     origin: str,
     destination: str,
@@ -543,19 +639,13 @@ def get_price(
         logger.warning("Could not get travel action ID.")
         return None
 
-    connection_ids = get_connection_ids(
-        travel_action_id,
-        origin_details,
-        destination_details,
+    price = get_price_for_route(
+        travel_action_id=travel_action_id,
+        origin_details=origin_details,
+        destination_details=destination_details,
         date=date,
         has_vc66=has_vc66,
-        get_only_first=(not take_median),
         access_token=access_token,
         host=CONFIG["host"],
     )
-    if not connection_ids:
-        logger.warning("Could not get connection ID.")
-        return None
-
-    price = get_price_for_connection(connection_ids, access_token=access_token)
     return price

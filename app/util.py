@@ -12,8 +12,7 @@ from app.models import Price, AuthToken
 from util.oebb import (
     get_station_details,
     get_travel_action_id,
-    get_connection_ids,
-    get_price_for_connection,
+    get_price_for_route,
 )
 
 
@@ -117,25 +116,20 @@ def get_price_generator(
     current_step += 1
     current_message = _("Processing connections")
     yield render(current_message, current_step, total_steps)
-    connection_ids = get_connection_ids(
-        travel_action_id,
-        origin_details,
-        destination_details,
-        date=date,
-        has_vc66=has_vc66,
-        get_only_first=False,
-        access_token=access_token,
-    )
-    if not connection_ids:
-        logger.warning("Could not process connections.")
-        current_message = _("Failed to process connections")
-        yield render(current_message)
-        return
 
     current_step += 1
     current_message = _("Retrieving price")
     yield render(current_message, current_step, total_steps)
-    price = get_price_for_connection(connection_ids, access_token=access_token)
+
+    price = get_price_for_route(
+        travel_action_id=travel_action_id,
+        origin_details=origin_details,
+        destination_details=destination_details,
+        date=date,
+        has_vc66=has_vc66,
+        access_token=access_token,
+    )
+
     if not price:
         logger.warning("Could not retrieve price.")
         current_message = _("Failed to retrieve price")

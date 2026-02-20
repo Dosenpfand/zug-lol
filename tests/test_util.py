@@ -1,5 +1,6 @@
 import os
 import re
+from datetime import datetime, timedelta
 
 from typing import TYPE_CHECKING
 
@@ -44,4 +45,25 @@ class TestUtil:
 
         assert price
         assert price > 5
+        assert price < 50
+
+    def test_get_price_for_route_with_few_prices(self) -> None:
+        """Only few connections for this route have prices"""
+        origin = "Moosburg in Ktn Ortsmitte"
+        destination = "Klagenfurt Heuplatz "
+
+        today = datetime.now()
+        days_ahead = 0 - today.weekday()
+        if days_ahead <= 0:
+            days_ahead += 7
+        next_monday = (today + timedelta(days=days_ahead)).replace(
+            hour=8, minute=0, second=0, microsecond=0
+        )
+
+        price = get_price(
+            origin, destination, date=next_monday, has_vc66=True, take_median=True
+        )
+
+        assert price
+        assert price > 0
         assert price < 50
