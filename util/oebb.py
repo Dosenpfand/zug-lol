@@ -311,8 +311,8 @@ def _get_connection_ids_with_next_date(
     if has_vc66:
         cards.append(
             {
-                "name": "Vorteilscard 66",
-                "cardId": 9097862,
+                "name": "Vorteilscard Classic",
+                "cardId": 108,
                 "numberRequired": False,
                 "isChallenged": False,
                 "isFamily": False,
