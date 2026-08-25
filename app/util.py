@@ -3,6 +3,7 @@ from typing import Optional, TYPE_CHECKING, Iterator
 
 from flask import render_template, request, redirect, url_for, current_app
 from flask_babel import lazy_gettext as _, format_decimal
+from sqlalchemy.exc import IntegrityError
 
 if TYPE_CHECKING:
     from werkzeug import Response as BaseResponse
@@ -144,7 +145,12 @@ def get_price_generator(
             price=price,
         )
     )
-    db.session.commit()
+    try:
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
+        price_query.update({Price.price: price, Price.updated: datetime.utcnow()})
+        db.session.commit()
     current_message = price_message_template.format(
         origin=origin, destination=destination, price=format_decimal(price)
     )
